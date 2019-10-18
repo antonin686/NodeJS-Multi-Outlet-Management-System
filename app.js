@@ -1,18 +1,23 @@
 const express = require('express');
 const expressLayout = require('express-ejs-layouts');
-const index = require('./routes/index');
-const users = require('./routes/users');
+const index = require('./controllers/index');
+const users = require('./controllers/users');
+const path = require('path');
+const bodyParser = require('body-parser');
 
 const app = express();
 
 // EJS
 app.use(expressLayout);
- 
 app.set('view engine', 'ejs');
+app.set("layout extractScripts", true)
 
+
+app.use(bodyParser.urlencoded({extended:true}));
+// Set Static Path
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Routes
-
 app.use('/', index);
 app.use('/users', users);
 
