@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-var db = require('./../models/loginDB.js');
+var db = require('./../models/db.js');
 // Login Page
 router.get('/login', (req, res) => res.render('Login', { title: "Login"}));
 router.post('/login', function(req, res){
