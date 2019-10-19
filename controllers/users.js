@@ -15,6 +15,18 @@ router.post('/login', function(req, res){
 				req.session.status = 1;
 				res.redirect('/admin/home/');
 			}
+			if(results[0].type == 2)
+			{
+				req.session.uname = req.body.uname;
+				req.session.status = 2;
+				res.redirect('/manager/home/');
+			}
+			if(results[0].type == 3)
+			{
+				req.session.uname = req.body.uname;
+				req.session.status = 3;
+				res.redirect('/seller/seller_home/');
+			}
 			
 		}else{
 			res.send('invalid username/password');		
@@ -26,6 +38,6 @@ router.post('/login', function(req, res){
 router.get('/register', (req, res) => res.render('Register', { title: "Register"}));
 
 // Logout
-router.get('/logout', (req, res) => res.send("logout"));
+router.get('/logout', (req, res) => res.render("logout"));
 
 module.exports = router;
