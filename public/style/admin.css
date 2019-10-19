@@ -1,15 +1,23 @@
-
-.bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+#header{
+    background: #333333;
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
 }
 
-@media (min-width: 768px) {
-  .bd-placeholder-img-lg {
-    font-size: 3.5rem;
-  }
+#header .create{
+    padding: 20px;
+}
+
+#header #dashboard-text{
+    padding: 10px;
+}
+
+.breadcrumb{
+    background: #cccccc;
+    color: #333333;
+}
+
+.breadcrumb a{
+    color: #333333;
 }

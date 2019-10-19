@@ -10,17 +10,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css">
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,300' rel='stylesheet' type='text/css'>
     <title><%= title %></title>
-    
+    <style>
+
+      .navbar-dark .nav-item:hover {
+        background-color: white;
+      } 
+      
+      .navbar-dark .nav-item:hover .nav-link {
+        color: black;
+      }
+
+      
+    </style>
   </head>
   <body>
-    <header>
-        <%- header %>
-    </header>
-    <div class="container">
-      <%- body %>
-    </div>
-
-    <footer class="fixed-bottom text-center">
+    
+    <%- body %>
+    
+    <footer class="footer fixed-bottom text-center">
       <p class="mb-1">&copy; 2017-2018 Company Name</p>
       <ul class="list-inline">
         <li class="list-inline-item"><a href="#">Privacy</a></li>
