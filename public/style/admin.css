@@ -21,3 +21,52 @@
 .breadcrumb a{
     color: #333333;
 }
+
+.main-bg-color{
+    background-color: rebeccapurple !important;
+    border-color: rebeccapurple !important;
+    color: white !important;
+}
+
+.progress-bar{
+    background: rebeccapurple;
+    color: #ffffff;
+}
+.card{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#panel{
+    margin-top: 0;
+}
+
+.panel-box,.panel-text{
+    text-align: center;
+}
+
+.navbar .navbar-nav .dropdown-menu {
+    background-color: rebeccapurple;
+    border-color: rebeccapurple;
+  }
+  .navbar .navbar-nav .dropdown-menu .dropdown-item {
+    color: #ecf0f1;
+  }
+  .navbar .navbar-nav .dropdown-menu .dropdown-item:hover,
+  .navbar .navbar-nav .dropdown-menu .dropdown-item:focus,
+  .navbar .navbar-nav .dropdown-menu .dropdown-item.active {
+    color: #ffbbbc;
+    background-color: rebeccapurple;
+  }
+  .navbar .navbar-nav .dropdown-menu .dropdown-divider {
+    border-top-color: rebeccapurple;
+  }
+
+  .graph{
+      text-align: center;
+  }
+
+  .card-body{
+      padding-top: 5px;
+      padding-bottom: 5px  
+    }
