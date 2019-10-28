@@ -2509,7 +2509,7 @@ body {
 
 .main {
   position: relative;
-  background: #FFFFFF;
+  background: wheat;
 }
 
 /* Animations */
@@ -2540,6 +2540,7 @@ body {
   -o-transition: all 300ms ease 0s;
   -ms-transition: all 300ms ease 0s;
   transition: all 300ms ease 0s;
+  z-index: 10;
 }
 
 .dropdown-toggle:after,

@@ -1,0 +1,9 @@
+form{
+    position: absolute;
+    top: 50px;
+    left: 115px;
+}
+tr,td{
+    margin: 30px;
+    padding: 5px;
+}
