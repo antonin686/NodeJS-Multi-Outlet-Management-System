@@ -1,0 +1,235 @@
+<% 
+var page_title= "Employee";
+var page_title_desc = "Manage Employee Profile";
+var progress1_title = 'Target Progress 1';
+var progress2_title = 'Target Progress 2';
+var e = {
+    id : empInfo.emp_ID,
+    name: empInfo.name,
+    rank: empInfo.rank,
+    contact: empInfo.contact
+}
+%>
+<link rel="stylesheet" href="/style/admin.css">
+<nav class="navbar py-0 navbar-expand-sm navbar-dark">
+    <!-- Brand Logo -->
+    <a class="navbar-brand" href="#">Logo</a>
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+        <a class="nav-link" href="/admin/home">Dashboard</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/admin/outlet">Outlet</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/admin/inventory">Inventory</a>
+        </li>
+    </ul>
+      
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/notification"><i class="fas fa-bell"></i></a>
+        </li>
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="navbardrop" data-toggle="dropdown">
+                Welcome, <%= user %>
+            </a>
+            <div class="dropdown-menu">
+            <a class="dropdown-item" href="/admin/settings">Settings</a>
+            <a class="dropdown-item" href="/user/logout">Logout</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+      
+<div id="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+
+                <div id="dashboard-text">
+                    <h1> <span><i class="fas fa-globe-asia"></i></span> <%= page_title %> <small class="text-secondary"> <%= page_title_desc %> </small></h1>
+                </div>
+                
+            </div>
+            <div class="col-md-2">
+                <div class="dropdown create">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Create Content
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/admin/employee/create">Employee</a>
+                        <a class="dropdown-item" href="/admin/outlet/create">Outlet</a>
+                    </div>
+                </div>          
+            </div>
+        </div>
+    </div>
+</div>
+      
+<!--Body section-->
+<section id="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/home">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/admin/employee">Employee</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Info</li>      
+        </ol>  
+    </div>
+</section>
+
+<section id="main">
+    <div class="container">
+        <div class="row">
+    
+            <div class="col-md-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active main-bg-color">
+                        Dashboard
+                    </a>
+                    <a href="/admin/employee" class="list-group-item list-group-item-action"> 
+                        <span><i class="fas fa-user-tie"></i></span> Employee <span id="employee-number" class="badge float-right badge-dark">20</span>
+                    </a>
+                    <a href="/admin/orders" class="list-group-item list-group-item-action">
+                        <span><i class="fas fa-utensils"></i></span> Orders <span id="order-number" class="badge float-right badge-dark">100</span>
+                    </a>
+                    <a href="/admin/booking" class="list-group-item list-group-item-action"> 
+                        <span><i class="fas fa-bookmark"></i></span> Booking <span id="booking-number" class="badge float-right badge-dark">20</span>
+                    </a>
+                </div>
+                <div id="card-progress" class="card card-body">
+                    <h4>Target Progress</h4>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        25%
+                        </div>
+                    </div>
+                    <hr>
+                    <h4><%= progress2_title %></h4>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        75%
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-md-9">
+                <div class="card main" id="panel">
+                    <div class="card-header main-bg-color">
+                        Employee Profile:
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>ID</th>
+                                            <td><%= e.id %></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Name</th>
+                                            <td><%= e.name %></td> 
+                                        </tr>
+                                        <tr>
+                                            <th>Rank</th>
+                                            <td> <%= e.rank %> </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th>Contact</th>
+                                            <td> <%= e.contact %> </td>                                          
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-5 ml-auto">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal">
+                                        Edit
+                                </button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+                                        Delete
+                                </button>        
+
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="card-body">
+                                                <h5 class="card-title">Profile Picture</h5>
+                                                </div>
+                                        <img class="card-img-top" src="/uploads/img/person.png" alt="Profile Picture">                                                                               
+                                    </div>
+                                                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+    
+        </div>
+    </div>
+</section>
+
+<!-- Modals -->
+
+<!-- Modals Edit -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Profie Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">                  
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Employee ID</label>
+                        <input type="text" class="form-control" value="<%= e.id %>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" value="<%= e.name %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" name="phone" value="<%= e.phone %>">
+                    </div>
+                        <input type="hidden" name="buttonType" value="edit">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modals Delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Profile Deletation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="POST">
+                <div class="modal-body">                  
+                        Are you sure your want to delete this profile?
+                </div>
+                <input type="hidden" name="buttonType" value="delete">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Yes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Body Section End-->

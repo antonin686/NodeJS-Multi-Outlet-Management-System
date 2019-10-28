@@ -1,3 +1,6 @@
+body{
+    background-image: url("/assets/img/admin_dashboard.jpg") !important;
+}
 #header{
     background: #333333;
     color: white;
@@ -48,25 +51,44 @@
 .navbar .navbar-nav .dropdown-menu {
     background-color: rebeccapurple;
     border-color: rebeccapurple;
-  }
-  .navbar .navbar-nav .dropdown-menu .dropdown-item {
+}
+.navbar .navbar-nav .dropdown-menu .dropdown-item {
     color: #ecf0f1;
-  }
-  .navbar .navbar-nav .dropdown-menu .dropdown-item:hover,
-  .navbar .navbar-nav .dropdown-menu .dropdown-item:focus,
-  .navbar .navbar-nav .dropdown-menu .dropdown-item.active {
+}
+.navbar .navbar-nav .dropdown-menu .dropdown-item:hover,
+.navbar .navbar-nav .dropdown-menu .dropdown-item:focus,
+.navbar .navbar-nav .dropdown-menu .dropdown-item.active {
     color: #ffbbbc;
     background-color: rebeccapurple;
-  }
-  .navbar .navbar-nav .dropdown-menu .dropdown-divider {
+}
+.navbar .navbar-nav .dropdown-menu .dropdown-divider {
     border-top-color: rebeccapurple;
-  }
+}
 
-  .graph{
-      text-align: center;
-  }
+.graph{
+    text-align: center;
+}
 
-  .card-body{
-      padding-top: 5px;
-      padding-bottom: 5px  
-    }
+.card-body{
+    padding-top: 10px;
+    padding-bottom: 10px  
+}
+
+#card-progress{
+    padding-top: 15px;
+    padding-bottom: 20px;
+}
+
+.tr-hover{
+cursor: pointer;
+}
+
+.card-header{
+    color: white;
+    background: rebeccapurple;
+}
+
+.table-hover {
+    border: 1px solid #33333330;
+}
+
