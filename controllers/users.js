@@ -19,6 +19,9 @@ router.post('/login', function(req, res){
 			{
 				req.session.uname = req.body.uname;
 				req.session.status = 2;
+				req.session.uid = results[0].id;
+				//console.log(req.session.uid);
+				//console.log(req.session.uname);
 				res.redirect('/manager/home/');
 			}
 			if(results[0].type == 3)
