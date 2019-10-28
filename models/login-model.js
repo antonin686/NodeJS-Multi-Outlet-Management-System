@@ -4,16 +4,18 @@ module.exports = {
 
 	validate: function(user, callback){
         
-        var sql = `select * from login where username='${user.username}' and password= '${user.password}'`;
+        var sql = `select * from login where username='${user.username}' and password ='${user.password}'`;
         
         db.getResults(sql, function(result){
-			if(result.length > 0){
-				callback(result[0].type);
+			//console.log(result[0]);
+			if(result.length > 0){			
+				callback(result[0]);
 			}else{
 				callback(false);
         }
 		});	
 	},
+
 	getAll: function(callback){
 		var sql = "select * from user";
 		
@@ -26,13 +28,15 @@ module.exports = {
 			}
 		});	
 	},
+
 	insert: function(user, callback){
 
-		var sql ="insert into user values('', '"+ user.username+"', '"+user.password+"')";
+		var sql =`insert into login values('', '${user.username}', '${user.password}', '${user.rank}')`;
 		db.execute(sql, function(status){
 			callback(status);
 		});
 	},
+
 	update: function(user, callback){
 		var sql ="update user set username='"+ user.username+"', password='"+user.password+"' where id="+user.id;
 		
@@ -42,6 +46,7 @@ module.exports = {
 			callback(status);
 		});
 	},
+
 	delete: function(id, callback){
 		var sql = "delete from user where id="+id;
 		db.execute(sql, function(status){

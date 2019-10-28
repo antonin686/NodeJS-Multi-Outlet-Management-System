@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const empModel = require('../models/emp-model');
 const outletModel = require('../models/outlet-model');
+const loginModel = require('../models/login-model');
 
 router.get('/home', (req, res) => res.render('admin/admin_home', { title: "Admin | Dashboard", user: req.session.uname}));
 
@@ -53,19 +54,25 @@ router.get('/employee/create', function(req, res){
 router.post('/employee/create', function(req, res){
 
 	var user = {
+		username: req.body.username,
 		name : req.body.name,
 		rank : req.body.rank,
 		contact : req.body.contact,
 		outlet : req.body.outlet,
-		pass : req.body.pass
+		password : req.body.password
 	}
 
 	empModel.insert(user, function(result){
-        //console.log(result)
 		if(!result){
-			res.send('no outlet result found');
+			res.send('emp insert unsuccessful');
 		}else{		
-			res.render('admin/employee/emp_create', { title: 'Admin | Employee | Create', user: req.session.uname, outList: result});	
+			loginModel.insert(user, function(result){
+				if(!result){
+					res.send('insert unsuccessful');
+				}else{		
+					res.redirect('/admin/employee');
+				}
+			});
 		}
 	});
 	

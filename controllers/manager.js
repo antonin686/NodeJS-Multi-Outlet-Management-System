@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const db = require('./../models/db.js');
 var managerModel = require('./../models/manager-model');
+var empModel = require('./../models/emp-model');
 
 router.get('/home', (req, res) => res.render('manager/manager_home', { title: "Manager | Dashboard", user: req.session.uname, mid: req.session.uid}));
 
@@ -10,8 +10,11 @@ router.get('/profile', function(req, res){
 	{
 		res.redirect('/users/login');
 	}
-	var id = req.session.uid;
-	managerModel.getById(id, function(result){
+
+	//var id = req.session.uid;
+	var id = 1;
+	console.log(id)
+	empModel.getById(id, function(result){
 		if(!result){
             res.send('invalid');
 		}else{

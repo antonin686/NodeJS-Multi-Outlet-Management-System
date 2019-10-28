@@ -6,7 +6,7 @@ module.exports = {
 
 	getById: function(id, callback){
 
-		var sql = `select * from ${table_name} where ${table_id}= ${id}`;
+		var sql = `SELECT employee.emp_ID, employee.username,employee.name, login.password , employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username and ${table_id}= ${id}`;
 		//console.log(sql);
 		db.getResults(sql, function(result){
 			if(result.length > 0 ){
@@ -18,7 +18,7 @@ module.exports = {
 	},
 
 	getAll: function(callback){
-		var sql = `select * from ${table_name}`;
+		var sql = `SELECT employee.emp_ID, employee.name, employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username`;
 		
 		db.getResults(sql, function(results){
 			
@@ -45,7 +45,8 @@ module.exports = {
 
 	insert: function(user, callback){
 
-		var sql =`insert into ${table_name} values('', '${user.name}', '${user.rank}', '${user.contact}, '${user.outlet}')`;
+		var sql =`insert into ${table_name} values('', '${user.username}', '${user.name}', '${user.contact}', '${user.outlet}');`;
+		console.log(sql);
 		db.execute(sql, function(status){
 			callback(status);
 		});

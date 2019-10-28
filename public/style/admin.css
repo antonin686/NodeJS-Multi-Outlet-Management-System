@@ -1,5 +1,7 @@
 body{
-    background-image: url("/assets/img/admin_dashboard.jpg") !important;
+    background-image: url("/assets/img/dd.jpg") !important;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 #header{
     background: #333333;
@@ -92,3 +94,10 @@ cursor: pointer;
     border: 1px solid #33333330;
 }
 
+.list-group-item{
+    opacity: .9;
+}
+
+.card{
+    opacity: .9;
+}

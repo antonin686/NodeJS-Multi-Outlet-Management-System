@@ -114,25 +114,19 @@ var progress2_title = 'Target Progress';
                     <div class="card-header">
                         Employee List
                     </div>
-                    <div class="row p-2">
+                    
 
-                       <div class="col-md-9 p-2">
+                       <div class="col-md-9 p-3 mx-auto">
                             <div class="container">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search Name" id="searchBox" >        
+                                    <input type="text" class="form-control" placeholder="Search By Name" id="searchBox" >        
                                 </div>
                             </div>
                        </div>
                         
-                       <div class="col-md-3 p-2">
-
-                            <div class="container">
-                                <!-- Button trigger modal -->
-                                <a class="btn btn-primary" role="button" href="/admin/employee/create">Add Employee</a>
-                            </div>
-                       </div>
+                       
                            
-                    </div>
+                    
                     
                     <div class="card-body">
                         <div class="table-responsive-md">
@@ -208,20 +202,9 @@ function searchBox(key)
                 }
                 $('#ajaxTable').html(html);
             }
-    }});
+        }
+    });
 }
-/*
-                var html = '';
-                
-                for (var i = 0; i< empList.length; i++) {
 
-                    html += `<tr class="tr-hover" id="${empList[i].emp_id}">`;
-                    html += `<td> ${empList[i].name} </td>`
-                    html += `<td> ${empList[i].rank} </td>`
-                    html += `<td> ${empList[i].contact} </td>`
-                    html += '</tr>';
-                }
-                $('#ajaxTable').html(html);
-                */			
 </script>
 
