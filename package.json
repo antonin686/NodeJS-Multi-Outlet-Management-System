@@ -16,9 +16,9 @@
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.0",
     "mysql": "^2.17.1",
-    "node-sass": "^4.12.0"
+    "node-sass": "^4.13.0"
   },
   "devDependencies": {
-    "nodemon": "^1.19.3"
+    "nodemon": "^1.19.4"
   }
 }

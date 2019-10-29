@@ -1,5 +1,6 @@
 var db = require('./db')
 var table_name = "employee";
+var table_pass = "login";
 var table_id = "emp_ID";
 
 module.exports = {
@@ -11,6 +12,7 @@ module.exports = {
 		db.getResults(sql, function(result){
 			if(result.length > 0 ){
 				callback(result[0]);
+				//console.log(result[0]);
 			}else{
 				callback(false);
 			}
@@ -59,6 +61,15 @@ module.exports = {
 			callback(status);
 		});
 	},
+	
+	update_manager: function(user, callback){
+		var sql = `update employee, login set employee.name = '${user.name}', employee.contact = '${user.contact}' ,login.password = '${user.password}' where employee.username = login.username AND  ${table_id} = ${user.id}`;
+		console.log(sql);
+		db.execute(sql, function(status){
+			callback(status);
+		});
+	},
+	
 
 	delete: function(id, callback){
 		var sql = `delete from ${table_name} where ${table_id} = ${id}`;

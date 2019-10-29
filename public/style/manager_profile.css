@@ -1,9 +1,13 @@
 form{
     position: absolute;
-    top: 50px;
-    left: 115px;
+    top: 95px;
 }
 tr,td{
-    margin: 30px;
-    padding: 5px;
+    margin: px;
+    padding: 0px;
+    text-align: center;
+}
+.form-group{
+
+    padding: 0px;
 }

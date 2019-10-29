@@ -1,6 +1,7 @@
 var db = require('./db');
 var table_name = "outlet";
 var table_id = "outlet_ID";
+var table_ids = "emp_ID";
 
 module.exports = {
 
@@ -16,6 +17,21 @@ module.exports = {
 			}
 		});
 	},
+
+	getByOutlet: function(id, callback){
+
+		var sql = `SELECT employee.emp_ID, employee.outlet_ID, outlet.name as outlet FROM employee,outlet WHERE employee.outlet_ID = outlet.outlet_ID and ${table_ids}= ${id}`;
+		console.log(sql);
+		db.getResults(sql, function(result){
+			if(result.length > 0 ){
+				callback(result[0]);
+				console.log(result[0]);
+			}else{
+				callback(false);
+			}
+		});
+	},
+
 
 	getAll: function(callback){
 		var sql = `select * from ${table_name}`;

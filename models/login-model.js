@@ -26,7 +26,7 @@ module.exports = {
 			}else{
 				callback([]);
 			}
-		});	
+		});	 
 	},
 
 	insert: function(user, callback){
