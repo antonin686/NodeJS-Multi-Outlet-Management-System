@@ -31,7 +31,7 @@ module.exports = {
 	},
 
 	search: function(key, callback){
-		var sql = `select * from ${table_name} where name like '%${key}%' `;
+		var sql = `SELECT employee.emp_ID, employee.name, employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username and employee.name like '%${key}%' `;
 		
 		db.getResults(sql, function(results){
 			

@@ -28,6 +28,32 @@ module.exports = {
 				callback(false);
 			}
 		});	
+	},
+
+	getAllInfo: function(id, callback){
+		var sql = `select em from employee where ${table_id} = ${id}`;
+		
+		db.getResults(sql, function(results){
+			
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback(false);
+			}
+		});	
+	},
+	
+	search: function(key, callback){
+		var sql = `select * from ${table_name} where name like '%${key}%' `;
+		
+		db.getResults(sql, function(results){
+			
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback(false);
+			}
+		});	
     },
     
 	insert: function(user, callback){

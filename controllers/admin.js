@@ -4,9 +4,57 @@ const empModel = require('../models/emp-model');
 const outletModel = require('../models/outlet-model');
 const loginModel = require('../models/login-model');
 
-router.get('/home', (req, res) => res.render('admin/admin_home', { title: "Admin | Dashboard", user: req.session.uname}));
+// Admin/home
+router.get('/home', (req, res) => res.render('admin/admin_home', {title: "Admin | Dashboard", user: req.session.uname, layout: 'layout_admin'}));
 
-router.get('/employee', (req, res) => res.render('admin/employee/emp_list', { title: "Admin | Employee", user: req.session.uname}));
+// Admin Outlet
+router.get('/outlet', (req, res) => res.render('admin/outlet/out_list', { title: "Admin | Outlet", user: req.session.uname, layout: 'layout_admin'}));
+
+router.get('/outlet/searchAjax/:key', function(req, res){
+	var key = req.params.key;
+	
+	if(key == '*')
+	{
+		outletModel.getAll( function(result){
+			//console.log(result)			
+			if(!result){
+				res.send(null);
+			}else{
+				//console.log(result);
+				res.send(result);
+			}
+		});	
+	}else{
+		outletModel.search(key, function(result){
+			//console.log(result)
+			
+			if(!result){
+				res.send(null);
+			}else{
+				//console.log(result);
+				res.send(result);
+			}
+		});	
+	}	
+});
+
+router.get('/outlet/info/:id', function(req, res){
+    var id = req.params.id;
+    //console.log(id);
+	outletModel.getById(id, function(result){
+        //console.log(result)
+		if(!result){
+			res.send('no result found');
+		}else{		
+			res.render('admin/outlet/out_info', { title: 'Admin | Outlet', user: req.session.uname, outInfo: result , layout: 'layout_admin'});
+		}
+	});
+});
+
+
+
+// Admin Employee
+router.get('/employee', (req, res) => res.render('admin/employee/emp_list', { title: "Admin | Employee", user: req.session.uname, layout: 'layout_admin'}));
 
 router.get('/employee/searchAJAX/:key', function(req, res){
 	var key = req.params.key;
@@ -33,9 +81,7 @@ router.get('/employee/searchAJAX/:key', function(req, res){
 				res.send(result);
 			}
 		});	
-	}
-	
-	
+	}	
 });
 
 router.get('/employee/create', function(req, res){
@@ -45,7 +91,7 @@ router.get('/employee/create', function(req, res){
 		if(!result){
 			res.send('no outlet result found');
 		}else{		
-			res.render('admin/employee/emp_create', { title: 'Admin | Employee | Create', user: req.session.uname, outList: result});	
+			res.render('admin/employee/emp_create', { title: 'Admin | Employee | Create', user: req.session.uname, outList: result, layout: 'layout_admin'});	
 		}
 	});
 	
@@ -86,7 +132,7 @@ router.get('/employee/info/:id', function(req, res){
 		if(!result){
 			res.send('no result found');
 		}else{		
-			res.render('admin/employee/emp_info', { title: 'Admin | Employee', user: req.session.uname, empInfo: result });
+			res.render('admin/employee/emp_info', { title: 'Admin | Employee', user: req.session.uname, empInfo: result , layout: 'layout_admin'});
 		}
 	});
 });
@@ -134,5 +180,12 @@ router.get('/employee/delete/:id', function(req, res){
 		}
 	})
 });
+
+
+
+
+
+
+
 
 module.exports = router;
