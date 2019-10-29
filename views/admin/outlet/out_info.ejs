@@ -1,0 +1,234 @@
+<% 
+var page_title= "Employee";
+var page_title_desc = "Manage Employee Profile";
+var progress1_title = 'Target Progress 1';
+var progress2_title = 'Target Progress 2';
+
+%>
+<%- contentFor('header') %>
+<nav class="navbar py-0 navbar-expand-sm navbar-dark">
+    <!-- Brand Logo -->
+    <a class="navbar-brand" href="#">Logo</a>
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+        <a class="nav-link" href="/admin/home">Dashboard</a>
+        </li>
+        <li class="nav-item active">
+        <a class="nav-link" href="/admin/outlet">Outlet</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/admin/inventory">Inventory</a>
+        </li>
+    </ul>
+      
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/notification"><i class="fas fa-bell"></i></a>
+        </li>
+        <!-- Dropdown -->
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="#" id="navbardrop" data-toggle="dropdown">
+                Welcome, <%= user %>
+            </a>
+            <div class="dropdown-menu">
+            <a class="dropdown-item" href="/admin/settings">Settings</a>
+            <a class="dropdown-item" href="/user/logout">Logout</a>
+            </div>
+        </li>
+    </ul>
+</nav>
+      
+<div id="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+
+                <div id="dashboard-text">
+                    <h1> <span><i class="fas fa-globe-asia"></i></span> <%= page_title %> <small class="text-secondary"> <%= page_title_desc %> </small></h1>
+                </div>
+                
+            </div>
+            <div class="col-md-2">
+                <div class="dropdown create">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Create Content
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/admin/employee/create">Employee</a>
+                        <a class="dropdown-item" href="/admin/outlet/create">Outlet</a>
+                    </div>
+                </div>          
+            </div>
+        </div>
+    </div>
+</div>
+      
+<!--Body section-->
+<section id="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/home">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/admin/outlet">Outlet</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Info</li>      
+        </ol>  
+    </div>
+</section>
+
+<%- contentFor('selection') %>
+<div class="card main" id="panel">
+    <div class="card-header main-bg-color">
+        Outlet Information
+    </div>
+    <div class="card-body">
+        
+        <div class="col">
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th>ID</th>
+                                    <td><%= outInfo.outlet_ID %></td>
+                                </tr>
+                                <tr>
+                                    <th>Name</th>
+                                    <td><%= outInfo.name %></td> 
+                                </tr>
+                                <tr>
+                                    <th>Rank</th>
+                                    <td> <%= outInfo.location %> </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <th>Contact</th>
+                                    <td> <%= outInfo.city %> </td>                                          
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-5 ml-auto">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal">
+                                Edit
+                        </button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+                                Delete
+                        </button>        
+        
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                    <h5 class="card-title">Outlet Picture</h5>
+                                    </div>
+                            <img class="card-img-top" src="/uploads/img/person.png" alt="Profile Picture">                                                                               
+                        </div>
+                                                
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    Employee List
+                </div>
+                
+                <div class="col-md-9 p-3 mx-auto">
+                    <div class="container">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search By Name" id="searchBox" >        
+                        </div>
+                    </div>
+                </div>
+                    
+                <div class="card-body">
+                    <div class="table-responsive-md">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Rank</th>
+                                    <th scope="col">Contact</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ajaxTable">
+            
+                                <!-- Employee List shown here -->
+            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+           
+
+<!-- Modals -->
+
+<!-- Modals Edit -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Outlet Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">                  
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Outlet ID</label>
+                        <input type="text" class="form-control" value="<%= outInfo.outlet_ID %>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" value="<%= outInfo.name %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Location</label>
+                        <input type="text" class="form-control" name="location" value="<%= outInfo.location %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">City</label>
+                        <input type="text" class="form-control" name="city" value="<%= outInfo.city %>">
+                    </div>
+                        <input type="hidden" name="buttonType" value="outlet_edit">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modals Delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Outlet Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="POST">
+                <div class="modal-body">                  
+                        Are you sure your want to delete this Outlet?
+                </div>
+                <input type="hidden" name="buttonType" value="outlet_delete">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger">Yes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Body Section End-->

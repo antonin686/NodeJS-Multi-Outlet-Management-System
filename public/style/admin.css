@@ -1,5 +1,5 @@
 body{
-    background-image: url("/assets/img/dd.jpg") !important;
+    background-image: url("/assets/img/bg3.jpg") !important;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -95,9 +95,15 @@ cursor: pointer;
 }
 
 .list-group-item{
-    opacity: .9;
+    opacity: .95;
 }
 
 .card{
-    opacity: .9;
+    opacity: .95;
+}
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 1300px;
+    }
 }

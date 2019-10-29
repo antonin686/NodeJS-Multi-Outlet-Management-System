@@ -5,6 +5,7 @@ var progress1_title = 'Target Progress 1';
 var progress2_title = 'Target Progress 2';
 %>
 
+<%- contentFor('header') %>
 <nav class="navbar py-0 navbar-expand-sm navbar-dark">
   <!-- Brand Logo -->
   <a class="navbar-brand" href="#"> Logo </a>
@@ -72,43 +73,7 @@ var progress2_title = 'Target Progress 2';
     </div>
 </section>
 
-<section id="main">
-  <div class="container">
-    <div class="row">
-
-      <div class="col-md-3">
-          <div class="list-group">
-              <a href="/admin/home" class="list-group-item list-group-item-action active main-bg-color">
-                Dashboard
-              </a>
-              <a href="/admin/employee" class="list-group-item list-group-item-action"> 
-                 <span><i class="fas fa-user-tie"></i></span> Employee <span id="employee-number" class="badge float-right badge-dark">20</span>
-              </a>
-              <a href="/admin/orders" class="list-group-item list-group-item-action">
-                 <span><i class="fas fa-utensils"></i></span> Orders <span id="order-number" class="badge float-right badge-dark">100</span>
-              </a>
-              <a href="/admin/booking" class="list-group-item list-group-item-action"> 
-                <span><i class="fas fa-bookmark"></i></span> Booking <span id="booking-number" class="badge float-right badge-dark">20</span>
-              </a>
-            </div>
-            <div id="card-progress" class="card card-body">
-              <h4> <%= progress1_title %> </h4>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width:25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                      25%
-                    </div>
-                  </div>
-                  <hr>
-                  <h4><%= progress2_title %></h4>
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                      75%
-                    </div>
-                  </div>
-            </div>
-      </div>
-
-      <div class="col-md-9">
+<%- contentFor('selection') %>
           <div class="card main" id="panel">
             <div class="card-header main-bg-color">
               Overview
@@ -183,15 +148,10 @@ var progress2_title = 'Target Progress 2';
                 </div>
               </div>
             </div>
-  
-     </div> 
-
-   </div>
- </div>
-</section>
+            <!--here-->
+   
 <!--Body Section End-->
 
-<link rel="stylesheet" href="/style/admin.css">
 
 <script>
 
