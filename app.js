@@ -6,6 +6,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const admin = require('./controllers/admin');
 const manager = require('./controllers/manager');
+const seller = require('./controllers/seller');
 const expSession = require('express-session');
 const app = express();
 
@@ -26,6 +27,6 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/admin', admin);
 app.use('/manager', manager);
-//app.use('/seller', seller);
+app.use('/seller', seller);
 
 app.listen(8000, console.log('Server started on port 8000...')); 

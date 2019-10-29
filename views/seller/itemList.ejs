@@ -1,0 +1,79 @@
+<nav class="navbar py-0 navbar-expand-sm navbar-dark">
+    <!-- Brand Logo -->
+    <a class="navbar-brand" href="#"> Logo </a>
+    <!-- Links -->
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/seller/home">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/seller/order-status">Order Status</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/seller/inventory">Inventory</a>
+      </li>
+    </ul>
+  
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/seller/notification"><i class="fas fa-bell"></i></a>
+          </li>
+      <!-- Dropdown -->
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbardrop" data-toggle="dropdown">
+              Welcome, <%= user %>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Settings</a>
+            <a class="dropdown-item" href="#">Logout</a>
+          </div>
+        </li>
+    </ul>
+  </nav>
+
+  <div id="header" style="background: #333333;color: white;padding: 10px;margin-bottom: 15px;" >
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+  
+          <div id="dashboard-text">
+              <h1> <span><i class="fas fa-list-alt"></i></span> Item List <small class="text-secondary"> of foods ! </small></h1>
+          </div>       
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Body -->
+
+  <div class="body">
+        <div class="row justify-content-md-center" >
+
+                <div class="col-md-3" style="background:black;" >
+                    A
+                </div>
+            
+                <div class="col-md-8" style="background:#ADA6AC;" >
+                    <table border="1" >
+                        <tr>
+                            <th>#</th>
+                            <th>Item Code</th>
+                            <th>Item Type</th>
+                            <th>Item Name</th>
+                            <th>Item Price</th>
+                        </tr>
+                        <% for(var i = 0; i<userList.length ; i++) { %>
+                                <tr>
+                                    <td><%= itemList[i].id %></td>
+                                    <td><%= itemList[i].itemCode %></td>
+                                    <td><%= itemList[i].itemType %></td>
+                                    <td><%= itemList[i].itemName %></td>
+                                    <td><%= itemList[i].itemCost %></td>
+                                </tr>
+                        <% } %>
+
+                    </table>
+                </div>
+            
+              </div>
+  </div>
