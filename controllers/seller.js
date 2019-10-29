@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const empModel = require('../models/emp-model');
-const itelListModel = require('../models/itemList-model');
+const itelmListModel = require('../models/itemList-model');
 const loginModel = require('../models/login-model');
 
 // Admin/home
@@ -10,13 +10,12 @@ router.get('/home', (req, res) => res.render('seller/seller_home', {title: "Sell
 // Admin Outlet
 router.get('/itemList', (req, res) => res.render('seller/itemList', { title: "Admin | Outlet", user: req.session.uname}));
 
-
 router.get('/itemList', function(req,res){
     
-	itelListModel.getAllInfo(function(status){
+	itelmListModel.getAllItem(function(status){
 		
 		if(status){
-			res.render('itemList', { userList:status});
+			res.render('itemList', { itemList:status});
 		}else{
 			res.redirect('/user/edit/'+req.params.id);
 		}

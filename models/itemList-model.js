@@ -6,15 +6,15 @@ var table_id = "item_id";
 module.exports = {
 
 	
-	getAllInfo: function(callback){
-		var sql = `select * from item_list`;
+	getAllItem: function(callback){
+		var sql = `select * from ${table_name}`;
 		
 		db.getResults(sql, function(results){
 			
 			if(results.length > 0){
 				callback(results);
 			}else{
-				callback(false);
+				callback([]);
 			}
 		});	
 	},

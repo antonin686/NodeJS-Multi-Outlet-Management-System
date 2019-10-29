@@ -1,7 +1,7 @@
 <nav class="navbar py-0 navbar-expand-sm navbar-dark">
     <!-- Brand Logo -->
     <a class="navbar-brand" href="#"> Logo </a>
-    <!-- Links -->
+    <!-- Nav Bar -->
     <ul class="navbar-nav">
       <li class="nav-item active">
         <a class="nav-link" href="/seller/home">Dashboard</a>
@@ -55,23 +55,24 @@
             
                 <div class="col-md-8" style="background:#ADA6AC;" >
                     <table border="1" >
-                        <tr>
-                            <th>#</th>
-                            <th>Item Code</th>
-                            <th>Item Type</th>
-                            <th>Item Name</th>
-                            <th>Item Price</th>
-                        </tr>
-                        <% for(var i = 0; i<userList.length ; i++) { %>
-                                <tr>
-                                    <td><%= itemList[i].id %></td>
-                                    <td><%= itemList[i].itemCode %></td>
-                                    <td><%= itemList[i].itemType %></td>
-                                    <td><%= itemList[i].itemName %></td>
-                                    <td><%= itemList[i].itemCost %></td>
-                                </tr>
-                        <% } %>
 
+                        <tr>
+                          <th>#</th>
+                          <th>Item Code</th>
+                          <th>Item Type</th>
+                          <th>Item Name</th>
+                          <th>Item Price</th>
+                        </tr>
+                        <% for(var i = 0; i<itemList.length ; i++) { %>
+                          <tr>
+                              <td><%= itemList[i].id %></td>
+                              <td><%= itemList[i].itemCode %></td>
+                              <td><%= itemList[i].itemType %></td>
+                              <td><%= itemList[i].itemName %></td>
+                              <td><%= itemList[i].itemCost %></td>
+                          </tr>
+                      <% } %>
+                                                
                     </table>
                 </div>
             
