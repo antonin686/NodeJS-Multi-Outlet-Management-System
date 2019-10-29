@@ -90,7 +90,7 @@
                             <span class="navbar-toggler-bar bar3"></span>
                         </button>
                     </div>
-                    <p class="navbar-brand" href="">Create Employee</p>
+                    <p class="navbar-brand" href="">Employee List</p>
                 </div>
                 <div class="collapse navbar-collapse justify-content-end" id="navigation">
                     <ul class="navbar-nav">
@@ -148,41 +148,85 @@
             });
         </script>
 
-<div class="row">
-    <div class="container col-md-7">
-        <form method="POST" class="container shadow-lg p-3 mb-5 bg-white rounded">
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control form-control-lg" id="name" name="name" aria-describedby="e" placeholder="" value="" required>
-            </div>
-            <div class="form-group">
-                <label>User Name</label>
-                <input type="text" class="form-control form-control-lg" id="username" name="username" aria-describedby="e" placeholder="" value="" required >
-            </div>
-            <div class="form-group">
-                <label>Contact</label>
-                <input type="text" class="form-control form-control-lg" id="contact" name="contact" aria-describedby="e" placeholder="" value="" required>
-            </div>
-            <div class="form-group">
-                <label>Outlet</label>
-                <input type="text" class="form-control form-control-lg" id="outlet" name="outlet" aria-describedby="e" placeholder="" value="<%= outletInfo.outlet %>" readonly>
-            </div>
-            <div class="form-group">
-                <label>Type</label>
-                <input type="text" class="form-control form-control-lg" id="type" name="type" aria-describedby="e" placeholder="" value="Seller" readonly>
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="text" class="form-control form-control-lg" id="password" name="password" aria-describedby="e" placeholder="" value="" required>
-            </div>
-            <table align="center">
-                <tr>
-                    <td>
-                        <button type="submit" class="btn btn btn-outline-success">Save</button>
-                        <a href="/manager/home" class="btn btn-outline-primary">Cancel</a>
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
-    </div>
+        <div class="content">
+                <div class="card" id="panel">
+                        <div class="col-md-9 p-3 mx-auto">
+                            <div class="container">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search By Name" id="searchBox" >        
+                                </div>
+                            </div>
+                        </div>
+                            
+                        <div class="card-body">
+                            <div class="table-responsive-md">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Rank</th>
+                                            <th scope="col">Contact</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ajaxTable">
+                    
+                                        <!-- Employee List shown here -->
+                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+
+        <script>
+
+                $(document).ready(() => {
+                    searchBox('*');
+                    $("#searchBox").keyup((event) => {
+                        var key = $(event.currentTarget).val();
+                        if (key == '')
+                            key = '*'
+                        searchBox(key);
+                    });
+                
+                    $('#ajaxTable').on('click','tr', (event) => {
+                        
+                        var id = $(event.currentTarget).attr("id");
+                        if(id != null)
+                        {
+                            window.location.href= `/manager/seller/info/${id}`;
+                        }
+                    });
+                
+                });
+                
+                function searchBox(key)
+                {
+                    $.ajax({
+                
+                        url: `/manager/seller/searchAjax/${key}`, 
+                        
+                        success: (empList) => {
+                            console.log(empList);
+                            var html = '';
+                            
+                            if(empList != null)
+                            {
+                                for (var i = 0; i< empList.length; i++) {
+                
+                                    html += `<tr class="tr-hover" id="${empList[i].emp_ID}" >`;
+                                    html += `<th scope="row"> ${empList[i].emp_ID} </t>`;
+                                    html += `<td> ${empList[i].name} </td>`
+                                    html += `<td> ${empList[i].rank} </td>`
+                                    html += `<td> ${empList[i].contact} </td>`
+                                    html += '</tr>';
+                                }
+                                $('#ajaxTable').html(html);
+                            }
+                        }
+                    });
+                }
+                
+                </script>
