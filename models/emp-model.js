@@ -45,7 +45,7 @@ module.exports = {
 		});	
 	},
 
-	getAllByOutID: function(callback){
+	getAllByOutID: function(id, callback){
 		var sql = `SELECT employee.emp_ID, employee.name, employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username and outlet_ID = ${id}`;
 		
 		db.getResults(sql, function(results){

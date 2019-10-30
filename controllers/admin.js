@@ -4,11 +4,19 @@ const empModel = require('../models/emp-model');
 const outletModel = require('../models/outlet-model');
 const loginModel = require('../models/login-model');
 
+
+router.get('*', (req, res, next) => {
+	if(req.session.uname != null && req.session.type == 1) {
+		next();
+	}else{
+		res.redirect('/');
+	}
+});
 // Admin/home
-router.get('/home', (req, res) => res.render('admin/admin_home', {title: "Admin | Dashboard", user: req.session.uname, layout: 'layout_admin'}));
+router.get('/home', (req, res) => res.render('admin/admin_home', {layout: 'layout_admin',title: "Admin | Dashboard", user: req.session.uname}));
 
 // Admin Outlet
-router.get('/outlet', (req, res) => res.render('admin/outlet/out_list', { title: "Admin | Outlet", user: req.session.uname, layout: 'layout_admin'}));
+router.get('/outlet', (req, res) => res.render('admin/outlet/out_list', {layout: 'layout_admin', title: "Admin | Outlet", user: req.session.uname}));
 router.get('/outlet/create', (req, res) => res.render('admin/outlet/out_create', { title: "Admin | Outlet | Create", user: req.session.uname, layout: 'layout_admin'}));
 
 router.post('/outlet/create', function(req, res){

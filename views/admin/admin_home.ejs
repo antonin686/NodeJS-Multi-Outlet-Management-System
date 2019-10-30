@@ -1,68 +1,9 @@
 <% 
-var page_title= "Dashboard";
-var page_title_desc = "Manage your system";
-var progress1_title = 'Target Progress 1';
-var progress2_title = 'Target Progress 2';
+var titleSplit = title.split(" ")[2] 
 %>
 
 <%- contentFor('header') %>
-<nav class="navbar py-0 navbar-expand-sm navbar-dark">
-  <!-- Brand Logo -->
-  <a class="navbar-brand" href="#"> Logo </a>
-  <!-- Links -->
-  <ul class="navbar-nav">
-    <li class="nav-item active">
-      <a class="nav-link" href="/admin/home">Dashboard</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/admin/outlet">Outlet</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="/admin/inventory">Inventory</a>
-    </li>
-  </ul>
 
-  <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-          <a class="nav-link" href="/admin/notification"><i class="fas fa-bell"></i></a>
-        </li>
-    <!-- Dropdown -->
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle active" href="#" id="navbardrop" data-toggle="dropdown">
-            Welcome, <%= user %>
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Settings</a>
-          <a class="dropdown-item" href="#">Logout</a>
-        </div>
-      </li>
-  </ul>
-</nav>
-
-<div id="header">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10">
-
-        <div id="dashboard-text">
-            <h1> <span><i class="fas fa-globe-asia"></i></span> <%= page_title %> <small class="text-secondary"> <%= page_title_desc %> </small></h1>
-        </div>       
-      </div>
-      
-      <div class="col-md-2">
-          <div class="dropdown create">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Create Content
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/admin/employee/create">Employee</a>
-                <a class="dropdown-item" href="/admin/outlet/create">Outlet</a>
-              </div>
-            </div>          
-      </div>
-    </div>
-  </div>
-</div>
 
 <!--Body section-->
 <section id="breadcrumb">

@@ -5,14 +5,14 @@ const loginModel = require('./../models/login-model');
 // Login Page
 router.get('/login', (req, res) => res.render('Login', { title: "Login"}));
 
-router.post('/login', function(req, res){
+router.post('/login', (req, res) => {
 
 	var user = {
 		username: req.body.uname,
 		password: req.body.pass
 	};
 
-	loginModel.validate(user, function(status){
+	loginModel.validate(user, (status) => {
 		if(!status){
 			res.send('invalid username/password');
 		}else{
@@ -20,22 +20,31 @@ router.post('/login', function(req, res){
 			req.session.uname = req.body.uname;
 			req.session.type = status.type;
 			req.session.uid = status.login_ID;
-			console.log(status);
-			console.log(req.session.uid)
-			if(status.type == 1)
-			{
+			//console.log(status);
+			//console.log(req.session.uid)
+			if(status.type == 1) {
 				res.redirect('/admin/home/');
-			}else if(status.type == 2){
+			}else if(status.type == 2) {
 				res.redirect('/manager/home/');
-			}else if(status.type == 3){
+			}else if(status.type == 3) {
 				res.redirect('/seller/home/');
-			}
-				
+			}		
 		}
 	});
 
 });	
-    
+	
+// Register Page
+router.get('/register', (req, res) => res.render('Register', { title: "Register"}));
+
+// Logout
+router.get('/logout', (req, res) => {
+	req.session.destroy();
+	res.redirect('/');
+});
+
+module.exports = router;
+
 // 	var sql ="select * from users where username='"+req.body.uname+"' and password='"+req.body.pass+"'";
 // 	db.getResults(sql, function(results){
 // 		if(results.length > 0){
@@ -67,10 +76,3 @@ router.post('/login', function(req, res){
 //     });
     
 
-// Register Page
-router.get('/register', (req, res) => res.render('Register', { title: "Register"}));
-
-// Logout
-router.get('/logout', (req, res) => res.render("logout"));
-
-module.exports = router;

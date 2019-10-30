@@ -1,6 +1,6 @@
 const express = require('express');
 const expressLayout = require('express-ejs-layouts');
-const index = require('./controllers/index');
+//const index = require('./controllers/index');
 const users = require('./controllers/users');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -23,10 +23,12 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(expSession({secret:'my top secret value', saveUninitialized:true, resave: false}));
 
 // Routes
-app.use('/', index);
+//app.use('/', index);
 app.use('/users', users);
 app.use('/admin', admin);
 app.use('/manager', manager);
 app.use('/seller', seller);
+
+app.get('/', (req, res) => res.redirect('/users/login'));
 
 app.listen(8000, console.log('Server started on port 8000...')); 

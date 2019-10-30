@@ -8,16 +8,16 @@ const loginModel = require('../models/login-model');
 router.get('/home', (req, res) => res.render('seller/seller_home', {title: "Seller | Dashboard", user: req.session.uname}));
 
 // Admin Outlet
-router.get('/itemList', (req, res) => res.render('seller/itemList', { title: "Admin | Outlet", user: req.session.uname}));
+//router.get('/itemList', (req, res) => res.render('seller/itemList', { title: "Admin | Outlet", user: req.session.uname}));
 
 router.get('/itemList', function(req,res){
     
 	itelmListModel.getAllItem(function(status){
 		
 		if(status){
-			res.render('itemList', { itemList:status});
+			res.render('seller/itemList', {title:'hello' ,user:req.session.uname, itemList:status});
 		}else{
-			res.redirect('/user/edit/'+req.params.id);
+			res.send("error");
 		}
 	});
 });

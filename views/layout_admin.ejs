@@ -1,114 +1,179 @@
 <% 
 var progress1_title = 'Target Progress';
 var progress2_title = 'Target Progress';
+var titleSplit = title.split(" ")[2] 
 %>
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,300' rel='stylesheet' type='text/css'>
-    <title><%= title %></title>
-    <style>
-      .navbar{
-        background-color: rebeccapurple;
-      }
-      .navbar-dark .nav-item:hover {
-        background-color: white;
-      } 
-      
-      .navbar-dark .nav-item:hover .nav-link {
-        color: black;
-      }
 
-      .navbar-brand{
-        padding-top: 0;
-      }
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-      .footer {
-      
-        width: 100%;
-        height: 50px;
-        background-color:rebeccapurple;
-        color: white;
-        text-align: center;
-      }
-      .footer > p{
-        padding-top: 10px;
-      }
-    </style>
-  </head>
-  <body>
-    
-    <header>
-        <%- header %>
-    </header>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css">
+  <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,300' rel='stylesheet' type='text/css'>
+  <title><%= title %></title>
+</head>
 
-    <section id="main">
-        <div class="container">
-          <div class="row">
+<body>
+
+  <header>
+      <nav class="navbar navbar-expand-sm navbar-dark">
+          <!-- Brand Logo -->
+          <a class="navbar-brand" href="#"> Logo </a>
+          <!-- Links -->
       
-            <div class="col-sm-3">
-                <ul class="list-group">
-                  <li class="active list-group-item-action list-group-item d-flex justify-content-between align-items-center">
-                    <a href="/admin/home"><span><i class="fas fa-home"></i></span>  Dashboard</a>
-                  </li>
-                  <li class="list-group-item-action list-group-item d-flex justify-content-between align-items-center">
-                      <a href="/admin/employee"> <span><i class="fas fa-user-tie"></i></span>  Employee</a>
-                    <span id="emp_value" class="badge badge-dark badge-pill">2</span>
-                  </li>
-                  <li class="list-group-item-action list-group-item d-flex justify-content-between align-items-center">
-                    <a href="/admin/outlet"><span><i class="fas fa-store-alt"></i></span> Outlet</a>
-                    <span id="out_value" class="badge badge-dark badge-pill">1</span>
-                  </li>
-                </ul>
-                 
-                  <div id="card-progress" class="card card-body">
-                    <h4> <%= progress1_title %> </h4>
-                      <div class="progress">
-                          <div class="progress-bar" role="progressbar" style="width:25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                            25%
-                          </div>
-                        </div>
-                        <hr>
-                        <h4><%= progress2_title %></h4>
-                      <div class="progress">
-                          <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                            75%
-                          </div>
-                        </div>
+          <ul class="navbar-nav">
+            <% if(titleSplit == "Dashboard") {%>
+            <li class="nav-item active"> <% }else{ %>
+            <li class="nav-item"> <% }%>
+              <a class="nav-link" href="/admin/home">Dashboard</a>
+            </li>
+            <% if(titleSplit == "Employee") {%>
+            <li class="nav-item active"> <% }else{ %>
+            <li class="nav-item"> <% }%>
+              <a class="nav-link" href="/admin/employee">Employee</a>
+            </li>
+            <% if(titleSplit == "Outlet") {%>
+            <li class="nav-item active"> <% }else{ %>
+            <li class="nav-item"> <% }%>
+              <a class="nav-link" href="/admin/outlet">Outlet</a>
+            </li>
+          </ul>
+      
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/admin/notification"><i class="fas fa-bell"></i></a>
+            </li>
+            <!-- Dropdown -->
+            <li class="nav-item dropdown pr-3">
+              <a class="nav-link dropdown-toggle active" href="#" id="navbardrop" data-toggle="dropdown">
+                Welcome, <%= user %>
+              </a>
+              <div class="dropdown-menu mr-2">
+                <a class="dropdown-item" href="#">Settings</a>
+                <a class="dropdown-item" href="/users/logout">Logout</a>
+              </div>
+            </li>
+            
+          </ul>
+        </nav>
+      
+        <div id="header">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-10">
+      
+                <div id="dashboard-text">
+                  <h1> <span><i class="fas fa-globe-asia"></i></span> <%= titleSplit %> <small class="text-secondary">
+                      <% if (titleSplit == 'Dashboard') { %> <%='Manage Your System'%> <% } else {%>
+                      Manage your <%= titleSplit %> <%}%>
+                    </small></h1>
+                </div>
+              </div>
+      
+              <div class="col-md-2">
+                <div class="dropdown create">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Create Content
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/admin/employee/create">Employee</a>
+                    <a class="dropdown-item" href="/admin/outlet/create">Outlet</a>
                   </div>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
       
-            <div class="col-sm-9">
-                <%- selection %>            
-           </div> <!--here-->
-      
-         </div>
-       </div>
-      </section>
+
+    <%- header %>
+  </header>
+
+  <section id="main">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-sm-3">
+          <ul class="list-group">
+            <a href="/admin/home">
+              <li
+                class="active list-group-item-action list-group-item d-flex justify-content-between align-items-center">
+                <span><i class="fas fa-home"></i> Dashboard</span>
+              </li>
+            </a>
+            <a href="/admin/order">
+              <li class="list-group-item-action list-group-item d-flex justify-content-between align-items-center">
+                <span><i class="fas fa-utensils"></i> Order</span>
+                <span id="out_value" class="badge badge-dark badge-pill">1</span>
+              </li>
+            </a>
+            <a href="/admin/booking">
+              <li class=" list-group-item-action list-group-item d-flex justify-content-between align-items-center">
+                <span><i class="fas fa-bookmark"></i></i> Booking</span>
+                <span id="out_value" class="badge badge-dark badge-pill">1</span>
+              </li>
+            </a>
 
 
-    <%- body %>
-    <link rel="stylesheet" href="/style/admin.css">
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js" integrity="sha256-BuxrUdr/4YoztQLxT6xmdO6hSQw2d6BtBUY1pteGds4=" crossorigin="anonymous"></script>
-    
-    <script>
-      
-    </script>
-    <!-- place the scripts at the end of the html page -->
-    <%- script %>
-  </body>
+          </ul>
+
+          <div id="card-progress" class="card card-body">
+            <h4> <%= progress1_title %> </h4>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width:25%" aria-valuenow="25" aria-valuemin="0"
+                aria-valuemax="100">
+                25%
+              </div>
+            </div>
+            <hr>
+            <h4><%= progress2_title %></h4>
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="25" aria-valuemin="0"
+                aria-valuemax="100">
+                75%
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-9">
+          <%- selection %>
+        </div>
+        <!--here-->
+
+      </div>
+    </div>
+  </section>
+
+
+  <%- body %>
+  <link rel="stylesheet" href="/style/admin.css">
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"
+    integrity="sha256-BuxrUdr/4YoztQLxT6xmdO6hSQw2d6BtBUY1pteGds4=" crossorigin="anonymous"></script>
+
+  <script>
+
+  </script>
+  <!-- place the scripts at the end of the html page -->
+  <%- script %>
+</body>
+
 </html>
