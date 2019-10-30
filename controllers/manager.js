@@ -4,6 +4,8 @@ var managerModel = require('./../models/manager-model');
 var empModel = require('./../models/emp-model');
 var outletModel = require('./../models/outlet-model');
 const loginModel = require('../models/login-model');
+const catagoryModel = require('../models/item_type-model');
+const itemModel = require('../models/itemList-model');
 
 router.get('*', function(req, res, next){
 
@@ -206,5 +208,59 @@ router.get('/seller/delete/:id', function(req, res){
 		}
 	})
 });
+
+router.get('/inventory/catagory', (req, res) => res.render('manager/item/item_catagory', { title: "Manager | Item | Catagory", user: req.session.uname}));
+
+router.post('/inventory/catagory', function(req, res){
+
+	var item = {
+		name: req.body.catagory
+	}
+
+	catagoryModel.insert(item, function(result){
+		if(!result){
+			res.send('item insert unsuccessful');
+		}else{		
+				res.redirect('/manager/home');
+				}
+			});
+		
+	});
+	
+
+router.get('/inventory/addproduct', function(req, res) {
+
+	catagoryModel.getAll(function(result){
+        //console.log(result)
+		if(!result){
+			res.send('no item result found');
+		}else{		
+			res.render('manager/item/add_item', { title: 'Manage | Item | Add Item', user: req.session.uname, itemList: result});	
+		}
+	});
+	
+});
+
+router.post('/inventory/addproduct', function(req, res){
+
+	var items = {
+		name: req.body.name,
+		type : req.body.type,
+		code : req.body.code,
+		cost : req.body.cost
+	}
+
+	itemModel.insert(items, function(result){
+		if(!result){
+			res.send('item insert unsuccessful');
+		}else{		
+				res.redirect('/manager/inventory/list');
+			}
+		});
+	
+});
+
+router.get('/inventory/list', (req, res) => res.render('manager/item/item_list', { title: "Manager | Item | Catagory", user: req.session.uname}));
+
 
 module.exports = router;

@@ -61,6 +61,15 @@ module.exports = {
 		});	
 	},
 
+	insert: function(items, callback){
+
+		var sql =`insert into ${table_name} values('', '${items.code}', '${items.type}', '${items.name}', '${items.cost}');`;
+		console.log(sql);
+		db.execute(sql, function(status){
+			callback(status);
+		});
+	},
+
 
 
 }

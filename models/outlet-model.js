@@ -1,6 +1,7 @@
 var db = require('./db');
 var table_name = "outlet";
 var table_id = "outlet_ID";
+var table_ids = "emp_ID";
 
 module.exports = {
 
