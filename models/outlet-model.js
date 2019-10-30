@@ -1,7 +1,6 @@
 var db = require('./db');
 var table_name = "outlet";
 var table_id = "outlet_ID";
-var table_ids = "emp_ID";
 
 module.exports = {
 
@@ -72,16 +71,16 @@ module.exports = {
 		});	
     },
     
-	insert: function(user, callback){
+	insert: function(outlet, callback){
 
-		var sql =`insert into ${table_name} values('', '', '')`;
+		var sql =`insert into ${table_name} values('', '${outlet.name}', '${outlet.location}', '${outlet.city}')`;
 		db.execute(sql, function(status){
 			callback(status);
 		});
     },
     
-	update: function(user, callback){
-		var sql = `update ${table_name} set name = '${user.name}', phone = '${user.phone}' where ${table_id} = ${user.id}`;
+	update: function(outlet, callback){
+		var sql = `update ${table_name} set name = '${outlet.name}', location = '${outlet.location}', city = '${outlet.city}' where ${table_id} = ${outlet.id}`;
 		
 		db.execute(sql, function(status){
 			callback(status);
@@ -89,7 +88,7 @@ module.exports = {
     },
     
 	delete: function(id, callback){
-		var sql = `delete from ${table_name} where id= ${id}`;
+		var sql = `delete from ${table_name} where ${table_id}= ${id}`;
 		db.execute(sql, function(status){
 			callback(status);
 		});

@@ -102,6 +102,20 @@ cursor: pointer;
     opacity: .95;
 }
 
+.list-group > li.active{
+    background-color: rebeccapurple;
+    border: rebeccapurple;
+}
+
+.list-group > li.active > a{
+    color: white;
+    text-decoration: none;
+}
+.list-group > li > a{
+    color: black;
+    text-decoration: none;
+}
+
 @media (min-width: 1200px) {
     .container{
         max-width: 1300px;

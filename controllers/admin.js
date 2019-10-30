@@ -9,6 +9,26 @@ router.get('/home', (req, res) => res.render('admin/admin_home', {title: "Admin 
 
 // Admin Outlet
 router.get('/outlet', (req, res) => res.render('admin/outlet/out_list', { title: "Admin | Outlet", user: req.session.uname, layout: 'layout_admin'}));
+router.get('/outlet/create', (req, res) => res.render('admin/outlet/out_create', { title: "Admin | Outlet | Create", user: req.session.uname, layout: 'layout_admin'}));
+
+router.post('/outlet/create', function(req, res){
+
+	var outlet = {
+		name : req.body.name,
+		location : req.body.location,
+		city : req.body.city
+	}
+
+	outletModel.insert(outlet, function(result){
+		if(!result){
+			res.send('Outlet insert unsuccessful');
+		}else{		
+			res.redirect('/admin/outlet');				
+		}
+	});
+	
+});
+
 
 router.get('/outlet/searchAjax/:key', function(req, res){
 	var key = req.params.key;
@@ -38,6 +58,36 @@ router.get('/outlet/searchAjax/:key', function(req, res){
 	}	
 });
 
+router.get('/outlet/employee/searchAjax/:id/:key', function(req, res){
+	
+	var id = req.params.id;
+	var key = req.params.key;
+	
+	if(key == '*')
+	{
+		empModel.getAllByOutID(id, function(result){
+			//console.log(result)			
+			if(!result){
+				res.send(null);
+			}else{
+				//console.log(result);
+				res.send(result);
+			}
+		});	
+	}else{
+		empModel.searchByOutletID(id, key, function(result){
+			//console.log(result)
+			
+			if(!result){
+				res.send(null);
+			}else{
+				//console.log(result);
+				res.send(result);
+			}
+		});	
+	}	
+});
+
 router.get('/outlet/info/:id', function(req, res){
     var id = req.params.id;
     //console.log(id);
@@ -51,7 +101,39 @@ router.get('/outlet/info/:id', function(req, res){
 	});
 });
 
+router.post('/outlet/info/:id', function(req, res){
+	
+	var btype = req.body.buttonType;
+	// FOR EDIT
+    if( btype == 'edit'){
 
+		var outlet = {
+			id : req.params.id,
+			name : req.body.name,
+			location : req.body.location,
+			city : req.body.city
+		};
+
+        outletModel.update(outlet, function(status){
+            if(status){
+                res.redirect(`/admin/outlet/info/${outlet.id}`)
+            }else{
+                res.send('Update Unsuccessful');
+            }
+		});
+	// FOR DELETE
+    }else if(btype == 'delete'){
+
+		var id = req.params.id;
+		outletModel.delete(id, function(status){	
+			if(status){
+				res.redirect("/admin/outlet");
+			}else{
+				res.send('Delete Unsuccessful');	
+			}
+		});
+	}
+});
 
 // Admin Employee
 router.get('/employee', (req, res) => res.render('admin/employee/emp_list', { title: "Admin | Employee", user: req.session.uname, layout: 'layout_admin'}));
@@ -84,7 +166,7 @@ router.get('/employee/searchAJAX/:key', function(req, res){
 	}	
 });
 
-router.get('/employee/create', function(req, res){
+router.get('/employee/create', function(req, res) {
 
 	outletModel.getAll(function(result){
         //console.log(result)
@@ -156,7 +238,7 @@ router.post('/employee/info/:id', function(req, res){
             }
 		});
 	// FOR DELETE
-    }else if(emp.btype == 'delete'){
+    }else if(btype == 'delete'){
 
 		var id = req.params.id;
 		empModel.delete(id, function(status){	
@@ -180,12 +262,5 @@ router.get('/employee/delete/:id', function(req, res){
 		}
 	})
 });
-
-
-
-
-
-
-
 
 module.exports = router;

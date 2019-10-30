@@ -1,6 +1,6 @@
 <% 
-var page_title= "Employee";
-var page_title_desc = "Manage Employee Profile";
+var page_title= "Outlet Info";
+var page_title_desc = "Manage Outlet Profile";
 var progress1_title = 'Target Progress 1';
 var progress2_title = 'Target Progress 2';
 
@@ -182,8 +182,8 @@ var progress2_title = 'Target Progress 2';
             <form method="post">
                 <div class="modal-body">                  
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Outlet ID</label>
-                        <input type="text" class="form-control" value="<%= outInfo.outlet_ID %>" disabled>
+                        <label for="outlet_id">Outlet ID</label>
+                        <input type="text" id="outlet_id" class="form-control" value="<%= outInfo.outlet_ID %>" disabled>
                     </div>
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -197,7 +197,7 @@ var progress2_title = 'Target Progress 2';
                         <label for="phone">City</label>
                         <input type="text" class="form-control" name="city" value="<%= outInfo.city %>">
                     </div>
-                        <input type="hidden" name="buttonType" value="outlet_edit">
+                        <input type="hidden" name="buttonType" value="edit">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
@@ -222,7 +222,7 @@ var progress2_title = 'Target Progress 2';
                 <div class="modal-body">                  
                         Are you sure your want to delete this Outlet?
                 </div>
-                <input type="hidden" name="buttonType" value="outlet_delete">
+                <input type="hidden" name="buttonType" value="delete">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-danger">Yes</button>
@@ -232,3 +232,61 @@ var progress2_title = 'Target Progress 2';
     </div>
 </div>
 <!--Body Section End-->
+
+<script>
+
+    $(document).ready(() => {
+        
+        
+        
+
+        searchBox('*');
+        $("#searchBox").keyup((event) => {
+            var key = $(event.currentTarget).val();
+            if (key == '')
+                key = '*'
+            searchBox(key);
+        });
+    
+        $('#ajaxTable').on('click','tr', (event) => {
+            
+            var id = $(event.currentTarget).attr("id");
+            if(id != null)
+            {
+                window.location.href= `/admin/employee/info/${id}`;
+            }
+        });
+    
+    });
+    
+    function searchBox(key)
+    {
+        var outlet_id = document.getElementById('outlet_id').value;
+    
+        $.ajax({
+    
+            url: `/admin/outlet/employee/searchAjax/${outlet_id}/${key}`, 
+            
+            success: (empList) => {
+                console.log(empList);
+                var html = '';
+                
+                if(empList != null)
+                {
+                    for (var i = 0; i< empList.length; i++) {
+    
+                        html += `<tr class="tr-hover" id="${empList[i].emp_ID}" >`;
+                        html += `<th scope="row"> ${empList[i].emp_ID} </t>`;
+                        html += `<td> ${empList[i].name} </td>`
+                        html += `<td> ${empList[i].rank} </td>`
+                        html += `<td> ${empList[i].contact} </td>`
+                        html += '</tr>';
+                    }
+                    $('#ajaxTable').html(html);
+                }
+            }
+        });
+    }
+    
+</script>
+    
