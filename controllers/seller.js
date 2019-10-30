@@ -15,7 +15,7 @@ router.get('/itemList', function(req,res){
 	itelmListModel.getAllItem(function(status){
 		
 		if(status){
-			res.render('seller/itemList', {title:'hello' ,user:req.session.uname, itemList:status});
+			res.render('seller/itemList', {title:'Item List' ,user:req.session.uname, itemList:status});
 		}else{
 			res.send("error");
 		}

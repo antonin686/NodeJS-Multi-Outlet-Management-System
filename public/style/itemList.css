@@ -1,0 +1,21 @@
+.cont{
+    background: url(/assets/img/itemListBG.jpg);
+    background-repeat: repeat;
+    background-size: contain;
+    text-align: center;
+    
+    height: 300px;
+    width: 300px;
+}
+
+#menu{
+    background-color: #bde9ba; 
+    text-align: center;
+    margin-top: 100px;
+}
+
+body{
+    background-image: url("/assets/img/itemListBodyBG.jpg") !important;
+    background-repeat: repeat;
+    background-size: contain;
+}
