@@ -28,7 +28,7 @@ router.post('/login', function(req, res){
 			}else if(status.type == 2){
 				res.redirect('/manager/home/');
 			}else if(status.type == 3){
-				res.redirect('/seller/seller_home/');
+				res.redirect('/seller/home/');
 			}
 				
 		}

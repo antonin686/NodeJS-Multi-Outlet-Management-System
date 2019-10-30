@@ -120,4 +120,91 @@ router.post('/createSeller', function(req, res){
 	
 });
 
+router.get('/seller/list', (req, res) => res.render('manager/seller/seller_list', { title: "Employee | List", user: req.session.uname}));
+
+router.get('/seller/searchAJAX/:key', function(req, res){
+	var key = req.params.key;
+	
+	if(key == '*')
+	{
+		empModel.getSeller( function(result){
+			//console.log(result)			
+			if(!result){
+				res.send(null);
+			}else{
+				//console.log(result);
+				res.send(result);
+			}
+		});	
+	}else{
+		empModel.search(key, function(result){
+			//console.log(result)
+			
+			if(!result){
+				res.send(null);
+			}else{
+				//console.log(result);
+				res.send(result);
+			}
+		});	
+	}	
+});
+
+router.get('/seller/info/:id', function(req, res){
+    var id = req.params.id;
+    //console.log(id);
+	empModel.getById(id, function(result){
+        //console.log(result)
+		if(!result){
+			res.send('no result found');
+		}else{		
+			res.render('manager/seller/seller_info', { title: 'Manager | Seller | Info', user: req.session.uname, sellerInfo: result});
+		}
+	});
+});
+
+router.post('/seller/info/:id', function(req, res){
+	var btype = req.body.buttonType;
+	// FOR EDIT
+    if( btype == 'edit'){
+
+		var emp = {
+			id: req.params.id,
+			name: req.body.name,
+			contact: req.body.contact
+		};
+
+        empModel.update(emp, function(status){
+            if(status){
+                res.redirect(`/manager/seller/info/${emp.id}`)
+            }else{
+                res.send('Update Unsuccessful');
+            }
+		});
+	// FOR DELETE
+    }else if(emp.btype == 'delete'){
+
+		var id = req.params.id;
+		empModel.delete(id, function(status){	
+			if(status){
+				res.redirect("/seller/list");
+			}else{
+			res.send('Delete Unsuccessful');	
+			}
+		});
+	}
+});
+
+router.get('/seller/delete/:id', function(req, res){
+    var id = req.params.id;
+    //console.log(id);
+	empModel.delete(sql, function(status){	
+		if(status){
+			res.redirect("/seller/list");
+		}else{
+			res.send('Delete unsuccessful');	
+		}
+	})
+});
+
 module.exports = router;

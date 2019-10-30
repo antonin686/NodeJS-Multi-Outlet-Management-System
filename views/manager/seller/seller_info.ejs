@@ -90,7 +90,7 @@
                             <span class="navbar-toggler-bar bar3"></span>
                         </button>
                     </div>
-                    <p class="navbar-brand" href="">Create Employee</p>
+                    <p class="navbar-brand" href="">Employee List</p>
                 </div>
                 <div class="collapse navbar-collapse justify-content-end" id="navigation">
                     <ul class="navbar-nav">
@@ -148,41 +148,114 @@
             });
         </script>
 
-<div class="row">
-    <div class="container col-md-7">
-        <form method="POST" class="container shadow-lg p-3 mb-5 bg-white rounded">
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control form-control-lg" id="name" name="name" aria-describedby="e" placeholder="" value="" required>
+<div class="content">
+        <div class="card main" id="panel">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>ID</th>
+                                        <td><%= sellerInfo.emp_ID %></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Name</th>
+                                        <td><%= sellerInfo.name %></td> 
+                                    </tr>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <td> <%= sellerInfo.rank %> </td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <th>Contact</th>
+                                        <td> <%= sellerInfo.contact %> </td>                                          
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-5 ml-auto">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal">
+                                    Edit
+                            </button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+                                    Delete
+                            </button>        
+            
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                        <h5 class="card-title">Profile Picture</h5>
+                                        </div>
+                                <img class="card-img-top" src="/uploads/img/person.png" alt="Profile Picture">                                                                               
+                            </div>
+                                                    
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>User Name</label>
-                <input type="text" class="form-control form-control-lg" id="username" name="username" aria-describedby="e" placeholder="" value="" required >
+                       
+            
+            <!-- Modals -->
+             
+            <!-- Modals Edit -->
+            <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Profie Edit</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="post">
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Employee ID</label>
+                                    <input type="text" class="form-control" value="<%= sellerInfo.emp_ID %>" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" name="name" value="<%= sellerInfo.name %>">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="text" class="form-control" name="contact" value="<%= sellerInfo.contact %>">
+                                </div>
+                                <input type="hidden" name="buttonType" value="edit">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Contact</label>
-                <input type="text" class="form-control form-control-lg" id="contact" name="contact" aria-describedby="e" placeholder="" value="" required>
+            
+            <!-- Modals Delete -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Profile Deletation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form action="POST">
+                            <div class="modal-body">
+                                Are you sure your want to delete this profile?
+                            </div>
+                            <input type="hidden" name="buttonType" value="delete">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-danger">Yes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Outlet</label>
-                <input type="text" class="form-control form-control-lg" id="outlet" name="outlet" aria-describedby="e" placeholder="" value="<%= outletInfo.outlet %>" readonly>
-            </div>
-            <div class="form-group">
-                <label>Type</label>
-                <input type="text" class="form-control form-control-lg" id="type" name="type" aria-describedby="e" placeholder="" value="Seller" readonly>
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="text" class="form-control form-control-lg" id="password" name="password" aria-describedby="e" placeholder="" value="" required>
-            </div>
-            <table align="center">
-                <tr>
-                    <td>
-                        <button type="submit" class="btn btn btn-outline-success">Save</button>
-                        <a href="/manager/home" class="btn btn-outline-primary">Cancel</a>
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
-    </div>
+</div>

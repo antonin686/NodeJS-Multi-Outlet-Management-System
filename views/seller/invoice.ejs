@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Invoice</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="jquery library/jquery-3.4.1.min.js"></script>
+    <script src="jquery-ui-1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="jquery-ui-1.12.1/jquery-ui.css">
+    <title>Document</title>
+</head>
+
+<script>
+$(Document).ready(function(){
+
+    $('#add').click(function(){
+        $('#itemList').append('<tr><td><input type="text" placeholder="Item Name"></td><td><input type="text" placeholder="Cost"></td></tr>');
+    });
+});
+</script>
+
+<body>
+    
+    <form action="">
+
+            <table id="introduction">
+            <tr>
+                <td>Restaurant Name</td>
+            </tr>
+            <tr>
+                <td> Address</td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+            </tr>
+            </table>
+
+        <table>
+            <tr>
+                <th>Customer</th>
+                <th>Contact</th>
+            </tr>
+            <tr>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+            </tr>
+            <tr>
+                    <th>Number of Guests</th>
+                    <th>Token Number</th>
+            </tr>
+            <tr>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+            </tr>
+
+            <tr>
+                    <th>Item Name</th>
+                    <th>Cost</th>
+            </tr>
+            <tr id="itemList" >
+                <td></td>
+                <td></td>
+            </tr>
+                <tr><td><input type="button" value="+" id="add"></td></tr>
+        </table>
+
+    </form>
+    
+</body>
+</html>

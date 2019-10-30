@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SellsMan Dashboard</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="jquery library/jquery-3.4.1.min.js"></script>
+        <script src="jquery-ui-1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="jquery-ui-1.12.1/jquery-ui.css">
+        <style>
+        body{
+            background-image: url("img/bgVeg.jpg");
+            background-size: cover;
+        }
+        .gridMenu{
+            display: grid;
+            margin-left: 3em;
+            margin-top: 3em;
+        }
+
+        .navBar{
+            display: grid;
+            grid-template-columns: 20% 10%;
+            grid-gap : 3em;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+        }
+
+        .optionTab{
+            margin-top: 50px;
+        }
+        .sellerProfile{
+            background: #34363a;
+            border-radius: 100px;
+            height: 70px;
+            width:80px;
+            border-style: double;
+            margin-left: 1em;
+            /*background-image: url("img/bgPP.jpg");
+            background-size: contain;*/
+        }
+        .sellerProfile:hover{
+            height: 100px;
+            width:100px;
+            align-self: auto;
+        }
+        .userPP{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .top_wrapper{
+            display: grid;
+            grid-template-columns: 33% 20%;
+            grid-gap: 1em;
+            text-align: center;
+            margin-bottom: 1em;
+            font-family: "Comic Sans MS", cursive, sans-serif;   
+        }
+        .addNote{
+            background: yellow;
+            border-style: dotted;
+        }
+        .addNote:hover{
+            transform: scale(1.1);
+            font-weight: bold;
+        }
+
+        .notification{
+            background: skyblue;
+            grid-column-start: 2;
+            grid-row-start: 1;
+            grid-row-end: 2;
+        }
+        .notification:hover{
+            color: whitesmoke;
+            font-weight: bold;
+        }
+        .notifi{
+            width:30%;
+            border-radius: 25px;
+            border-style: double;
+            border-color: black;
+            color: black;
+            background: skyblue;
+            grid-row-start: 1;
+            grid-row-end: 4;
+            grid-column-start: 4;
+            grid-column-end: 5;  
+        }
+        .wrapper{
+            display: grid;
+            grid-template-columns: 10% 10% 10%;
+            grid-gap: 1em;
+            text-align: center;
+            perspective: 1000px;
+           /* grid-template-rows: 200px; */
+        }    
+        .wrapper div{
+                    padding: 1em;
+        }
+        
+        .btn-seller{
+                        position: relative;
+                        transition: transform 0.6s;
+                        border-radius: 25px;
+                        height: 120px;
+                        transform-style: preserve-3d;
+                        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                        background: lightsteelblue;
+                        font-family: "Comic Sans MS", cursive, sans-serif;
+                        }
+        .btn-seller:hover {
+                    transform: rotateY(180deg);
+        }
+        .a_front , .a_back{
+                        position: absolute;
+        }
+        .a_front{
+            backface-visibility: hidden;
+        }
+        .a_back{
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+            background: transparent;
+        }
+
+        table, th, td {
+        border: 1px solid black;
+        color: white;
+        background-color: #4CAF50;
+        }
+
+        td:hover{
+            transform: scale(1.3);
+        }
+
+        /* Button CSS */
+
+        button::-moz-focus-inner{
+        border: 0;
+        padding: 0;
+        }
+
+        .button{
+        display: inline-block;
+        *display: inline;
+        zoom: 1;
+        padding: 6px 20px;
+        margin: 0;
+        cursor: pointer;
+        border: 1px solid #bbb;
+        overflow: visible;
+        font: bold 13px arial, helvetica, sans-serif;
+        text-decoration: none;
+        white-space: nowrap;
+        color: #555;
+        
+        background-color: #ddd;
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,1)), to(rgba(255,255,255,0)));
+        background-image: -webkit-linear-gradient(top, rgba(255,255,255,1), rgba(255,255,255,0));
+        background-image: -moz-linear-gradient(top, rgba(255,255,255,1), rgba(255,255,255,0));
+        background-image: -ms-linear-gradient(top, rgba(255,255,255,1), rgba(255,255,255,0));
+        background-image: -o-linear-gradient(top, rgba(255,255,255,1), rgba(255,255,255,0));
+        background-image: linear-gradient(top, rgba(255,255,255,1), rgba(255,255,255,0));
+        
+        -webkit-transition: background-color .2s ease-out;
+        -moz-transition: background-color .2s ease-out;
+        -ms-transition: background-color .2s ease-out;
+        -o-transition: background-color .2s ease-out;
+        transition: background-color .2s ease-out;
+        background-clip: padding-box; /* Fix bleeding */
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 2px 2px -1px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .3) inset;
+        -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 2px 2px -1px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .3) inset;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, .3), 0 2px 2px -1px rgba(0, 0, 0, .5), 0 1px 0 rgba(255, 255, 255, .3) inset;
+        text-shadow: 0 1px 0 rgba(255,255,255, .9);
+        
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        }
+
+        .button:hover{
+        background-color: #eee;
+        color: #555;
+        }
+
+        .button:active{
+        background: #e9e9e9;
+        position: relative;
+        top: 1px;
+        text-shadow: none;
+        -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .3) inset;
+        }
+
+        .button[disabled], .button[disabled]:hover, .button[disabled]:active{
+        border-color: #eaeaea;
+        background: #fafafa;
+        cursor: default;
+        position: static;
+        color: #999;
+        /* Usually, !important should be avoided but here it's really needed :) */
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        }
+
+        /* Smaller buttons styles */
+
+        .button.small{
+        padding: 4px 12px;
+        }
+
+
+        /* Colored buttons styles */
+
+        .button.green {
+        color: #fff;
+        text-shadow: 0 1px 0 rgba(0,0,0,.2);
+        
+        background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,.3)), to(rgba(255,255,255,0)));
+        background-image: -webkit-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+        background-image: -moz-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+        background-image: -ms-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+        background-image: -o-linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+        background-image: linear-gradient(top, rgba(255,255,255,.3), rgba(255,255,255,0));
+        }
+
+        /* */
+
+        .button.green{
+        background-color: #57a957;
+        border-color: #57a957;
+        }
+
+        .button.green:hover{
+        background-color: #62c462;
+        }
+
+        .button.green:active{
+        background: #57a957;
+        }
+
+        /* */
+
+        .green[disabled], .green[disabled]:hover, .green[disabled]:active{
+        border-color: #57A957;
+        background: #57A957;
+        color: #D2FFD2;
+        }
+
+        #stickyNote{
+            background: yellow;
+            font-family: "Comic Sans MS", cursive, sans-serif;
+        }
+        /*textarea{
+            font-family: "Comic Sans MS", cursive, sans-serif;
+        }*/
+        </style>
+
+        <script>
+        $(document).ready(function(){
+            
+            //profile
+            $('.sellerProfile').click(function(){
+                window.open('Profile');
+            });
+            
+            //Nav Buttons
+            $('#outletRev').click(function(){
+                window.open('GOOGLE RATING');
+            });
+
+            $('#orderRec').click(function(){
+                window.open('Records');
+            });
+
+            $('#viewInv').click(function(){
+                window.open('Inventory');
+            });
+
+            //Outlet Menu
+            $('.orderinvoice').click(function(){
+                window.open('Invoice Form');
+            });
+            
+            //Sticky Note
+            $('#stickyNoteSpace').hide();
+            $('#addNote').click(function(){
+                $('#stickyNoteSpace').show();
+                $( '#stickyNoteSpace' ).append('<div id="stickyNote" title="Sticky Note"><textarea rows="6" cols="30" placeholder="Write Something..." style="background : transparent; border: 0px solid;" ></textarea></div>');
+                $('#stickyNote').dialog({ 
+                    closeOnEscape : false,
+               
+                }
+            );
+            });
+        });
+
+        </script>
+
+    </head>
+        <body>
+            <div id="stickyNoteSpace"></div>                      
+            <div class="gridMenu">
+                
+                <div class="navBar">
+                    <div class="optionTab">
+                            <table>
+                                    <tr>
+                                        <td><button id="outletRev" class="small green button">Outlet Review</button></td>
+                                        <td><button id="orderRec" class="small green button">Order Record</button></td>
+                                        <td><button id="viewInv" class="small green button">View Inventory</button></td>
+                                    </tr>
+                                </table>
+                    </div>
+                    <div class="sellerProfile">
+                            <img src="img/demoProfileImage.png" alt="UserProfileImage" class="userPP" height="70" width="70">
+                    </div>
+                </div>
+
+                <div class="top_wrapper">
+                    <button id="addNote" style=" background:transparent;border: 0px solid;" ><div class="addNote"  ><p> TO DO List... </p></div></button>                   
+                    <div class="notification"><p>Notification</p></div>
+                </div>
+
+                <div class="wrapper">
+                    
+                        <div class="notifi">
+                            * Tomato Sauce will be EXPIRED soon! <br>
+                            *Tomorrow is Valentine's Day. Is your inventory Ready ? <br>
+                            *You have 3 Booked tables today. <br>
+                            *Table <b> C-1803 </b>is Blocked for last 2 hours. <br>
+                            *Customer is watching his OrderStatus in his mobile. Hurry! <br>
+                            #if you get Notification I WILL SHAKE MY ASS      <i> (‿ˠ‿) </i> 
+                        </div>
+
+                    <div class="btn-seller">
+                        <div class="orderinvoice"> 
+                            <div class="a_front"><p>Order </br> <b>&</b> </br> Invoice</p></div>
+                            <div class="a_back"><img src="img/order&invoice.png" alt="Order&Invoice Icon" width="90" height="90"></div>
+                        </div>
+                    </div>
+
+                    <div class="btn-seller">
+                        <div class="tableManage">
+                                <div class="a_front"><p>Table</br>Management</p></div>
+                                <div class="a_back"><img src="img/tableManage.png" alt="TableManagement Icon" width="100" height="100"></div>
+                        </div>
+                    </div>
+
+                    <div class="btn-seller">
+                        <div class="orderStatus">
+                            <div class="a_front"><p>Order</br>Status</p></div>
+                            <div class="a_back"><img src="img/foodStatus.png" alt="OrderStatus Icon" width="100" height="100"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-seller">
+                            <div class="mobileBanking">
+                                    <div class="a_front"><p>Mobile</br>Banking</p></div>
+                                    <div class="a_back"><img src="img/mobileBank.png" alt="MobileBanking Icon" width="90" height="90"></div>
+                            </div>
+                    </div>
+
+                    
+                    <div class="btn-seller">
+                            <div class="rawGoodsEntry">
+                                    <div class="a_front"><p>Raw Goods</br>Data Entry</p></div>
+                                    <div class="a_back"><img src="img/rawGoods.png" alt="DataEntry Icon" width="90" height="90"></div>
+                            </div>
+                    </div>
+
+                    <div class="btn-seller">
+                            <div class="itemList">
+                                    <div class="a_front"><p>Item</br>List</p></div>
+                                    <div class="a_back"><img src="img/foodItems.png" alt="ItemList Icon" width="100" height="100"></div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <a href="/seller/itemList">Item List</a>
+        </body>
+</html>

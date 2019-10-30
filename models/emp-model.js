@@ -32,9 +32,35 @@ module.exports = {
 		});	
 	},
 
-	getAllByOutID: function(id, callback){
+	getAll: function(callback){
+		var sql = `SELECT employee.emp_ID, employee.name, employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username`;
+		
+		db.getResults(sql, function(results){
+			
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback(false);
+			}
+		});	
+	},
+
+	getAllByOutID: function(callback){
 		var sql = `SELECT employee.emp_ID, employee.name, employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username and outlet_ID = ${id}`;
-		//console.log(sql);
+		
+		db.getResults(sql, function(results){
+			
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback(false);
+			}
+		});	
+	},
+		
+	getSeller: function(callback){
+		var sql = `SELECT employee.emp_ID, employee.name, employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username and login.type = 3`;
+		
 		db.getResults(sql, function(results){
 			
 			if(results.length > 0){
