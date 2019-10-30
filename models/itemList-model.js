@@ -1,6 +1,6 @@
 var db = require('./db');
 var table_name = "item_list";
-var table_id = "item_id";
+var table_id = "id";
 
 
 module.exports = {
@@ -69,6 +69,21 @@ module.exports = {
 			callback(status);
 		});
 	},
+
+	update: function(item, callback){
+		var sql = `update ${table_name} set itemCode = '${item.code}', itemName = '${item.name}', itemCost = '${item.cost}' where ${table_id} = ${item.id}`;
+		
+		db.execute(sql, function(status){
+			callback(status);
+		});
+	},
+
+	delete: function(id, callback){
+		var sql = `delete from ${table_name} where ${table_id} = ${id}`;
+		db.execute(sql, function(status){
+			callback(status);
+		});
+	}
 
 
 

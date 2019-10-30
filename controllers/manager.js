@@ -260,7 +260,72 @@ router.post('/inventory/addproduct', function(req, res){
 	
 });
 
-router.get('/inventory/list', (req, res) => res.render('manager/item/item_list', { title: "Manager | Item | Catagory", user: req.session.uname}));
+router.get('/inventory/list', function(req, res) {
+
+	itemModel.getAllItem(function(result){
+        //console.log(result)
+		if(!result){
+			res.send('no item result found');
+		}else{		
+			res.render('manager/item/item_list', { title: 'Manage | Item | List', user: req.session.uname, itemList: result});	
+		}
+	});
+	
+});
+
+router.get('/inventory/list/edit/:id', function(req, res){
+    var ids = req.params.id;
+   // console.log(req.params.id);
+	itemModel.getById(ids, function(result){
+        //console.log(result)
+		if(!result){
+			res.send('no result found');
+		}else{		
+			res.render('manager/item/item_edit', { title: 'Manage | Item Edit', user: req.session.uname, edit: result});
+		}
+	});
+});
+
+router.post('/inventory/list/edit/:id', function(req, res){
+	var update = {
+		id:req.params.id,
+		code: req.body.code,
+		name: req.body.name,
+		cost: req.body.cost
+	};
+	itemModel.update(update, function(status){
+            if(status){
+                res.redirect("/manager/inventory/list")
+            }else{
+                res.send('Update Unsuccessful');
+            }
+		});
+});
+
+router.get('/inventory/list/delete/:id', function(req, res){
+	var ids = req.params.id;
+	itemModel.getById(ids, function(result){
+        //console.log(result)
+		if(!result){
+			res.send('no result found');
+		}else{		
+			res.render('manager/item/item_delete', { title: 'Manage | Item | Delete', user: req.session.uname, item: result});
+		}
+	});
+});
+
+router.post('/inventory/list/delete/:id', function(req, res){
+   // console.log(req.params.id);
+   var id = req.params.id;
+   itemModel.delete(id, function(status){	
+	   if(status){
+		   res.redirect("/manager/inventory/list");
+	   }else{
+		   res.send('Delete Unsuccessful',{delete: status[0]});	
+	   }
+   });
+});
+
 
 
 module.exports = router;
