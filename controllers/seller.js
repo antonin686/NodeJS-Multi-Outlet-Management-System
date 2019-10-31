@@ -3,6 +3,7 @@ const router = express.Router();
 const empModel = require('../models/emp-model');
 const itelmListModel = require('../models/itemList-model');
 const loginModel = require('../models/login-model');
+//const fetchDropDown = require('../models/inventory-raw-model');
 
 // Admin/home
 router.get('/home', (req, res) => res.render('seller/seller_home', {title: "Seller | Dashboard", user: req.session.uname}));
@@ -10,12 +11,26 @@ router.get('/home', (req, res) => res.render('seller/seller_home', {title: "Sell
 // Admin Outlet
 //router.get('/itemList', (req, res) => res.render('seller/itemList', { title: "Admin | Outlet", user: req.session.uname}));
 
+//router.get('/rawGoodsEntry', (req, res) => res.render('seller/rawGoodsEntry', { title: "Inventory | Raw Goods", user: req.session.uname}));
+
 router.get('/itemList', function(req,res){
     
 	itelmListModel.getAllItem(function(status){
 		
 		if(status){
 			res.render('seller/itemList', {title:'Item List' ,user:req.session.uname, itemList:status});
+		}else{
+			res.send("error");
+		}
+	});
+});
+
+router.get('/rawGoodsEntry', function(req,res){
+    
+	itelmListModel.getAllRawtype(function(status){
+		
+		if(status){
+			res.render('seller/rawGoodsEntry', {title:'Raw Goods | Inventory' ,user:req.session.uname, itemList:status});
 		}else{
 			res.send("error");
 		}

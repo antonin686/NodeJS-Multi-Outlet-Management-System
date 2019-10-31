@@ -1,0 +1,161 @@
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+<!--Dynamic--> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script> 
+<!--Dynamic-->
+
+<script src="/assets/lib/jquery library/jquery-3.4.1.min.js"></script>
+<script src="/assets/lib/jquery-ui-1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="/assets/lib/jquery-ui-1.12.1/jquery-ui.css">
+
+
+<link rel="stylesheet" href="/style/raw_goods_insert.css">
+<nav class="navbar py-0 navbar-expand-sm navbar-dark">
+    <!-- Brand Logo -->
+    <a class="navbar-brand" href="#"> Logo </a>
+    <!-- Nav Bar -->
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="/seller/home">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/seller/order-status">Order Status</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/seller/inventory">Inventory</a>
+      </li>
+    </ul>
+  
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/seller/notification"><i class="fas fa-bell"></i></a>
+          </li>
+      <!-- Dropdown -->
+      <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbardrop" data-toggle="dropdown">
+              Welcome, <%= user %>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Settings</a>
+            <a class="dropdown-item" href="#">Logout</a>
+          </div>
+        </li>
+    </ul>
+  </nav>
+
+  <div id="header" style="background: #333333;color: white;padding: 10px;margin-bottom: 15px;" >
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10">
+  
+          <div id="dashboard-text">
+              <h1> <span><i class="fas fa-list-alt"></i></span> Raw Goods Inventory <small class="text-secondary"> Data Entry </small></h1>
+          </div>       
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--Body-->
+  <div style="background: rgb(254, 201, 154, .8) ;">
+    <form action="">
+        <table id="rawGoodsInsert" border="1px" align="center" >
+ 
+            <thead>
+              <tr>
+                <th>Product Name</th>
+                <th>Product Type</th>
+                <th>Date</th>
+                <th>Opening(kg)</th>            
+                <th>Receive(kg)</th>
+                <th>Total(kg)</th>
+                <th>Exp(kg)</th>
+                <th>Balance(kg)</th>
+                <th>Add</th>
+              </tr>
+            </thead>
+            <tbody id="tab-body" >
+              <tr id="insertInventory1" >
+                <td>
+                    <select class="custom-select" name="type" required>
+                        <% for(var i=0; i < itemList.length; i++) {%>
+                            <option value="<%= itemList[i].item_type %>"> <%= itemList[i].product_name %> </option>
+                        <% } %>
+                      </select>
+                </td>
+                <td>
+                    <select class="custom-select" name="type" required><% for(var i=0; i < itemList.length; i++) {%><option value="<%= itemList[i].item_type %>"> <%= itemList[i].product_type %> </option><% } %></select>
+                </td>
+                <td><input type="text" id="datepicker" size="21" placeholder="Pick a date(dd/mm/yy)" ></td>
+                <td><input type="text" id="opening" ></td>
+                <td><input type="text" id="rec" ></td>
+                <td><input type="text" id="total" ></td>
+                <td><input type="text" id="exp" ></td>
+                <td><input type="text" id="bal" ></td>
+                <td><button type="button" name="addMore" id="addMore" class="btn btn-success btn_add"><b>+</b></button></td>
+              </tr>
+            </tbody>
+            <tr>
+                <td colspan="9" >
+                 <div class="warp" style="text-align: center;" >
+                  <button type="submit" class="btn btn-success" style="margin-top: 2ex; margin-bottom: 2ex;" >Save</button>
+                </div> 
+                </td>
+              </tr>
+        </table>
+    </form>
+  </div>
+<!--Body-->
+
+<!--script-->
+<script>
+$(document).ready(function(){
+
+  var i = 1 ;
+  //var picker = "a";
+ 
+  $('body').hover(function(){
+    
+    var a=$('#opening').val();
+    var b=$('#rec').val();
+    var c=$('#exp').val();
+
+    var total = parseFloat(a) + parseFloat(b);
+    var bal = parseFloat(total) - parseFloat(c);
+    $('#total').val(total);
+    $('#bal').val(bal);
+  });
+
+  $( function() {
+    $( "#datepicker" ).datepicker({
+      showAnim:'fold',
+      dateFormat:'dd/mm/yy',
+      minDate:'0',
+      maxDate:'+1D',
+      setDate:'1D',
+    });
+    $('#datepicker').datepicker('setDate', 'today');
+
+  } );
+
+  $('body').on('click','#addMore',function(){
+    
+    //var picker = $("<input/>", {type: 'text',id:'lol',}).datepicker();
+
+    i++
+    $('#tab-body').append('<tr id="insertInventory'+i+'"><td><select class="custom-select" name="type" required><% for(var i=0; i < itemList.length; i++) {%><option value="<%= itemList[i].item_type %>"> <%= itemList[i].product_name %> </option><% } %></select></td><td><select class="custom-select" name="type" required><% for(var i=0; i < itemList.length; i++) {%><option value="<%= itemList[i].item_type %>"> <%= itemList[i].product_type %> </option><% } %></select></td><td><input type="date" id="datepicker" size="30" placeholder="Pick a date(dd/mm/yy)" ></td><td><input type="text" id="opening" ></td><td><input type="text" id="rec" ></td><td><input type="text" id="total" ></td><td><input type="text"></td><td><input type="text"></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove"><b>-</b></button></td></tr>');
+    $( "#datepicker" ).datepicker();                                                       
+  });
+  
+  $(document).on('click','.btn_remove',function(){
+
+    var btn_rmv=$(this).attr("id");
+    $('#insertInventory'+btn_rmv+'').remove();
+
+  });
+
+  
+
+});
+</script>
