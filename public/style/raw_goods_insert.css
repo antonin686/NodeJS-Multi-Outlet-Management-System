@@ -1,0 +1,13 @@
+.table {
+    border-radius: 5px;
+    width: 50%;
+    margin: 0px auto;
+    float: none;
+}
+
+
+body{
+    background-image: url("/assets/img/itemListBodyBG.jpg") !important;
+    background-repeat: repeat;
+    background-size: contain;
+}

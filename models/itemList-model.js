@@ -19,6 +19,20 @@ module.exports = {
 		});	
 	},
 	
+
+	getAllRawtype: function(callback){
+		var sql = `select * from raw_goods_type`;
+		
+		db.getResults(sql, function(results){
+			
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback([]);
+			}
+		});	
+	},
+
 	
 	getById: function(id, callback){
 
