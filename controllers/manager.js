@@ -6,6 +6,7 @@ var outletModel = require('./../models/outlet-model');
 const loginModel = require('../models/login-model');
 const catagoryModel = require('../models/item_type-model');
 const itemModel = require('../models/itemList-model');
+const empAttendance = require('../models/employee_attendance-model');
 
 router.get('*', function(req, res, next){
 
@@ -32,6 +33,7 @@ router.get('/profile', function(req, res){
 		if(!result){
             res.send('invalid');
 		}else{
+			console.log(result);
             res.render("manager/manager_profile", {title: "Profile", user : req.session.uname, userInfo: result});
 		}
 	});
@@ -89,7 +91,7 @@ router.get('/createSeller', function(req, res){
             res.send('invalid');
 		}else{
 			req.session.oid = result.outlet_ID;
-			//console.log(req.session.oid);
+			console.log(req.session.oid);
             res.render("manager/seller/create_seller", {title: "Create Seller", user : req.session.uname, outletInfo: result});
 		}
 	});
@@ -267,7 +269,7 @@ router.get('/inventory/list', function(req, res) {
 		if(!result){
 			res.send('no item result found');
 		}else{		
-			res.render('manager/item/item_list', { title: 'Manage | Item | List', user: req.session.uname, itemList: result});	
+			res.render('manager/item/item_list', { title: 'Manager | Item | List', user: req.session.uname, itemList: result});	
 		}
 	});
 	
@@ -281,7 +283,7 @@ router.get('/inventory/list/edit/:id', function(req, res){
 		if(!result){
 			res.send('no result found');
 		}else{		
-			res.render('manager/item/item_edit', { title: 'Manage | Item Edit', user: req.session.uname, edit: result});
+			res.render('manager/item/item_edit', { title: 'Manager | Item Edit', user: req.session.uname, edit: result});
 		}
 	});
 });
@@ -309,7 +311,7 @@ router.get('/inventory/list/delete/:id', function(req, res){
 		if(!result){
 			res.send('no result found');
 		}else{		
-			res.render('manager/item/item_delete', { title: 'Manage | Item | Delete', user: req.session.uname, item: result});
+			res.render('manager/item/item_delete', { title: 'Manager | Item | Delete', user: req.session.uname, item: result});
 		}
 	});
 });
@@ -326,6 +328,57 @@ router.post('/inventory/list/delete/:id', function(req, res){
    });
 });
 
+router.get('/attendance', function(req, res) {
+	if(req.session.uname == null)
+	{
+		res.redirect('/users/login');
+	}
+	var id = req.session.outID;
+	//var id = 1;
+	//console.log(id)
+	empModel.getAllSellerByOutlet(id, function(result){
+		if(!result){
+            res.send('invalid');
+		}else{
+			console.log(result);
+            res.render("manager/attendance", {title: "Employee Attendance", user : req.session.uname, sellerInfo: result});
+		}
+	});
+});
+
+router.post('/attendance', function(req, res) {
+	var val = req.body.checkbox;
+	//console.log(val);
+	for(var i = 0; i< val.length; i++){
+		var id = val[i];
+		console.log(id);
+		empModel.getById(id, function(result){
+			if(!result){
+				res.send('invalid');
+			}else{
+				//console.log(result);
+				var utc = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+				var seller = {
+					id: result.emp_ID,
+					name : result.name,
+					username : result.username,
+					outlet : result.outlet_ID,
+					date : utc
+				}
+				console.log(seller)
+				empAttendance.insert(seller, function(result){
+					if(!result){
+						res.send('attendance insert unsuccessful');
+					}
+					else{
+						res.render('manager/manager_home', { title: "Manager | Dashboard", user: req.session.uname, mid: req.session.uid});
+					}
+				});
+				//res.redirect('/manager/home');
+			}
+		});
+	}
+});
 
 
 module.exports = router;

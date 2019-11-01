@@ -32,6 +32,20 @@ module.exports = {
 		});
 	},
 
+	getSellersByOutlet: function(id, callback){
+
+		var sql = `SELECT * from employee, outlet.name as outlet FROM employee,outlet WHERE employee.outlet_ID = outlet.outlet_ID and ${table_ids}= ${id}`;
+		console.log(sql);
+		db.getResults(sql, function(result){
+			if(result.length > 0 ){
+				callback(result[0]);
+				console.log(result[0]);
+			}else{
+				callback(false);
+			}
+		});
+	},
+
 
 	getAll: function(callback){
 		var sql = `select * from ${table_name}`;

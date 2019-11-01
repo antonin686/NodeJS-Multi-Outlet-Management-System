@@ -32,19 +32,6 @@ module.exports = {
 		});	
 	},
 
-	getAll: function(callback){
-		var sql = `SELECT employee.emp_ID, employee.name, employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username`;
-		
-		db.getResults(sql, function(results){
-			
-			if(results.length > 0){
-				callback(results);
-			}else{
-				callback(false);
-			}
-		});	
-	},
-
 	getAllByOutID: function(id, callback){
 		var sql = `SELECT employee.emp_ID, employee.name, employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username and outlet_ID = ${id}`;
 		
@@ -70,6 +57,33 @@ module.exports = {
 			}
 		});	
 	},
+
+	getAllSellerByOutlet: function(id,callback){
+		var sql = `SELECT employee.name as employee,employee.emp_ID,employee.username,employee.outlet_ID,outlet.outlet_ID,outlet.name,login.username as uname,login.type from employee,outlet,login WHERE employee.outlet_ID = outlet.outlet_ID and employee.username = login.username and login.type = 3 and outlet.outlet_ID= ${id}`;
+		console.log(sql)
+		db.getResults(sql, function(results){
+			
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback(false);
+			}
+		});	
+	},
+
+	getSellerByOutlet: function(id,callback){
+		var sql = `SELECT employee.name as employee,employee.emp_ID,employee.username,employee.outlet_ID,outlet.outlet_ID,outlet.name,login.username as uname,login.type from employee,outlet,login WHERE employee.outlet_ID = outlet.outlet_ID and employee.username = login.username and login.type = 3 and outlet.outlet_ID= ${id}`;
+		console.log(sql)
+		db.getResults(sql, function(results){
+			
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback(false);
+			}
+		});	
+	},
+
 
 	search: function(key, callback){
 		var sql = `SELECT employee.emp_ID, employee.name, employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username and employee.name like '%${key}%' `;
@@ -100,7 +114,7 @@ module.exports = {
 	insert: function(user, callback){
 
 		var sql =`insert into ${table_name} values('', '${user.username}', '${user.name}', '${user.contact}', '${user.outlet}');`;
-		console.log(sql);
+		//console.log(sql);
 		db.execute(sql, function(status){
 			callback(status);
 		});
@@ -116,7 +130,7 @@ module.exports = {
 	
 	update_manager: function(user, callback){
 		var sql = `update employee, login set employee.name = '${user.name}', employee.contact = '${user.contact}' ,login.password = '${user.password}' where employee.username = login.username AND  ${table_id} = ${user.id}`;
-		console.log(sql);
+		//console.log(sql);
 		db.execute(sql, function(status){
 			callback(status);
 		});

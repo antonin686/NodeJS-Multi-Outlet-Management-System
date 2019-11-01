@@ -4,8 +4,8 @@ module.exports = {
 
 	validate: function(user, callback){
         
-        var sql = `select * from login where username='${user.username}' and password ='${user.password}'`;
-        
+        var sql = `select login.login_ID, login.username, login.password,login.type,employee.emp_ID,employee.username, employee.outlet_ID from login,employee where login.username='${user.username}' and login.password ='${user.password}' and login.login_ID = employee.emp_ID and login.username = employee.username`;
+        //console.log(sql);
         db.getResults(sql, function(result){
 			//console.log(result[0]);
 			if(result.length > 0){			
