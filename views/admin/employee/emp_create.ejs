@@ -23,7 +23,11 @@
             <form class="card-body" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username">
+                    <input type="text" class="form-control" id="username" name="username"> <span>
+                        <div id="div-alert" role="alert">
+
+                        </div>
+                    </span>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
@@ -35,7 +39,7 @@
                 </div>
                 <div class="form-group">
                     <label for="name">Contact</label>
-                    <input type="text" class="form-control" name="contact">
+                    <input type="number" class="form-control" name="contact">
                 </div>
                 <div class="form-group mb-3">
                     <label for="outlet">Outlet</label>
@@ -55,7 +59,7 @@
                 </div>
                 <div class="form-group">
                     <label for="salary">Salary</label>
-                    <input type="text" class="form-control" name="salary">
+                    <input type="number" class="form-control" name="salary">
                 </div>
                 <div class="form-group">
                     <label for="dp">Profile Picture</label>
@@ -70,3 +74,25 @@
 </div>
 
 <!--Body Section End-->
+
+<script>
+    $(document).ready(() => {
+        $('#username').change((event) => {
+            var key = $(event.currentTarget).val();
+            $('#div-alert').removeClass();
+            $('#div-alert').text(' ');
+            //console.log(key)
+            $.ajax({
+
+                url: `/admin/employee/searchUsernameAjax/${key}`,
+
+                success: (status) => {
+                    if (status) {
+                        $('#div-alert').addClass('alert alert-danger');
+                        $('#div-alert').text('this username is used');
+                    }
+                }
+            });
+        });
+    });
+</script>

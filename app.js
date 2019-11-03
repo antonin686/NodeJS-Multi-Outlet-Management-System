@@ -9,6 +9,7 @@ const admin = require('./controllers/admin');
 const manager = require('./controllers/manager');
 const seller = require('./controllers/seller');
 const expSession = require('express-session');
+const expValidator = require('express-validator');
 
 const app = express();
 
@@ -17,7 +18,7 @@ app.use(expressLayout);
 app.set('view engine', 'ejs');
 app.set("layout extractScripts", true)
 
-
+// Body parser
 app.use(bodyParser.urlencoded({extended:true}));
 // Set Static Path
 app.use(express.static(path.join(__dirname, 'public')))

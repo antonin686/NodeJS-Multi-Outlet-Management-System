@@ -145,7 +145,7 @@ var titleSplit = title.split(" ")[2];
           <div id="card-progress" class="card card-body">
             <h4> <%= progress1_title %> </h4>
             <div class="progress">
-              <div class="progress-bar" role="progressbar" style="width:25%" aria-valuenow="25" aria-valuemin="0"
+              <div class="progress-bar" id="progBar1" role="progressbar" style="width:25%" aria-valuenow="25" aria-valuemin="0"
                 aria-valuemax="100">
                 25%
               </div>
@@ -191,6 +191,7 @@ var titleSplit = title.split(" ")[2];
     $(document).ready(() => {
       getOrderCount();
       getBookingCount();
+      getProg1();
     });
 
     function getOrderCount() {
@@ -203,6 +204,29 @@ var titleSplit = title.split(" ")[2];
           var html = '';
           html = count[0].order_count;
           $('#order_count').text(html);
+
+        }
+      });
+    }
+
+    function getProg1() {
+
+      $.ajax({
+        url: '/admin/order/totalTransactionAjax',
+
+        success: (value) => {
+          var td = value[1].total;
+          var yt = value[0].total;
+          
+          var prog = yt != 0 ? td / yt * 100 : 0;
+        
+          
+          
+          if (prog <= 100 )
+          {
+            $('#progBar1').html(prog + '%')
+            $('#progBar1').css('width', `${prog}%`)
+          }
 
         }
       });

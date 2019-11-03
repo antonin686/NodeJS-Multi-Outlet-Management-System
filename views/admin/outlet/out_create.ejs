@@ -1,14 +1,13 @@
-
 <%- contentFor('header') %>
-            
+
 <!--Body section-->
 <section id="breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/admin/home">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="/admin/outlet">Outlet</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create</li>
-        </ol>  
+            <li class="breadcrumb-item"><a href="/admin/home">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/admin/outlet">Outlet</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Create</li>
+        </ol>
     </div>
 </section>
 
@@ -18,10 +17,17 @@
         Create Outlet
     </div>
     <div class="card-body">
-        <div class="col-md-8 mx-auto">
 
+        <div class="col-md-8 mx-auto">
+            <% if(errs != 'undefined') {%>
+            <div class="alert alert-danger" role="alert">
+                <% for(var i =0; i < errs.length; i++) {%>
+                    <%= errs[i].msg %> <br>
+                <% } %>
+            </div>
+            <% } %>
             <form class="card-body" method="POST">
-                                    
+
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" name="name">
@@ -29,19 +35,19 @@
 
                 <div class="form-group">
                     <label for="location">Location</label>
-                    <input type="text" class="form-control" name="location" >
+                    <input type="text" class="form-control" name="location">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="city">City</label>
-                    <input type="text" class="form-control" name="city" >
+                    <input type="text" class="form-control" name="city">
                 </div>
-        
+
                 <button type="submit" class="btn btn-success">Create</button>
 
             </form>
-        </div>  
+        </div>
     </div>
 </div>
-           
+
 <!--Body Section End-->

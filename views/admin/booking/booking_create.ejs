@@ -18,9 +18,14 @@
     </div>
     <div class="card-body">
         <div class="col-md-9 mx-auto">
-
+            <% if(errs != 'undefined') {%>
+            <div class="alert alert-danger" role="alert">
+                <% for(var i =0; i < errs.length; i++) {%>
+                <%= errs[i].msg %> <br>
+                <% } %>
+            </div>
+            <% } %>
             <form class="card card-body" method="POST">
-
 
                 <div class="form-group mb-3">
                     <label for="outlet">Outlet</label>
@@ -51,10 +56,10 @@
                 </div>
                 <div class="form-group">
                     <label for="contact">Contact</label>
-                    <input type="text" class="form-control" name="contact">
+                    <input type="number" class="form-control" name="contact">
                 </div>
 
-                
+
                 <div class="md-col-4 mx-auto">
                     <button type="submit" class="btn btn-success">Create</button>
                 </div>
@@ -69,6 +74,7 @@
         timepicker: true,
         datepicker: true,
         format: 'Y-m-d H:i',
+        minDate:new Date(),
     })
     $("#toggle").on('click', function () {
         $('#dateTimePicker').datetimepicker('toggle');

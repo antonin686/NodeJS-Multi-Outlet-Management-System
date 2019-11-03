@@ -72,6 +72,20 @@ module.exports = {
 		});	
 	},
 
+	usernameValidation: function(key, callback){
+		var sql = `SELECT * from employee where username = '${key}' `;
+		
+		db.getResults(sql, function(results){
+			
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback(false);
+			}
+		});	
+	},
+
+
 	searchByOutletID: function(id,key, callback){
 		var sql = `SELECT employee.emp_ID, employee.name, employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username and employee.name like '%${key}%' and outlet_ID = ${id}`;
 		//console.log(sql);

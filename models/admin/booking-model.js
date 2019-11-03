@@ -44,8 +44,15 @@ module.exports = {
 	},
 
 	getBookingList: (data, callback) => {
-		var sql = `SELECT booking.booking_ID, outlet.outlet_ID, outlet.name, booking.table_ID, booking.booked_by, booking.contact,  DATE_FORMAT(booking.date, "%l:%i %p - %D %M") as date FROM booking, outlet WHERE outlet.outlet_ID = booking.outlet_ID AND booking.date BETWEEN CURRENT_DATE() - ${data.time} AND NOW() and booking.outlet_ID = ${data.outlet} and  booking.booked_by like '%${data.key}%'`;
-		//console.log(sql);
+		if(data.time == 0 ){
+			data.time = '=0 '
+		}else if(data.time < 0){
+			data.time = `>= ${data.time} and DATEDIFF( booking.date, CURDATE()) < 0 `;
+		}else{
+			data.time = `<= ${data.time} and DATEDIFF( booking.date, CURDATE()) > 0 `;
+		}
+		var sql = `SELECT booking.booking_ID, outlet.outlet_ID, outlet.name, booking.table_ID, booking.booked_by, booking.contact,  DATE_FORMAT(booking.date, "%l:%i %p - %D %M") as date FROM booking, outlet WHERE outlet.outlet_ID = booking.outlet_ID AND DATEDIFF( booking.date, CURDATE()) ${data.time} and booking.outlet_ID = ${data.outlet} and  booking.booked_by like '%${data.key}%'`;
+		console.log(sql);
 		db.getResults(sql, function (results) {
 
 			if (results.length > 0) {
@@ -85,7 +92,7 @@ module.exports = {
 	insert: (booking, callback) => {
 
 		var sql = `insert into ${table_name} values('', '${booking.outlet_id}', '${booking.table_id}', '${booking.booked_by}', '${booking.contact}', '${booking.date}')`;
-		console.log(sql)
+		//console.log(sql)
 		db.execute(sql, function (status) {
 			callback(status);
 		});

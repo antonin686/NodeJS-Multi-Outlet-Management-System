@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const {
+	check,
+	validationResult
+} = require('express-validator');
 const empModel = require('../models/admin/emp-model');
 const outletModel = require('../models/admin/outlet-model');
 const loginModel = require('../models/login-model');
@@ -13,34 +17,36 @@ const salaryModel = require('../models/admin/salary_scale-model');
 
 // init storage
 const storage = multer.diskStorage({
-    destination: './public/uploads/img/',
-    filename: (req, file, cb) => {
-        cb(null,`${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
-    }
+	destination: './public/uploads/img/',
+	filename: (req, file, cb) => {
+		cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
+	}
 });
 
 //Init Upload
 const upload = multer({
 	storage: storage,
-	limits: {fileSize: 10000000},
-	fileFilter: (req, file, cb) =>{
-		checkFileType(file,cb);
+	limits: {
+		fileSize: 10000000
+	},
+	fileFilter: (req, file, cb) => {
+		checkFileType(file, cb);
 	}
 }).single('myImage');
 
 // Check File Type
-function checkFileType(file, cb){
+function checkFileType(file, cb) {
 	// Allowed ext
 	const filetypes = /jpeg|jpg|png|gif/;
 	// Check ext
 	const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 	// Check mime
 	const mimetype = filetypes.test(file.mimetype);
-  
-	if(mimetype && extname){
-	  return cb(null,true);
+
+	if (mimetype && extname) {
+		return cb(null, true);
 	} else {
-	  cb('Error: Images Only!');
+		cb('Error: Images Only!');
 	}
 }
 
@@ -240,14 +246,26 @@ router.get('/booking/create', (req, res) => {
 				layout: 'layout_admin',
 				title: "Admin | Booking",
 				user: req.session.uname,
-				outList: result
+				outList: result,
+				errs : 'undefined'
 			})
 		}
 	});
 
 });
 
-router.post('/booking/create', (req, res) => {
+router.post('/booking/create', [
+
+	check('table', 'Table cant be empty').not().isEmpty(),
+	check('date', 'Date cant be empty').not().isEmpty(),
+	check('booked_by', 'Booked By cant be empty').not().isEmpty(),
+	check('contact', 'Invalid Contact').isLength({
+		min: 11,
+		max: 11
+	}),
+	check('booked_by', 'Booked By cant be empty').not().isEmpty(),
+
+], (req, res) => {
 
 	var booking = {
 		outlet_id: req.body.outlet,
@@ -257,13 +275,33 @@ router.post('/booking/create', (req, res) => {
 		date: req.body.date,
 	}
 
-	bookingModel.insert(booking, (result) => {
-		if (!result) {
-			res.send('booking insert unsuccessful');
-		} else {
-			res.redirect('/admin/booking');
-		}
-	});
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		
+		outletModel.getAll((result) => {
+			if (!result) {
+				res.send('Outlet insert unsuccessful');
+			} else {
+				res.render('admin/booking/booking_create', {
+					layout: 'layout_admin',
+					title: "Admin | Booking",
+					user: req.session.uname,
+					outList: result,
+					errs : errors.array()
+				})
+			}
+		});
+	} else {
+
+		bookingModel.insert(booking, (result) => {
+			if (!result) {
+				res.send('booking insert unsuccessful');
+			} else {
+				res.redirect('/admin/booking');
+			}
+		});
+
+	}
 
 });
 
@@ -304,7 +342,7 @@ router.get('/booking/countAjax/', (req, res) => {
 router.get('/employee/salary/', (req, res) => {
 
 	salaryModel.getAll((result) => {
-		console.log(result)			
+		console.log(result)
 		if (!result) {
 			res.send(null);
 		} else {
@@ -320,12 +358,12 @@ router.get('/employee/salary/', (req, res) => {
 
 router.post('/employee/salary/', (req, res) => {
 	var data = {
-		id : req.body.scale_id,
-		time : req.body.time,
+		id: req.body.scale_id,
+		time: req.body.time,
 		per: req.body.per
 	}
 	salaryModel.update(data, (result) => {
-		console.log(result)			
+		console.log(result)
 		if (!result) {
 			res.send(null);
 		} else {
@@ -350,28 +388,46 @@ router.get('/employee/salary/delete/:id', (req, res) => {
 router.get('/employee/salary/create', (req, res) => res.render('admin/employee/emp_salary_create', {
 	layout: 'layout_admin',
 	title: "Admin | Salary",
-	user: req.session.uname
+	user: req.session.uname,
+	errs: 'undefined'
 }));
 
-router.post('/employee/salary/create/', (req, res) => {
-	
+router.post('/employee/salary/create/', [
+
+	check('time', 'Time cant be empty').not().isEmpty(),
+
+	check('per', 'Percentage cant be empty').not().isEmpty(),
+
+], (req, res) => {
+
 	var data = {
-		time : req.body.time,
+		time: req.body.time,
 		per: req.body.per
 	}
 
-	salaryModel.insert(data, (result) => {
-		//console.log(result)			
-		if (!result) {
-			res.send(null);
-		} else {
-			res.redirect('/admin/employee/salary');
-		}
-	});
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		res.render('admin/employee/emp_salary_create', {
+			title: "Admin | Employee | Salary",
+			user: req.session.uname,
+			layout: 'layout_admin',
+			errs: errors.array()
+		})
+	} else {
+
+		salaryModel.insert(data, (result) => {
+			//console.log(result)			
+			if (!result) {
+				res.send(null);
+			} else {
+				res.redirect('/admin/employee/salary');
+			}
+		});
+	}
 });
 
 router.get('/employee/salary/getAjax', (req, res) => {
-	
+
 	salaryModel.getAll((result) => {
 		//console.log(result)			
 		if (!result) {
@@ -384,7 +440,7 @@ router.get('/employee/salary/getAjax', (req, res) => {
 
 router.get('/employee/salary/update/:id/:sal', (req, res) => {
 	var user = {
-		id : req.params.id,
+		id: req.params.id,
 		sal: req.params.sal
 	}
 	empModel.updateSalary(user, (result) => {
@@ -497,7 +553,8 @@ router.get('/outlet', (req, res) => res.render('admin/outlet/out_list', {
 router.get('/outlet/create', (req, res) => res.render('admin/outlet/out_create', {
 	title: "Admin | Outlet | Create",
 	user: req.session.uname,
-	layout: 'layout_admin'
+	layout: 'layout_admin',
+	errs: 'undefined'
 }));
 
 router.get('/outlet/totalOutletAjax/', (req, res) => {
@@ -514,7 +571,16 @@ router.get('/outlet/totalOutletAjax/', (req, res) => {
 
 });
 
-router.post('/outlet/create', (req, res) => {
+router.post('/outlet/create', [
+	check('name', 'Name minimum length 5').isLength({
+		min: 5
+	}),
+
+	check('location', 'Location cant be empty').not().isEmpty(),
+
+	check('city', 'City cant be empty').not().isEmpty(),
+
+], (req, res) => {
 
 	var outlet = {
 		name: req.body.name,
@@ -522,13 +588,25 @@ router.post('/outlet/create', (req, res) => {
 		city: req.body.city
 	}
 
-	outletModel.insert(outlet, (result) => {
-		if (!result) {
-			res.send('Outlet insert unsuccessful');
-		} else {
-			res.redirect('/admin/outlet');
-		}
-	});
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		res.render('admin/outlet/out_create', {
+			title: "Admin | Outlet | Create",
+			user: req.session.uname,
+			layout: 'layout_admin',
+			errs: errors.array()
+		})
+	} else {
+		outletModel.insert(outlet, (result) => {
+			if (!result) {
+				res.send('Outlet insert unsuccessful');
+			} else {
+				res.redirect('/admin/outlet');
+			}
+		});
+	}
+
+
 
 });
 
@@ -645,6 +723,24 @@ router.get('/employee', (req, res) => res.render('admin/employee/emp_list', {
 	layout: 'layout_admin'
 }));
 
+router.get('/employee/searchUsernameAjax/:key', (req, res) => {
+	var key = req.params.key;
+
+	
+	
+		empModel.search(key, (result) => {
+			//console.log(result)
+
+			if (!result) {
+				res.send(false);
+			} else {
+				//console.log(result);
+				res.send(result);
+			}
+		});
+	
+});
+
 router.get('/employee/searchAJAX/:key', (req, res) => {
 	var key = req.params.key;
 
@@ -683,6 +779,8 @@ router.get('/employee/create', (req, res) => {
 				title: 'Admin | Employee | Create',
 				user: req.session.uname,
 				outList: result,
+				success: false,
+				errors: req.session.erros,
 				layout: 'layout_admin'
 			});
 		}
@@ -692,39 +790,50 @@ router.get('/employee/create', (req, res) => {
 
 router.post('/employee/create', (req, res) => {
 
-	upload(req,res,(err) => {
-		if(err){
+	upload(req, res, (err) => {
+		if (err) {
 			res.render('admin/employee/emp_create', {
 				layout: 'layout_admin',
 				title: "Admin | Employee",
 				user: req.session.uname,
 				errMsg: err
 			});
-		}else{
-			var user = {
-				username: req.body.username,
-				name: req.body.name,
-				rank: req.body.rank,
-				contact: req.body.contact,
-				outlet: req.body.outlet,
-				password: req.body.password,
-				salary: req.body.salary,
-				imgPath: req.file.filename
-			}
-			
-			empModel.insert(user, (result) => {	
-				if (!result) {
-					res.send('emp insert unsuccessful');
-				} else {
-					loginModel.insert(user, (result) => {
-						if (!result) {
-							res.send('insert unsuccessful');
-						} else {
-							res.redirect('/admin/employee');
-						}
-					});
+		} else {
+			if (req.file == null) {
+				res.render('admin/employee/emp_create', {
+					layout: 'layout_admin',
+					title: "Admin | Employee",
+					user: req.session.uname,
+					errMsg: 'no image'
+				});
+			} else {
+
+				// validate
+				var user = {
+					username: req.body.username,
+					name: req.body.name,
+					rank: req.body.rank,
+					contact: req.body.contact,
+					outlet: req.body.outlet,
+					password: req.body.password,
+					salary: req.body.salary,
+					imgPath: req.file.filename
 				}
-			});
+
+				empModel.insert(user, (result) => {
+					if (!result) {
+						res.send('emp insert unsuccessful');
+					} else {
+						loginModel.insert(user, (result) => {
+							if (!result) {
+								res.send('insert unsuccessful');
+							} else {
+								res.redirect('/admin/employee');
+							}
+						});
+					}
+				});
+			}
 		}
 	});
 	/*
@@ -752,20 +861,20 @@ router.get('/employee/info/:id', (req, res) => {
 
 router.post('/employee/info/:id', (req, res) => {
 
-	
-	upload(req,res,(err) => {
-		if(err){
+
+	upload(req, res, (err) => {
+		if (err) {
 			res.send(err)
-		}else{
+		} else {
 			console.log(req.file);
-			if(req.file == undefined){
+			if (req.file == undefined) {
 				var emp = {
 					id: req.params.id,
 					name: req.body.name,
 					contact: req.body.contact,
 					salary: req.body.salary
 				};
-			
+
 				empModel.update(emp, (status) => {
 					if (status) {
 						res.redirect(`/admin/employee/info/${emp.id}`)
@@ -773,7 +882,7 @@ router.post('/employee/info/:id', (req, res) => {
 						res.send('Update Unsuccessful');
 					}
 				});
-			}else{
+			} else {
 				console.log('here')
 				var emp = {
 					id: req.params.id,
@@ -782,7 +891,7 @@ router.post('/employee/info/:id', (req, res) => {
 					salary: req.body.salary,
 					imgPath: req.file.filename
 				};
-			
+
 				empModel.updateWithImg(emp, (status) => {
 					if (status) {
 						res.redirect(`/admin/employee/info/${emp.id}`)
@@ -797,7 +906,7 @@ router.post('/employee/info/:id', (req, res) => {
 
 
 
-	
+
 
 });
 

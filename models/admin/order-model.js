@@ -70,8 +70,8 @@ module.exports = {
 	},
 
 	getTotalTransactionForTnY: (callback) => {
-		var sql = `SELECT date,sum(total_price) as total from ${table_name} GROUP BY date HAVING date BETWEEN CURRENT_DATE() - 1 AND CURRENT_DATE()`;
-		//console.log(sql)
+		var sql = `SELECT date,sum(total_price) as total from ${table_name} GROUP BY date HAVING DATEDIFF(date, CURDATE()) = 0 or DATEDIFF(date, CURDATE()) = -1`;
+		console.log(sql)
 		db.getResults(sql, (results) => {
 
 			if (results.length > 0) {
