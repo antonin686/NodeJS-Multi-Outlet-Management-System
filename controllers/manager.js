@@ -19,7 +19,27 @@ router.get('*', function(req, res, next){
 
 });
 
-router.get('/home', (req, res) => res.render('manager/manager_home', { title: "Manager | Dashboard", user: req.session.uname, mid: req.session.uid}));
+router.get('/home', function(req, res){
+    var id = req.session.outID;
+    //console.log(id);
+	empModel.countAllSellerByOutlet(id, function(result1){
+	   empModel.countAllSellerAttendance(id, function(result2){
+		empModel.countOrders(id, function(result3){
+			empModel.countPrice(id, function(result4){
+		if(!result1 && !result2 && !result3 && !result4){
+            res.send('invalid');
+		}else{
+			//console.log(result4);
+			//console.log(result2);
+            res.render("manager/manager_home", {title: "Manager | Dashboard", user : req.session.uname,mid: req.session.uid, counter: result1,attend:result2,orders:result3,sell:result4});
+		}
+		});
+	});
+	});
+	});
+});
+
+//router.get('/home', (req, res) => res.render('manager/manager_home', { title: "Manager | Dashboard", user: req.session.uname, mid: req.session.uid}));
 
 router.get('/profile', function(req, res){
     if(req.session.uname == null)
@@ -106,7 +126,9 @@ router.post('/createSeller', function(req, res){
 		rank : 3,
 		contact : req.body.contact,
 		outlet : req.session.oid,
-		password : req.body.password
+		password : req.body.password,
+		salary : req.body.salary,
+		date : req.body.date
 	}
 
 	empModel.insert(user, function(result){
@@ -188,29 +210,44 @@ router.post('/seller/info/:id', function(req, res){
 		});
 	// FOR DELETE
     }else if(emp.btype == 'delete'){
-
-		var id = req.params.id;
-		empModel.delete(id, function(status){	
-			if(status){
-				res.redirect("/seller/list");
-			}else{
-			res.send('Delete Unsuccessful');	
-			}
+		router.get('/seller/delete/:id', function(req, res){
+			var id = req.params.id;
+				empModel.getById(id, function(result){
+					//console.log(result)
+					if(!result){
+						res.send('no result found');
+					}else{		
+						res.render('manager/seller/seller_delete', { title: 'Manager | Seller | Delete', user: req.session.uname, sellerInfo: result});
+					}
+				});
 		});
+		
 	}
 });
 
 router.get('/seller/delete/:id', function(req, res){
     var id = req.params.id;
-    //console.log(id);
-	empModel.delete(sql, function(status){	
-		if(status){
-			res.redirect("/seller/list");
-		}else{
-			res.send('Delete unsuccessful');	
-		}
-	})
+		empModel.getById(id, function(result){
+			//console.log(result)
+			if(!result){
+				res.send('no result found');
+			}else{		
+				res.render('manager/seller/seller_delete', { title: 'Manager | Seller | Delete', user: req.session.uname, sellerInfo: result});
+			}
+		});
 });
+
+router.post('/seller/delete/:id', function(req, res){
+	// console.log(req.params.id);
+	var id = req.params.id;
+	empModel.delete(id, function(status){	
+		if(status){
+			res.redirect("/manager/seller/list");
+		}else{
+			res.send('Delete Unsuccessful',{delete: status[0]});	
+		}
+	});
+ });
 
 router.get('/inventory/catagory', (req, res) => res.render('manager/item/item_catagory', { title: "Manager | Item | Catagory", user: req.session.uname}));
 

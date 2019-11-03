@@ -20,23 +20,23 @@
         <form method="POST" action="send">
           <p>
             <label>Name</label>
-            <input type="text" name="name">
+            <input type="text" name="name" required>
           </p>
           <p>
             <label>Location</label>
-            <input type="text" name="company">
+            <input type="text" name="company" required>
           </p>
           <p>
             <label>Email Address</label>
-            <input type="email" name="email">
+            <input type="email" name="email" required>
           </p>
           <p>
             <label>Phone Number</label>
-            <input type="text" name="phone">
+            <input type="text" name="phone" required>
           </p>
           <p class="full">
             <label>Outlet Description</label>
-            <textarea name="message" rows="5"></textarea>
+            <textarea name="message" rows="5" maxlength="250" required></textarea>
           </p>
           <p class="full">
             <button type="submit">Submit</button>

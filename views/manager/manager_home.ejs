@@ -27,18 +27,6 @@
           </a>
         </li>
         <li>
-          <a href="./notifications.html">
-            <i class="far fa-clock"></i>
-            <p>Manage Shift</p>
-          </a>
-        </li>
-        <li>
-          <a href="./tables.html">
-            <i class="fas fa-utensils"></i>
-            <p>Orders</p>
-          </a>
-        </li>
-        <li>
           <a href="./tables.html" class="dropdown">
             <i class="fas fa-chair"></i>
             <p>Seat Booking</p>
@@ -136,13 +124,13 @@
               <div class="row">
                 <div class="col-5 col-md-4">
                   <div class="icon-big text-center icon-warning">
-                    <i class="nc-icon nc-globe text-warning"></i>
+                      <i class="fas fa-users"></i>
                   </div>
                 </div>
                 <div class="col-7 col-md-8">
                   <div class="numbers">
-                    <p class="card-category">Capacity</p>
-                    <p class="card-title">150GB
+                    <p class="card-category">Total Employee</p>
+                    <p class="card-title"> <%= counter.count1 %>
                       <p>
                   </div>
                 </div>
@@ -151,7 +139,7 @@
             <div class="card-footer ">
               <hr>
               <div class="stats">
-                <i class="fa fa-refresh"></i> Update Now
+                <label style=" text-align: center;" for=""><strong>Recruit More for Better Outcome</strong></strong></label>
               </div>
             </div>
           </div>
@@ -162,13 +150,13 @@
               <div class="row">
                 <div class="col-5 col-md-4">
                   <div class="icon-big text-center icon-warning">
-                    <i class="nc-icon nc-money-coins text-success"></i>
+                      <i class="far fa-clipboard"></i>
                   </div>
                 </div>
                 <div class="col-7 col-md-8">
                   <div class="numbers">
-                    <p class="card-category">Revenue</p>
-                    <p class="card-title">$ 1,345
+                    <p class="card-category">Today's attendance</p>
+                    <p class="card-title"><%= attend.count2 %>
                       <p>
                   </div>
                 </div>
@@ -177,7 +165,7 @@
             <div class="card-footer ">
               <hr>
               <div class="stats">
-                <i class="fa fa-calendar-o"></i> Last day
+                  <label style=" text-align: center;" for=""><strong>Less Attendance = Less Service</strong></strong></label>
               </div>
             </div>
           </div>
@@ -188,13 +176,13 @@
               <div class="row">
                 <div class="col-5 col-md-4">
                   <div class="icon-big text-center icon-warning">
-                    <i class="nc-icon nc-vector text-danger"></i>
+                      <i class="fas fa-utensils"></i>
                   </div>
                 </div>
                 <div class="col-7 col-md-8">
                   <div class="numbers">
-                    <p class="card-category">Errors</p>
-                    <p class="card-title">23
+                    <p class="card-category">Total Orders</p>
+                    <p class="card-title"><%= orders.count3 %>
                       <p>
                   </div>
                 </div>
@@ -203,7 +191,7 @@
             <div class="card-footer ">
               <hr>
               <div class="stats">
-                <i class="fa fa-clock-o"></i> In the last hour
+                <i class="fa fa-clock-o"></i> <strong>From Today</strong>
               </div>
             </div>
           </div>
@@ -214,13 +202,13 @@
               <div class="row">
                 <div class="col-5 col-md-4">
                   <div class="icon-big text-center icon-warning">
-                    <i class="nc-icon nc-favourite-28 text-primary"></i>
+                      <i class="fas fa-money-bill-alt"></i>
                   </div>
                 </div>
                 <div class="col-7 col-md-8">
                   <div class="numbers">
-                    <p class="card-category">Followers</p>
-                    <p class="card-title">+45K
+                    <p class="card-category">Total Sell</p>
+                    <p class="card-title"><%= 0+sell.count4 %> Tk.
                       <p>
                   </div>
                 </div>
@@ -229,7 +217,7 @@
             <div class="card-footer ">
               <hr>
               <div class="stats">
-                <i class="fa fa-refresh"></i> Update now
+                <i class="fa fa-refresh"></i> <strong>From Today</strong>
               </div>
             </div>
           </div>
@@ -254,55 +242,11 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card ">
-            <div class="card-header ">
-              <h5 class="card-title">Email Statistics</h5>
-              <p class="card-category">Last Campaign Performance</p>
-            </div>
-            <div class="card-body ">
-              <canvas id="chartEmail"></canvas>
-            </div>
-            <div class="card-footer ">
-              <div class="legend">
-                <i class="fa fa-circle text-primary"></i> Opened
-                <i class="fa fa-circle text-warning"></i> Read
-                <i class="fa fa-circle text-danger"></i> Deleted
-                <i class="fa fa-circle text-gray"></i> Unopened
-              </div>
-              <hr>
-              <div class="stats">
-                <i class="fa fa-calendar"></i> Number of emails sent
-              </div>
-            </div>
+      <footer class="footer mt-auto py-3" style="background-color: rgb(21, 205, 211) !important;position: fixed;left: 0;bottom: 0; width: 100%; text-align: center;">
+          <div class="container">
+            <span class="text-muted">&copy; All Rights Reserverd 2019</span>
           </div>
-        </div>
-        <div class="col-md-8">
-          <div class="card card-chart">
-            <div class="card-header">
-              <h5 class="card-title">NASDAQ: AAPL</h5>
-              <p class="card-category">Line Chart with Points</p>
-            </div>
-            <div class="card-body">
-              <canvas id="speedChart" width="400" height="100"></canvas>
-            </div>
-            <div class="card-footer">
-              <div class="chart-legend">
-                <i class="fa fa-circle text-info"></i> Tesla Model S
-                <i class="fa fa-circle text-warning"></i> BMW 5 Series
-              </div>
-              <hr />
-              <div class="card-stats">
-                <i class="fa fa-check"></i> Data information certified
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+        </footer>
 <!--   Core JS Files   -->
 <script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 <!--  Google Maps Plugin    -->

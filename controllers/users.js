@@ -87,7 +87,7 @@ router.post('/send', (req, res) => {
 		}
 		console.log('Message sent: %s', info.messageId);   
 		console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-		console.log(transporter.options.host);
+		//console.log(transporter.options.host);
   
 		res.render('mail', {msg:'Email has been sent', title: "Email"});
 	});

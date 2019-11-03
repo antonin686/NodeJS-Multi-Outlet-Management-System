@@ -78,7 +78,7 @@
               <span class="navbar-toggler-bar bar3"></span>
             </button>
           </div>
-          <p class="navbar-brand" href="">Product List</p>
+          <p class="navbar-brand" href="">Delete Employee</p>
         </div>
         <div class="collapse navbar-collapse justify-content-end" id="navigation">
           <ul class="navbar-nav">
@@ -111,59 +111,32 @@
       </div>
     </nav>
     <!-- End Navbar -->
-
-<div class="content">
-        <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search By Item Code" title="Type in a name">
-              <table class="table table-hover table-bordered results" id="myTable">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Item Code</th>
-                    <th scope="col">Item Type</th>
-                    <th scope="col">Item Name</th>
-                    <th scope="col">Item Cost</th>
-                    <th scope="col">Operations</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <% for(var i=0; i < itemList.length; i++){ %>
-                        <tr class="bg-light" id="<%= itemList[i].id %>">
-                            <th scope="row"> <%= itemList[i].id %> </t>
-                            <td> <%= itemList[i].itemCode %> </td>
-                            <td> <%= itemList[i].itemType %> </td>
-                            <td> <%= itemList[i].itemName %> </td>
-                            <td> <%= itemList[i].itemCost %> </td>
+    <div class="content">
+            <form method="POST" class="container shadow-lg p-3 mb-5 bg-white rounded">
+                    <div class="form-group">
+                            <label>Id</label>
+                            <input type="text" class="form-control form-control-lg" id="id" name="id" aria-describedby="e" placeholder="" value="<%= sellerInfo.emp_ID %>" readonly>
+                        </div>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control form-control-lg" id="name" name="name" aria-describedby="e" placeholder="" value="<%= sellerInfo.name %>" readonly>
+                    </div>
+                    <div class="form-group">
+                            <label>Rank</label>
+                            <input type="text" class="form-control form-control-lg" id="rank" name="rank" aria-describedby="e" placeholder="" value="<%= sellerInfo.rank %>" readonly>
+                        </div>
+                    <table align="center">
+                        <tr>
                             <td>
-                                <a href="/manager/inventory/list/edit/<%= itemList[i].id %>" type="button" class="btn btn-primary btn-sm">Edit</a>
-                                <a href="/manager/inventory/list/delete/<%= itemList[i].id %>" type="button" class="btn btn-danger btn-sm">Delete</a>
+                                <button type="submit" class="btn btn btn-outline-danger">Delete</button>
+                                <a href="/manager/home" class="btn btn-outline-primary">Cancel</a>
                             </td>
                         </tr>
-                    <% } %>
-                </tbody>
-              </table>
-</div>
-<footer class="footer mt-auto py-3" style="background-color: rgb(21, 205, 211) !important;position: fixed;left: 0;bottom: 0; width: 100%; text-align: center;">
-    <div class="container">
-      <span class="text-muted">&copy; All Rights Reserverd 2019</span>
+                    </table>
+                </form>
     </div>
-  </footer>
-<script>
- function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
-</script>
+    <footer class="footer mt-auto py-3" style="background-color: rgb(21, 205, 211) !important;position: fixed;left: 0;bottom: 0; width: 100%; text-align: center;">
+            <div class="container">
+              <span class="text-muted">&copy; All Rights Reserverd 2019</span>
+            </div>
+          </footer>
