@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const loginModel = require('./../models/login-model');
-
+const nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
+const xoauth2 = require('xoauth2');
 // Login Page
 router.get('/login', (req, res) => res.render('Login', { title: "Login"}));
 
@@ -37,6 +39,59 @@ router.post('/login', (req, res) => {
 	
 // Register Page
 router.get('/register', (req, res) => res.render('Register', { title: "Register"}));
+
+//mail page
+router.get('/mail', (req, res) => res.render('mail', { title: "Email",msg:""}));
+
+router.post('/send', (req, res) => {
+	const output = `
+	  <p>You have a new outlet registration request</p>
+	  <h3>Contact Details</h3>
+	  <ul>  
+		<li>Name: ${req.body.name}</li>
+		<li>Locaton: ${req.body.company}</li>
+		<li>Email: ${req.body.email}</li>
+		<li>Phone: ${req.body.phone}</li>
+	  </ul>
+	  <h3>Outlet Description</h3>
+	  <p>${req.body.message}</p>
+	`;
+  
+	// create reusable transporter object using the default SMTP transport
+	let transporter = nodemailer.createTransport({
+		service: 'gmail',
+		secure: false,
+		port: 25,
+		auth: {
+		  user: 'bondskrillex@gmail.com',
+		  pass: 'randlekithortonn'
+		},
+		tls: {
+		  rejectUnauthorized: false
+		}
+	  });
+  
+	// setup email data with unicode symbols
+	let mailOptions = {
+		from: '"New Outlet Request" <shihabpearce@gmail.com>', // sender address
+		to: 's.rahman3443@gmail.com', // list of receivers
+		subject: 'Outlet Request', // Subject line
+		text: 'Hello world?', // plain text body
+		html: output // html body
+	};
+  
+	// send mail with defined transport object
+	transporter.sendMail(mailOptions, (error, info) => {
+		if (error) {
+			return console.log(error);
+		}
+		console.log('Message sent: %s', info.messageId);   
+		console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+		console.log(transporter.options.host);
+  
+		res.render('mail', {msg:'Email has been sent', title: "Email"});
+	});
+	});
 
 // Logout
 router.get('/logout', (req, res) => {

@@ -17,7 +17,11 @@
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.0",
     "mysql": "^2.17.1",
-    "node-sass": "^4.13.0"
+    "node-notifier": "^6.0.0",
+    "node-sass": "^4.13.0",
+    "nodemailer": "^6.3.1",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "xoauth2": "^1.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.4"

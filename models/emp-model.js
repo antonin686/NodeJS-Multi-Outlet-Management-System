@@ -7,7 +7,7 @@ module.exports = {
 
 	getById: function(id, callback){
 
-		var sql = `SELECT employee.emp_ID, employee.username,employee.name, login.password , employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username and ${table_id}= ${id}`;
+		var sql = `SELECT employee.emp_ID, employee.username,employee.name, login.password , employee.contact,employee.outlet_ID, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username and ${table_id}= ${id}`;
 		//console.log(sql);
 		db.getResults(sql, function(result){
 			if(result.length > 0 ){
@@ -60,7 +60,7 @@ module.exports = {
 
 	getAllSellerByOutlet: function(id,callback){
 		var sql = `SELECT employee.name as employee,employee.emp_ID,employee.username,employee.outlet_ID,outlet.outlet_ID,outlet.name,login.username as uname,login.type from employee,outlet,login WHERE employee.outlet_ID = outlet.outlet_ID and employee.username = login.username and login.type = 3 and outlet.outlet_ID= ${id}`;
-		console.log(sql)
+		//console.log(sql)
 		db.getResults(sql, function(results){
 			
 			if(results.length > 0){
@@ -73,7 +73,7 @@ module.exports = {
 
 	getSellerByOutlet: function(id,callback){
 		var sql = `SELECT employee.name as employee,employee.emp_ID,employee.username,employee.outlet_ID,outlet.outlet_ID,outlet.name,login.username as uname,login.type from employee,outlet,login WHERE employee.outlet_ID = outlet.outlet_ID and employee.username = login.username and login.type = 3 and outlet.outlet_ID= ${id}`;
-		console.log(sql)
+		//console.log(sql)
 		db.getResults(sql, function(results){
 			
 			if(results.length > 0){

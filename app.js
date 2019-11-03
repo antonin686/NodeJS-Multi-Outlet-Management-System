@@ -3,6 +3,7 @@ const expressLayout = require('express-ejs-layouts');
 //const index = require('./controllers/index');
 const users = require('./controllers/users');
 const path = require('path');
+const notifier = require('node-notifier');
 const bodyParser = require('body-parser');
 const admin = require('./controllers/admin');
 const manager = require('./controllers/manager');

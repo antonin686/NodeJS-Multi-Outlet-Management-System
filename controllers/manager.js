@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const notifier = require('node-notifier');
 var managerModel = require('./../models/manager-model');
 var empModel = require('./../models/emp-model');
 var outletModel = require('./../models/outlet-model');
@@ -334,13 +335,12 @@ router.get('/attendance', function(req, res) {
 		res.redirect('/users/login');
 	}
 	var id = req.session.outID;
-	//var id = 1;
 	//console.log(id)
 	empModel.getAllSellerByOutlet(id, function(result){
 		if(!result){
             res.send('invalid');
 		}else{
-			console.log(result);
+			//console.log(result);
             res.render("manager/attendance", {title: "Employee Attendance", user : req.session.uname, sellerInfo: result});
 		}
 	});
@@ -365,13 +365,13 @@ router.post('/attendance', function(req, res) {
 					outlet : result.outlet_ID,
 					date : utc
 				}
-				console.log(seller)
+				//console.log(seller)
 				empAttendance.insert(seller, function(result){
 					if(!result){
 						res.send('attendance insert unsuccessful');
 					}
 					else{
-						res.render('manager/manager_home', { title: "Manager | Dashboard", user: req.session.uname, mid: req.session.uid});
+						res.redirect('/manager/home');
 					}
 				});
 				//res.redirect('/manager/home');
