@@ -393,8 +393,8 @@ router.post('/attendance', function(req, res) {
 			if(!result){
 				res.send('invalid');
 			}else{
-				//console.log(result);
-				var utc = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+				console.log(result);
+				var utc =  new Date().toJSON().slice(0,10).replace(/-/g,'/');
 				var seller = {
 					id: result.emp_ID,
 					name : result.name,
@@ -402,7 +402,7 @@ router.post('/attendance', function(req, res) {
 					outlet : result.outlet_ID,
 					date : utc
 				}
-				//console.log(seller)
+				console.log(seller)
 				empAttendance.insert(seller, function(result){
 					if(!result){
 						res.send('attendance insert unsuccessful');

@@ -9,6 +9,10 @@
                 <li class="breadcrumb-item"><a href="/seller/home">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="/seller/itemList">Item List</a></li>
                 <li class="breadcrumb-item"><a href="#">Order Status</a></li>
+                <li class="breadcrumb-item"><a  active" href="#"">
+                    Welcome, <%= user %>
+                </a></li>
+                
         </ol>  
     </div>
 </section>
@@ -44,7 +48,7 @@
                         </div>
                         <div class="form-group">
                             <label  for="outlet">Ticket Number</label>
-                            <input type="text" class="form-control" name="ticket" id="ticket">    
+                            <input type="text" class="form-control" name="ticket" id="ticket"  readonly>    
                         </div>
 
                         <div class="form-group">
@@ -64,7 +68,7 @@
 
                             <div class="form-group" style="background: cadetblue;font-family:Arial;font-size: 150%;font-weight: bold; margin-top: 5px;" >
                                 <label>Total : </label>
-                                <label id="result"  for="sum">0000</label>
+                                <label name="sum" id="result" for="sum">0000</label>
                                 <input type="button" value="View Total" class="btn btn-info btn-lg"  id="total">   
                             </div>
 
