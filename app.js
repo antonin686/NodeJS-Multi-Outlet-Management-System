@@ -8,6 +8,7 @@ const admin = require('./controllers/admin');
 const manager = require('./controllers/manager');
 const seller = require('./controllers/seller');
 const expSession = require('express-session');
+
 const app = express();
 
 // EJS

@@ -1,7 +1,7 @@
 <% 
 var progress1_title = 'Target Progress';
 var progress2_title = 'Target Progress';
-var titleSplit = title.split(" ")[2] 
+var titleSplit = title.split(" ")[2];
 %>
 <!doctype html>
 <html lang="en">
@@ -16,6 +16,9 @@ var titleSplit = title.split(" ")[2]
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css">
+  <!-- Include Bootstrap Datepicker -->
+  <link rel="stylesheet" href="/assets/lib/dateTimePicker/jquery.datetimepicker.min.css">
+
   <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,300' rel='stylesheet' type='text/css'>
   <title><%= title %></title>
 </head>
@@ -23,57 +26,70 @@ var titleSplit = title.split(" ")[2]
 <body>
 
   <header>
-      <nav class="navbar navbar-expand-sm navbar-dark">
-          <!-- Brand Logo -->
-          <a class="navbar-brand" href="#"> Logo </a>
-          <!-- Links -->
-      
-          <ul class="navbar-nav">
-            <% if(titleSplit == "Dashboard") {%>
-            <li class="nav-item active"> <% }else{ %>
-            <li class="nav-item"> <% }%>
-              <a class="nav-link" href="/admin/home">Dashboard</a>
-            </li>
-            <% if(titleSplit == "Employee") {%>
-            <li class="nav-item active"> <% }else{ %>
-            <li class="nav-item"> <% }%>
-              <a class="nav-link" href="/admin/employee">Employee</a>
-            </li>
-            <% if(titleSplit == "Outlet") {%>
-            <li class="nav-item active"> <% }else{ %>
-            <li class="nav-item"> <% }%>
-              <a class="nav-link" href="/admin/outlet">Outlet</a>
-            </li>
-          </ul>
-      
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/notification"><i class="fas fa-bell"></i></a>
-            </li>
-            <!-- Dropdown -->
-            <li class="nav-item dropdown pr-3">
-              <a class="nav-link dropdown-toggle active" href="#" id="navbardrop" data-toggle="dropdown">
-                Welcome, <%= user %>
-              </a>
-              <div class="dropdown-menu mr-2">
-                <a class="dropdown-item" href="#">Settings</a>
-                <a class="dropdown-item" href="/users/logout">Logout</a>
-              </div>
-            </li>
-            
-          </ul>
-        </nav>
-      
-        <div id="header">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-10">
-      
-                <div id="dashboard-text">
-                  <h1> <span><i class="fas fa-globe-asia"></i></span> <%= titleSplit %> <small class="text-secondary">
-                      <% if (titleSplit == 'Dashboard') { %> <%='Manage Your System'%> <% } else {%>
-                      Manage your <%= titleSplit %> <%}%>
-                    </small></h1>
+    <nav class="navbar navbar-expand-sm navbar-dark">
+      <!-- Brand Logo -->
+      <a class="navbar-brand" href="#"> Logo </a>
+      <!-- Links -->
+
+      <ul class="navbar-nav">
+        <% if(titleSplit == "Dashboard") {%>
+        <li class="nav-item active"> <% }else{ %>
+        <li class="nav-item"> <% }%>
+          <a class="nav-link" href="/admin/home">Dashboard</a>
+        </li>
+        <% if(titleSplit == "Employee") {%>
+        <li class="nav-item dropdown active"> <% }else{ %>
+        <li class="nav-item dropdown "> <% }%>
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            Employee
+          </a>
+          <div class="dropdown-menu mr-2">
+            <a class="dropdown-item" href="/admin/employee">Employee List</a>
+            <a class="dropdown-item" href="/admin/employee/Attendance">Employee Attendence</a>
+            <a class="dropdown-item" href="/admin/employee/salary">Employee Salary Scale</a>
+          </div>
+        </li>
+
+        <% if(titleSplit == "Outlet") {%>
+        <li class="nav-item active"> <% }else{ %>
+        <li class="nav-item"> <% }%>
+          <a class="nav-link" href="/admin/outlet">Outlet</a>
+        </li>
+        <% if(titleSplit == "Inventory") { %>
+        <li class="nav-item active"> <% }else{ %>
+        <li class="nav-item"> <% }%>
+          <a class="nav-link" href="/admin/inventory">Inventory</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/notification"><i class="fas fa-bell"></i></a>
+        </li>
+        <!-- Dropdown -->
+        <li class="nav-item dropdown pr-3">
+          <a class="nav-link dropdown-toggle active" href="#" id="navbardrop" data-toggle="dropdown">
+            Welcome, <%= user %>
+          </a>
+          <div class="dropdown-menu mr-2">
+            <a class="dropdown-item" href="/admin/profile">Profile</a>
+            <a class="dropdown-item" href="/users/logout">Logout</a>
+          </div>
+        </li>
+
+      </ul>
+    </nav>
+
+    <div id="header">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-10">
+
+            <div id="dashboard-text">
+              <h1> <span><i class="fas fa-globe-asia"></i></span> <%= titleSplit %> <small class="text-secondary">
+                  <% if (titleSplit == 'Dashboard') { %> <%='Manage Your System'%> <% } else {%>
+                  Manage your <%= titleSplit %> <%}%>
+                  </small></h1>
                 </div>
               </div>
       
@@ -86,6 +102,8 @@ var titleSplit = title.split(" ")[2]
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="/admin/employee/create">Employee</a>
                     <a class="dropdown-item" href="/admin/outlet/create">Outlet</a>
+                    <a class="dropdown-item" href="/admin/booking/create">Booking</a>
+                    <a class="dropdown-item" href="/admin/employee/salary/create">Salary Scale</a>
                   </div>
                 </div>
               </div>
@@ -111,17 +129,16 @@ var titleSplit = title.split(" ")[2]
             </a>
             <a href="/admin/order">
               <li class="list-group-item-action list-group-item d-flex justify-content-between align-items-center">
-                <span><i class="fas fa-utensils"></i> Order</span>
-                <span id="out_value" class="badge badge-dark badge-pill">1</span>
+                <span><i class="fas fa-utensils"></i> Orders</span>
+                <span id="order_count" class="badge badge-dark badge-pill">0</span>
               </li>
             </a>
             <a href="/admin/booking">
               <li class=" list-group-item-action list-group-item d-flex justify-content-between align-items-center">
-                <span><i class="fas fa-bookmark"></i></i> Booking</span>
-                <span id="out_value" class="badge badge-dark badge-pill">1</span>
+                <span><i class="fas fa-bookmark"></i></i> Bookings</span>
+                <span id="booking_count" class="badge badge-dark badge-pill">0</span>
               </li>
             </a>
-
 
           </ul>
 
@@ -168,9 +185,43 @@ var titleSplit = title.split(" ")[2]
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"
     integrity="sha256-BuxrUdr/4YoztQLxT6xmdO6hSQw2d6BtBUY1pteGds4=" crossorigin="anonymous"></script>
+  <script src="/assets/lib/dateTimePicker/jquery.datetimepicker.full.min.js"></script>
 
   <script>
+    $(document).ready(() => {
+      getOrderCount();
+      getBookingCount();
+    });
 
+    function getOrderCount() {
+
+      $.ajax({
+        url: '/admin/order/countAjax',
+
+        success: (count) => {
+          //console.log(count);
+          var html = '';
+          html = count[0].order_count;
+          $('#order_count').text(html);
+
+        }
+      });
+    }
+
+    function getBookingCount() {
+
+      $.ajax({
+        url: '/admin/booking/countAjax',
+
+        success: (count) => {
+          //console.log(count);
+          var html = '';
+          html = count[0].booking_count;
+          $('#booking_count').text(html);
+
+        }
+      });
+    }
   </script>
   <!-- place the scripts at the end of the html page -->
   <%- script %>

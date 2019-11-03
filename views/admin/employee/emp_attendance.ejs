@@ -1,0 +1,129 @@
+<%- contentFor('header') %>
+
+<section id="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/home">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Attendence</li>
+        </ol>
+    </div>
+</section>
+
+<%- contentFor('selection') %>
+<!-- col-md-9 -->
+<div class="card" id="panel">
+    <div class="card-header">
+        Attendence of Today
+    </div>
+
+    <div class="card-body">
+        <div class="card card-body">
+            <div class="col">
+                <div class="col-md-4 pt-4 mx-auto">
+                    <select class="custom-select dropDown" id="outlet_id">
+                        <% for(var i = 0; i < outList.length; i++) {%>
+                        <option value="<%= outList[i].outlet_ID %>"> <%= outList[i].name %> </option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="col-md-12 p-3 ">
+                    <div class="row">
+                        <div class="col-md-9 mx-auto">
+                            <div class="container">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search By Name"
+                                        id="getAttendenceList">
+                                </div>
+                            </div>
+                        </div>
+                        <!--
+                            <div class="col-md-2 mx-auto">
+                            <select class="custom-select dropDown" id="time_id">
+                                <option value="0">Today</option>
+                                <option value="7">Week</option>
+                                <option value="30">Month</option>
+                            </select>
+                             </div>
+                        -->
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="table-responsive-md">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Status</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="ajaxTable">
+
+                                <!-- Employee List shown here -->
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Body Section End-->
+
+<script>
+    $(document).ready(() => {
+        getAttendenceList('*');
+
+
+        $(".dropDown").change((event) => {
+            var key = $("#getAttendenceList").text();
+            if (key == '')
+                key = '*'
+            //console.log(key);
+            getAttendenceList(key);
+        });
+
+        $("#getAttendenceList").keyup((event) => {
+            var key = $(event.currentTarget).val();
+            if (key == '')
+                key = '*'
+            getAttendenceList(key);
+        });
+
+    });
+
+    function getAttendenceList(key) {
+        var outlet = $('#outlet_id').val();
+        //var time = $('#time_id').val();
+        var time = 0;
+        $.ajax({
+
+            url: `/admin/attendence/getattendenceList/${outlet}/${time}/${key}`,
+
+            success: (AttendenceList) => {
+                //console.log(AttendenceList);
+                var html = '';
+
+                if (AttendenceList != null) {
+                    for (var i = 0; i < AttendenceList.length; i++) {
+
+                        html += `<tr class="tr-hover">`;
+                            
+                        html += `<th scope="row"> ${AttendenceList[i].emp_ID} </t>`;
+                        html += `<td> ${AttendenceList[i].username} </td>`;
+                        html += `<td> ${AttendenceList[i].name} </td>`;
+                        html += `<td> ${AttendenceList[i].attendance_status} </td>`;
+
+                        html += '</tr>';
+                    }
+                    $('#ajaxTable').html(html);
+                }
+            }
+        });
+    }
+</script>

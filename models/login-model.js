@@ -1,4 +1,5 @@
-var db = require('./db')
+var db = require('./db');
+var table_name = 'login';
 
 module.exports = {
 
@@ -52,5 +53,13 @@ module.exports = {
 		db.execute(sql, function(status){
 			callback(status);
 		});
-	}
+	},
+
+	changePassword: function(user, callback){
+		var sql = `update ${table_name} set password = '${user.password}' where username = '${user.username}'`;
+		console.log(sql);
+		db.execute(sql, function(status){
+			callback(status);
+		});
+	},
 }

@@ -1,0 +1,191 @@
+<%- contentFor('header') %>
+
+<!--Body section-->
+<section id="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/home">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/admin/employee">Employee</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Info</li>
+        </ol>
+    </div>
+</section>
+
+<%- contentFor('selection') %>
+<div class="card main" id="panel">
+    <div class="card-header main-bg-color">
+        Employee Profile
+    </div>
+    <div class=" card-body">
+        <div class="card card-body">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <table class="table">
+                        <tbody>
+                            <tr class="bg-dark text-light">
+                                <th>Rank</th>
+                                <td> <%= empInfo.rank %> </td>
+
+                            </tr>
+                            <tr>
+                                <th>ID</th>
+                                <td><%= empInfo.emp_ID %></td>
+                            </tr>
+                            <tr>
+                                <th>Name</th>
+                                <td><%= empInfo.name %></td>
+                            </tr>
+
+                            <tr>
+                                <th>Contact</th>
+                                <td> <%= empInfo.contact %> </td>
+                            </tr>
+
+                            <tr>
+                                <th>Join Date</th>
+                                <td> <%= empInfo.date %> </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-5 ml-auto">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal">
+                        Edit
+                    </button>
+
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#passwordModal">
+                        Change Password
+                    </button>
+
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body mx-auto">
+                            <h5 class="card-title">Username: <span aria-colspan="3"><%= empInfo.username %></span></h5>
+                        </div>
+                        <img class="card-img-top" src="/uploads/img/person.png" alt="Profile Picture">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modals -->
+
+<!-- Modals Edit -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Profie Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Employee ID</label>
+                        <input type="text" class="form-control" value="<%= empInfo.emp_ID %>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" value="<%= empInfo.name %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Contact</label>
+                        <input type="text" class="form-control" name="contact" value="<%= empInfo.contact %>">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modals Change Password -->
+<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change Password </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    <div id="div-alert" role="alert">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="oldPassword">Old Password</label>
+                        <input type="password" class="form-control" id="oldPassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" class="form-control" id="newPassword">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPassword">
+                    </div>
+                    <input type="hidden" id="realPassword" value="<%= empInfo.password %>">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                    <button type="button" id="btn-sub" class="btn btn-warning">Change Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#btn-sub').click(() => {
+        var realPass = $('#realPassword').val();
+        var oldPass = $('#oldPassword').val();
+        var newPass = $('#newPassword').val();
+        var conPass = $('#confirmPassword').val();
+
+        $('#div-alert').removeClass();
+        $('#div-alert').text('');
+
+        if (oldPass == realPass) {
+            if (newPass == conPass) {
+
+                //window.location.href = `/admin/profile/changePassword/${newPass}`;
+                $.ajax({
+                    url: `/admin/profile/changePassword/${newPass}`,
+
+                    success: (status) => {
+                        if(status)
+                        {
+                            $('#div-alert').addClass(" alert alert-success");
+                            $('#div-alert').text('Password Changed');
+                        }else{
+                            $('#div-alert').addClass(" alert alert-danger");
+                            $('#div-alert').text('Some Error Occured');
+                        }
+                    }
+                });
+
+            } else {
+                $('#div-alert').addClass(" alert alert-danger");
+                $('#div-alert').text('Passwords does not match');
+            }
+        } else {
+            $('#div-alert').addClass(" alert alert-danger");
+            $('#div-alert').text('Old Password invalid');
+        }
+    })
+</script>

@@ -34,12 +34,12 @@
                                     <td><%= outInfo.name %></td> 
                                 </tr>
                                 <tr>
-                                    <th>Rank</th>
+                                    <th>Location</th>
                                     <td> <%= outInfo.location %> </td>
                                     
                                 </tr>
                                 <tr>
-                                    <th>Contact</th>
+                                    <th>City</th>
                                     <td> <%= outInfo.city %> </td>                                          
                                 </tr>
                             </tbody>
@@ -116,7 +116,7 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post">
+            <form method="post" id="form-edit">
                 <div class="modal-body">                  
                     <div class="form-group">
                         <label for="outlet_id">Outlet ID</label>
@@ -134,11 +134,10 @@
                         <label for="phone">City</label>
                         <input type="text" class="form-control" name="city" value="<%= outInfo.city %>">
                     </div>
-                        <input type="hidden" name="buttonType" value="edit">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Save Changes</button>
+                    <button type="submit" form="form-edit" value="Edit" class="btn btn-success">Save Changes</button>
                 </div>
             </form>
         </div>
@@ -155,14 +154,13 @@
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="POST">
+            <form action="POST" id="form-delete">
                 <div class="modal-body">                  
                         Are you sure your want to delete this Outlet?
                 </div>
-                <input type="hidden" name="buttonType" value="delete">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger">Yes</button>
+                    <a href="/admin/outlet/delete/<%= outInfo.outlet_ID %>" class="btn btn-danger" role="button">Yes</a>
                 </div>
             </form>
         </div>
@@ -174,9 +172,6 @@
 
     $(document).ready(() => {
         
-        
-        
-
         searchBox('*');
         $("#searchBox").keyup((event) => {
             var key = $(event.currentTarget).val();
@@ -224,6 +219,8 @@
             }
         });
     }
+
+  
     
 </script>
     

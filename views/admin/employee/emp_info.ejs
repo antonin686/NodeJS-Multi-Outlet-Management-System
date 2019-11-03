@@ -1,4 +1,3 @@
-
 <%- contentFor('header') %>
 
 <!--Body section-->
@@ -15,57 +14,71 @@
 <%- contentFor('selection') %>
 <div class="card main" id="panel">
     <div class="card-header main-bg-color">
-        Employee Profile:
+        Employee Profile
     </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <table class="table">
-                    <tbody>
-                        <tr>
-                            <th>ID</th>
-                            <td><%= empInfo.emp_ID %></td>
-                        </tr>
-                        <tr>
-                            <th>Name</th>
-                            <td><%= empInfo.name %></td> 
-                        </tr>
-                        <tr>
-                            <th>Rank</th>
-                            <td> <%= empInfo.rank %> </td>
-                            
-                        </tr>
-                        <tr>
-                            <th>Contact</th>
-                            <td> <%= empInfo.contact %> </td>                                          
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-5 ml-auto">
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal">
-                        Edit
-                </button>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
-                        Delete
-                </button>        
+    <div class=" card-body">
+        <div class="card card-body">
+            <div class="row">
+                <div class="col-md-6">
 
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                            <h5 class="card-title">Profile Picture</h5>
-                            </div>
-                    <img class="card-img-top" src="/uploads/img/person.png" alt="Profile Picture">                                                                               
+                    <table class="table">
+                        <tbody>
+                            <tr class="bg-dark text-light">
+                                <th>Rank</th>
+                                <td> <%= empInfo.rank %> </td>
+
+                            </tr>
+                            <tr>
+                                <th>ID</th>
+                                <td><%= empInfo.emp_ID %></td>
+                            </tr>
+                            <tr>
+                                <th>Name</th>
+                                <td><%= empInfo.name %></td>
+                            </tr>
+
+                            <tr>
+                                <th>Contact</th>
+                                <td> <%= empInfo.contact %> </td>
+                            </tr>
+                            <tr>
+                                <th>Salary</th>
+                                <td> <%= empInfo.salary %> </td>
+                            </tr>
+                            <tr>
+                                <th>Join Date</th>
+                                <td> <%= empInfo.date %> </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
                 </div>
-                                        
+                <div class="col-md-5 ml-auto">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal">
+                        Edit
+                    </button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+                        Delete
+                    </button>
+
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body mx-auto">
+                            <h5 class="card-title">Username: <span aria-colspan="3"><%= empInfo.username %></span></h5>
+                        </div>
+                        <img class="card-img-top" src="/uploads/img/<%= empInfo.img_path %>" alt="Profile Picture">
+
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 </div>
-           
+
 
 <!-- Modals -->
- 
+
 <!-- Modals Edit -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -76,7 +89,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Employee ID</label>
@@ -87,10 +100,17 @@
                         <input type="text" class="form-control" name="name" value="<%= empInfo.name %>">
                     </div>
                     <div class="form-group">
-                        <label for="phone">Phone</label>
+                        <label for="phone">Contact</label>
                         <input type="text" class="form-control" name="contact" value="<%= empInfo.contact %>">
                     </div>
-                    <input type="hidden" name="buttonType" value="edit">
+                    <div class="form-group">
+                        <label for="phone">Salary</label>
+                        <input type="text" class="form-control" name="salary" value="<%= empInfo.salary %>">
+                    </div>
+                    <div class="form-group">
+                            <label for="dp">Profile Picture</label>
+                            <input type="file" class="form-control-file" name="myImage">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
@@ -119,7 +139,7 @@
                 <input type="hidden" name="buttonType" value="delete">
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger">Yes</button>
+                    <a href="/admin/employee/delete/<%= empInfo.username %>" class="btn btn-danger" role="button">Yes</a>
                 </div>
             </form>
         </div>

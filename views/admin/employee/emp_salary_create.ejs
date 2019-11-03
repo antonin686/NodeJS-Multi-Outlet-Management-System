@@ -1,0 +1,43 @@
+
+<%- contentFor('header') %>
+            
+<!--Body section-->
+<section id="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/home">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="/admin/employee">Employee</a></li>
+                <li class="breadcrumb-item"><a href="/admin/employee/salary">Salary</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Create</li>
+        </ol>  
+    </div>
+</section>
+
+<%- contentFor('selection') %>
+<div class="card main" id="panel">
+    <div class="card-header main-bg-color">
+        Create Outlet
+    </div>
+    <div class="card-body">
+        <div class="col-md-8 mx-auto">
+
+            <form class="card-body" method="POST">
+                                    
+                <div class="form-group">
+                    <label for="name">Time (Months) </label>
+                    <input type="number" class="form-control" name="time">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Percentage</label>
+                    <input type="number" class="form-control" name="per" >
+                </div>
+        
+                <button type="submit" class="btn btn-success">Create</button>
+
+            </form>
+        </div>  
+    </div>
+</div>
+           
+<!--Body Section End-->

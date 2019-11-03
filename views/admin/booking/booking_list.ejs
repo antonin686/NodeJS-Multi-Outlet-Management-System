@@ -1,0 +1,133 @@
+<%- contentFor('header') %>
+
+<section id="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin/home">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Booking</li>
+        </ol>
+    </div>
+</section>
+
+<%- contentFor('selection') %>
+<!-- col-md-9 -->
+<div class="card" id="panel">
+    <div class="card-header">
+        Booking List
+    </div>
+
+    <div class="card-body">
+        <div class="card card-body">
+            <div class="col">
+                <div class="col-md-4 pt-4 mx-auto">
+                    <select class="custom-select dropDown" id="outlet_id">
+                        <% for(var i = 0; i < outList.length; i++) {%>
+                        <option value="<%= outList[i].outlet_ID %>"> <%= outList[i].name %> </option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="col-md-12 p-3 ">
+                    <div class="row">
+                        <div class="col-md-9 mx-auto">
+                            <div class="container">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search By Name" id="getBookingList">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 mx-auto">
+                            <select class="custom-select dropDown" id="time_id">
+                                <option value="0">Today</option>
+                                <option value="7">Week</option>
+                                <option value="30">Month</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="table-responsive-md">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Outlet Name</th>
+                                    <th scope="col">Table</th>
+                                    <th scope="col">Booked by</th>
+                                    <th scope="col">Contact</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ajaxTable">
+    
+                                <!-- Employee List shown here -->
+    
+                            </tbody>
+                        </table>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Body Section End-->
+
+<script>
+    $(document).ready(() => {
+        getBookingList('*');
+
+        $('#ajaxTable').on('click', 'tr', (event) => {
+
+            var id = $(event.currentTarget).attr("id");
+            if (id != null) {
+                window.location.href = `/admin/outlet/info/${id}`;
+            }
+        });
+
+        $(".dropDown").change((event) => {
+            var key = $("#getBookingList").text();
+            if (key == '')
+                key = '*'
+            //console.log(key);
+            getBookingList(key);
+        });
+
+        $("#getBookingList").keyup((event) => {
+            var key = $(event.currentTarget).val();
+            if (key == '')
+                key = '*'
+            getBookingList(key);
+        });
+
+    });
+
+    function getBookingList(key) {
+        var outlet = $('#outlet_id').val();
+        var time = $('#time_id').val();
+
+        $.ajax({
+            url: `/admin/booking/getBookingList/${outlet}/${time}/${key}`,
+
+            success: (BookingList) => {
+                //console.log(BookingList);
+                var html = '';
+
+                if (BookingList != null) {
+                    for (var i = 0; i < BookingList.length; i++) {
+
+                        html += `<tr class="tr-hover" id="${BookingList[i].outlet_ID}" >`;
+                        html += `<th scope="row"> ${BookingList[i].booking_ID} </t>`;
+                        html += `<td> ${BookingList[i].name} </td>`
+                        html += `<td> ${BookingList[i].table_ID} </td>`
+                        html += `<td> ${BookingList[i].booked_by} </td>`
+                        html += `<td> ${BookingList[i].contact} </td>`
+                        html += `<td> ${BookingList[i].date} </td>`
+                        html += '</tr>';
+                    }
+                    $('#ajaxTable').html(html);
+                }
+            }
+        });
+    }
+</script>

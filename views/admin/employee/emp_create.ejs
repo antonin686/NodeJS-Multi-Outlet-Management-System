@@ -1,14 +1,13 @@
-
 <%- contentFor('header') %>
-            
+
 <!--Body section-->
 <section id="breadcrumb">
     <div class="container">
         <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/admin/home">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="/admin/employee">Employee</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create</li>
-        </ol>  
+            <li class="breadcrumb-item"><a href="/admin/home">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/admin/employee">Employee</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Create</li>
+        </ol>
     </div>
 </section>
 
@@ -18,47 +17,56 @@
         Create Employee
     </div>
     <div class="card-body">
+        <%= typeof msgErr != 'undefined' ? msg : ''%>
         <div class="col-md-8 mx-auto">
 
-            <form class="card-body" method="POST">
-                    <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" name="username">
-                        </div>                
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" name="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="name">Contact</label>
-                            <input type="text" class="form-control" name="contact" >
-                        </div>
-                        <div class="form-group mb-3">
-                            <label  for="outlet">Outlet</label>
-                            <select class="custom-select" name="outlet">
-                                <% for(var i=0; i < outList.length; i++) {%>
-                                    <option value="<%= outList[i].outlet_ID %>"> <%= outList[i].name %> </option>
-                                <% } %>
-                            </select>    
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="rank">Type</label>
-                            <select class="custom-select" name="rank">
-                                <option value="3" selected>Seller</option>
-                                <option value="2">Manager</option>
-                                <option value="1">Admin</option>
-                            </select> 
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" name="password" >
-                        </div>
-                
+            <form class="card-body" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="name">Contact</label>
+                    <input type="text" class="form-control" name="contact">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="outlet">Outlet</label>
+                    <select class="custom-select" name="outlet">
+                        <% for(var i=0; i < outList.length; i++) {%>
+                        <option value="<%= outList[i].outlet_ID %>"> <%= outList[i].name %> </option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="rank">Type</label>
+                    <select class="custom-select" name="rank">
+                        <option value="3" selected>Seller</option>
+                        <option value="2">Manager</option>
+                        <option value="1">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="salary">Salary</label>
+                    <input type="text" class="form-control" name="salary">
+                </div>
+                <div class="form-group">
+                    <label for="dp">Profile Picture</label>
+                    <input type="file" class="form-control-file" name="myImage">
+                </div>
+
                 <button type="submit" class="btn btn-success">Create</button>
 
             </form>
-        </div>  
+        </div>
     </div>
 </div>
-           
+
 <!--Body Section End-->

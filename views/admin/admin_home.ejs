@@ -7,153 +7,268 @@ var titleSplit = title.split(" ")[2]
 
 <!--Body section-->
 <section id="breadcrumb">
-    <div class="container">
-      <ol class="breadcrumb">
-        <li class="active">Dashboard</li>
-      </ol>  
-    </div>
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="active">Dashboard</li>
+    </ol>
+  </div>
 </section>
 
 <%- contentFor('selection') %>
-          <div class="card" id="panel">
-            <div class="card-header">
-              Overview
-            </div>
-            <div class="card-body">
-              <div class="row">
+<div class="card" id="panel">
+  <div class="card-header">
+    Overview
+  </div>
+  <div class="card-body">
+    <div class="row">
 
-                <div class="col-md-4">
-                    <div class="card">
-                      <div class="card-header panel-box">
-                          <span><i class="fas fa-coins"></i></span> Total Transaction
-                      </div>
-                      <div class="card-body panel-text">
-                        <h2> <span id="total-transaction-value" class="badge badge-pill badge-success">20000000</span></h2>
-                      </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                      <div class="card-header panel-box">
-                          <span><i class="fas fa-store-alt"></i></span> Total Outlet
-                      </div>
-                      <div class="card-body panel-text">
-                        <h2> <span id="Total-outlet-value" class="badge badge-pill main-bg-color">20</span></h2>
-                      </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                      <div class="card-header panel-box">
-                          <span><i class="fas fa-user-check"></i></span> Total Attendence
-                      </div>
-                      <div class="card-body panel-text">
-                        <h2> <span id="total-attendence-value" class="badge badge-pill badge-danger">20</span></h2>
-                      </div>
-                    </div>
-                </div>
-                    
-              </div>
-            </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header panel-box">
+            <span><i class="fas fa-coins"></i></span> Total Transaction
           </div>
+          <div class="card-body panel-text">
+            <h2> <span id="total-transaction-value" class="badge badge-pill badge-danger">0</span></h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header panel-box">
+            <span><i class="fas fa-store-alt"></i></span> Total Outlet
+          </div>
+          <div class="card-body panel-text">
+            <h2> <span id="total-outlet-value" class="badge badge-pill badge-dark">20</span></h2>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header panel-box">
+            <span><i class="fas fa-user-check"></i></span> Total Attendence
+          </div>
+          <div class="card-body panel-text">
+            <h2> <span id="total-attendence-value" class="badge badge-pill badge-danger">20</span></h2>
+          </div>
+        </div>
+      </div>
 
-          <div class="card graph" id="panel">
-              <div class="card-header main-bg-color">
-                Weekly Graph
-              </div>
-              <div class="card-body">
-                <div class="row">
-  
-                  <div class="col-md-6">
-                      <div class="card">
-                        <div class="card-header panel-box">
-                            <h4>Outlet's Transaction</h3>
-                        </div>
-                        <div class="card-body panel-text">
-                          <canvas id="outlet-transaction-chart"></canvas>
-                        </div>
-                      </div>
-                  </div>
-                  <div class="col-md-6">
-                      <div class="card">
-                        <div class="card-header panel-box">
-                            <h4>Total Transaction</h3>
-                        </div>
-                        <div class="card-body panel-text">
-                          <canvas id="transaction-chart"></canvas>
-                        </div>
-                      </div>
-                  </div>
-                  
-                      
-                </div>
-              </div>
-            </div>
-            <!--here-->
-   
+    </div>
+  </div>
+</div>
+
+<div class="card graph" id="panel">
+  <div class="card-header main-bg-color">
+    Graph Reports
+  </div>
+  <div class="card-body">
+    <div class="row">
+
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header panel-box">
+            <h4>Outlet's Transaction</h3>
+          </div>
+          <div class="card-body panel-text">
+            <canvas id="outlet-transaction-chart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header panel-box">
+            <h4>Total Transaction</h3>
+          </div>
+          <div class="card-body panel-text">
+            <canvas id="transaction-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<!--here-->
+
 <!--Body Section End-->
 
-
 <script>
+  $(document).ready(() => {
+    getTotalTransaction();
+    getTotalOutlet();
+    getTotalAttendence();
+    createOutletTransactionGraph();
+    createTotalWeeklyTransactionGraph();
 
-var outlet_transaction_chart = document.getElementById("outlet-transaction-chart").getContext('2d');
+  });
 
-var popChart1 = new Chart(outlet_transaction_chart, {
-  type: 'bar', 
-  data:{
-    labels:['Outlet 1', 'Outlet 2', 'outlet 3'],
-    datasets:[{
-      label: 'Today\'s transaction',
-      data:[
-        50000,
-        90000,
-        20000,
-      ],
-      backgroundColor: [
-        'rgba(54, 162, 235, 0.6)',  
-        'rgba(255, 99, 132, 0.6)',
-        'rgba(75, 192, 192, 0.6)'
-      ]
-     
-    }]
-  },
-  options: {
+  function getTotalTransaction() {
+
+    $.ajax({
+      url: '/admin/order/totalTransactionAjax',
+
+      success: (value) => {
+
+        var td = 0;
+        var yt = value[0].total;
+
+        if(value.length = 1){
+          td = yt;
+          yt = 0;
+        }else{
+          var td = value[1].total;
+        }
+        
+        //console.log(yt, ' ',td);
+        var element = document.getElementById('total-transaction-value');
+        element.innerText = td;
+
+        if (td < yt * 75 / 100) {
+          element.className = 'badge badge-pill badge-danger';
+        } else if (td > yt * 75 / 100 && td < yt) {
+          element.className = 'badge badge-pill badge-warning';
+        } else {
+          element.className = 'badge badge-pill badge-success';
+        }
+      }
+    });
+  }
+
+  function getTotalOutlet() {
+
+    $.ajax({
+      url: '/admin/outlet/totalOutletAjax',
+
+      success: (value) => {
+
+        //console.log(yt, ' ',att);
+        var element = document.getElementById('total-outlet-value');
+        element.innerText = value[0].total;
+
+      }
+    });
+  }
+
+  function getTotalAttendence() {
+
+    $.ajax({
+      url: '/admin/attendence/totalAttendenceAjax',
+
+      success: (value) => {
+        var emp = value.totalEmp;
+        var att = value.totalAtt;
+        //console.log(att, ' ', emp, value);
+
+        var element = document.getElementById('total-attendence-value');
+        element.innerText = att;
+
+        if (att == emp) {
+          element.className = 'badge badge-pill badge-success';
+        } else if (att > emp * 90 / 100) {
+          element.className = 'badge badge-pill badge-warning';
+        } else {
+          element.className = 'badge badge-pill badge-danger';
+        }
+
+      }
+    });
+  }
+
+  // Graph
+  function createOutletTransactionGraph() {
+    $.ajax({
+      url: '/admin/graph/outletTransactionAjax',
+
+      success: (value) => {
+        //console.log(value)
+        var l = [];
+        var d = [];
+        for (var i = 0; i < value.length; i++) {
+          l.push(`Outlet ${value[i].outlet_id}`);
+          d.push(value[i].total);
+        }
+        //console.log(l)
+        var datas = {
+          type: 'bar',
+          id: 'outlet-transaction-chart',
+          label: 'Today\'s Outlet Transaction',
+          labels: l,
+          data: d,
+          colors: [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)',
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 159, 64, 0.6)',
+            'rgba(255, 99, 132, 0.6)'
+          ]
+        }
+        drawGraph(datas);
+      }
+    });
+  }
+
+  function createTotalWeeklyTransactionGraph() {
+    $.ajax({
+      url: '/admin/graph/totalWeeklyTransactionsAjax',
+
+      success: (value) => {
+        //console.log(value)
+        var l = [];
+        var d = [];
+        for (var i = 0; i < value.length; i++) {
+          l.push(value[i].day);
+          d.push(value[i].total);
+        }
+
+        //console.log(l)
+        var datas = {
+          type: 'line',
+          id: 'transaction-chart',
+          label: 'Weekly Transaction',
+          labels: l,
+          data: d,
+          colors: [
+            'rgba(75, 192, 192, 0.6)',
+          ]
+        }
+        drawGraph(datas);
+      }
+    });
+  }
+
+  function drawGraph(datas) {
+
+    var chart = document.getElementById(datas.id).getContext('2d');
+
+    var popChart = new Chart(chart, {
+      type: datas.type,
+      data: {
+        labels: datas.labels,
+        datasets: [{
+          label: datas.label,
+          data: datas.data,
+          backgroundColor: datas.colors
+
+        }]
+      },
+      options: {
         legend: {
-          display: true
+          display: false
         },
         scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
         }
-    },
-    
-});
+      },
 
+    });
 
-  var transaction_chart = document.getElementById("transaction-chart").getContext('2d');
+  }
 
-  var popChart2 = new Chart(transaction_chart, {
-    type: 'line', 
-    data:{
-      labels:['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-      datasets:[{
-        label: 'Last 7 Day Transaction',
-        data:[
-          50000,
-          70000,
-          60000,
-          75000,
-          70000,
-          60000,
-          80000
-        ],
-        backgroundColor: 'rgba(75, 192, 192, 0.6)'
-       
-      }]
-    },
-    option:{}
-  });
 </script>
