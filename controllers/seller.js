@@ -6,6 +6,16 @@ const loginModel = require('../models/login-model');
 const invoiceModel = require('../models/invoice-model');
 //const fetchDropDown = require('../models/inventory-raw-model');
 
+router.get('*', function(req, res, next){
+
+	if(req.session.uname != null){
+		next();
+	}else{
+		res.redirect('/users/login');
+	}
+
+});
+
 // Admin/home
 router.get('/home', (req, res) => res.render('seller/seller_home', {title: "Seller | Dashboard", user: req.session.uname}));
 
@@ -35,20 +45,21 @@ router.post('/invoice', function(req, res){
 		contact : req.body.contact,
 		token : req.body.token,
 		ticket : req.body.ticket,
-		totalSum : req.body.totalSum,
-		outID : req.session.outID
+		totalSum : req.body.cost,
+		outID : req.session.outID,
+		//bro: req.body
 	}
-	console.log(invoice);
+	//console.log(invoice);
 
 	invoiceModel.insert(invoice, function(result){ 
 		if(!result){
 			res.send('emp insert unsuccessful');
 		}
 		else{		
-					res.redirect('/admin/employee');
+					res.redirect('/seller/home');
 				}
 			});
-		
+		 
 	});
 	
 
