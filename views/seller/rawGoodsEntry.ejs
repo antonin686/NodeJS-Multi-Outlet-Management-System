@@ -81,7 +81,7 @@
               <tr id="insertInventory1" >
                   <td class="ser" >1</td>
                 <td>
-                    <select class="custom-select" name="type" required>
+                    <select class="custom-select" name="name" required>
                         <% for(var i=0; i < itemList.length; i++) {%>
                             <option value="<%= itemList[i].item_type %>"> <%= itemList[i].product_name %> </option>
                         <% } %>
@@ -90,7 +90,7 @@
                 <td>
                     <select class="custom-select" name="type" required><% for(var i=0; i < itemList.length; i++) {%><option value="<%= itemList[i].item_type %>"> <%= itemList[i].product_type %> </option><% } %></select>
                 </td>
-                <td><input type="text" id="datepicker" placeholder="Pick a date(dd/mm/yy)" ></td>
+                <td><input type="text" id="datepicker" placeholder="Pick a date(dd/mm/yy)"></td>
                 <td><input type="text" id="opening1" ></td>
                 <td><input type="text" id="rec1" ></td>
                 <td><input type="text" id="total1" ></td>
@@ -170,7 +170,7 @@ $(document).ready(function(){
 
 
     i++
-    $('#tab-body').append('<tr id="insertInventory'+i+'"> <td class="ser" >'+i+'</td> <td><select class="custom-select" name="type" required><% for(var i=0; i < itemList.length; i++) {%><option value="<%= itemList[i].item_type %>"> <%= itemList[i].product_name %> </option><% } %></select></td><td><select class="custom-select" name="type" required><% for(var i=0; i < itemList.length; i++) {%><option value="<%= itemList[i].item_type %>"> <%= itemList[i].product_type %> </option><% } %></select></td><td><input type="text" id="datepickerClone" placeholder="Pick a date" value="'+D+'" ></td><td><input type="text" id="opening'+i+'" ></td><td><input type="text" id="rec'+i+'" ></td><td><input type="text" id="total'+i+'" ></td><td><input type="text" id="exp'+i+'" ></td><td><input type="text" id="bal'+i+'"></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove"><b>-</b></button></td></tr>');
+    $('#tab-body').append('<tr id="insertInventory'+i+'"> <td class="ser" >'+i+'</td> <td><select class="custom-select" name="name" required><% for(var i=0; i < itemList.length; i++) {%><option value="<%= itemList[i].item_type %>"> <%= itemList[i].product_name %> </option><% } %></select></td><td><select class="custom-select" name="type" required><% for(var i=0; i < itemList.length; i++) {%><option value="<%= itemList[i].item_type %>"> <%= itemList[i].product_type %> </option><% } %></select></td><td><input type="text" id="datepickerClone" placeholder="Pick a date" value="'+D+'" ></td><td><input type="text" id="opening'+i+'" ></td><td><input type="text" id="rec'+i+'" ></td><td><input type="text" id="total'+i+'" ></td><td><input type="text" id="exp'+i+'" ></td><td><input type="text" id="bal'+i+'"></td><td><button type="button" name="remove" id="'+i+'" class="btn btn-danger btn_remove"><b>-</b></button></td></tr>');
     $( "#datepicker" ).datepicker(); 
    
   });

@@ -11,7 +11,7 @@ router.get('/home', (req, res) => res.render('seller/seller_home', {title: "Sell
 // Admin Outlet
 //router.get('/itemList', (req, res) => res.render('seller/itemList', { title: "Admin | Outlet", user: req.session.uname}));
 
-//router.get('/rawGoodsEntry', (req, res) => res.render('seller/rawGoodsEntry', { title: "Inventory | Raw Goods", user: req.session.uname}));
+router.get('/invoice', (req, res) => res.render('seller/invoice', { title: "Seller | Invoice", user: req.session.uname}));
 
 router.get('/itemList', function(req,res){
     
