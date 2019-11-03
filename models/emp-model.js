@@ -7,7 +7,7 @@ module.exports = {
 
 	getById: function(id, callback){
 
-		var sql = `SELECT employee.emp_ID, employee.username,employee.name, login.password , employee.contact, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username and ${table_id}= ${id}`;
+		var sql = `SELECT employee.emp_ID, employee.username,employee.name, login.password , employee.contact,employee.outlet_ID, rank.rank_name as rank FROM login,employee,rank WHERE rank.rank_id = login.type and employee.username = login.username and ${table_id}= ${id}`;
 		//console.log(sql);
 		db.getResults(sql, function(result){
 			if(result.length > 0 ){
@@ -60,7 +60,7 @@ module.exports = {
 
 	getAllSellerByOutlet: function(id,callback){
 		var sql = `SELECT employee.name as employee,employee.emp_ID,employee.username,employee.outlet_ID,outlet.outlet_ID,outlet.name,login.username as uname,login.type from employee,outlet,login WHERE employee.outlet_ID = outlet.outlet_ID and employee.username = login.username and login.type = 3 and outlet.outlet_ID= ${id}`;
-		console.log(sql)
+		//console.log(sql)
 		db.getResults(sql, function(results){
 			
 			if(results.length > 0){
@@ -71,9 +71,60 @@ module.exports = {
 		});	
 	},
 
+	countAllSellerByOutlet: function(id,callback){
+		var sql = `SELECT count(emp_ID) as count1 from employee where outlet_ID= ${id}`;
+		//console.log(sql)
+		db.getResults(sql, function(results){
+			
+			if(results){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});	
+	},
+
+	countAllSellerAttendance: function(id,callback){
+		var sql = `SELECT count(emp_ID) as count2 from employee_attendance where outlet_ID= ${id} and date = CURRENT_DATE`;
+		//console.log(sql)
+		db.getResults(sql, function(results){
+			
+			if(results){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});	
+	},
+	countOrders: function(id,callback){
+		var sql = `SELECT count(order_ID) as count3 from orders where outlet_ID= ${id} and date = CURRENT_DATE`;
+		//console.log(sql)
+		db.getResults(sql, function(results){
+			
+			if(results){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});	
+	},
+	countPrice: function(id,callback){
+		var sql = `SELECT SUM(total_price) as count4 from orders where outlet_ID= ${id} and date = CURRENT_DATE`;
+		//console.log(sql)
+		db.getResults(sql, function(results){
+			
+			if(results){
+				callback(results[0]);
+			}else{
+				callback(false);
+			}
+		});	
+	},
+
+
 	getSellerByOutlet: function(id,callback){
 		var sql = `SELECT employee.name as employee,employee.emp_ID,employee.username,employee.outlet_ID,outlet.outlet_ID,outlet.name,login.username as uname,login.type from employee,outlet,login WHERE employee.outlet_ID = outlet.outlet_ID and employee.username = login.username and login.type = 3 and outlet.outlet_ID= ${id}`;
-		console.log(sql)
+		//console.log(sql)
 		db.getResults(sql, function(results){
 			
 			if(results.length > 0){
@@ -113,7 +164,7 @@ module.exports = {
 
 	insert: function(user, callback){
 
-		var sql =`insert into ${table_name} values('', '${user.username}', '${user.name}', '${user.contact}', '${user.outlet}');`;
+		var sql =`insert into ${table_name} values('', '${user.username}', '${user.name}', '${user.contact}', '${user.outlet}', '${user.salary}', '${user.date}');`;
 		//console.log(sql);
 		db.execute(sql, function(status){
 			callback(status);

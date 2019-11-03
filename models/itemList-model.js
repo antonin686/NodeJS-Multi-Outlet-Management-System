@@ -33,6 +33,20 @@ module.exports = {
 		});	
 	},
 
+
+	foodSearch: function(id,callback){
+		var sql = `select * from item_list where itemCode= '${id}'`;
+		
+		db.getResults(sql, function(results){
+			
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback([]);
+			}
+		});	
+	},
+
 	
 	getById: function(id, callback){
 
