@@ -3,6 +3,7 @@ const router = express.Router();
 const empModel = require('../models/emp-model');
 const itelmListModel = require('../models/itemList-model');
 const loginModel = require('../models/login-model');
+const invoiceModel = require('../models/invoice-model');
 //const fetchDropDown = require('../models/inventory-raw-model');
 
 // Admin/home
@@ -26,6 +27,31 @@ router.get('/invoice/searchAjax/:id', function(req,res){
 
 
 router.get('/invoice', (req, res) => res.render('seller/invoice', { title: "Seller | Invoice", user: req.session.uname}));
+
+router.post('/invoice', function(req, res){
+
+	var invoice = {
+		username: req.body.username,
+		contact : req.body.contact,
+		token : req.body.token,
+		ticket : req.body.ticket,
+		totalSum : req.body.totalSum,
+		outID : req.session.outID
+	}
+	console.log(invoice);
+
+	invoiceModel.insert(invoice, function(result){ 
+		if(!result){
+			res.send('emp insert unsuccessful');
+		}
+		else{		
+					res.redirect('/admin/employee');
+				}
+			});
+		
+	});
+	
+
 
 router.get('/itemList', function(req,res){
     

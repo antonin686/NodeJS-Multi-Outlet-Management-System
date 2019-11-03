@@ -23,8 +23,8 @@ router.post('/login', (req, res) => {
 			req.session.type = status.type;
 			req.session.uid = status.login_ID;
 			req.session.outID = status.outlet_ID;
-			//console.log(status);
-			//console.log(req.session.uid)
+			console.log(req.session.outID);
+			console.log(req.session.uid)
 			if(status.type == 1) {
 				res.redirect('/admin/home/');
 			}else if(status.type == 2) {
