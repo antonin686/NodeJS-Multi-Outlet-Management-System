@@ -86,11 +86,15 @@ $(document).ready(function(){
     var sum= 0 ;
     var d = new Date();
     var e = Math.random();
+    var f = 0 ;
+    var g = 0;
+    var h = 0;
+    var m = 0;
     $('#ticket').val(d + e);
 
     $('#addMore').on('click',function(){
         i++;
-        $('#orders').append('<tr id="orderedItems'+i+'" ><td class="f_code">D-127</td><td class="f_name">Burger</td><td> <input type="number" class="cost" name="cost"> </td><td><button type="button" id="'+i+'" class="btn btn-danger btn_remove"><b>Remove</b></button></td></tr>');
+        $('#orders').append('<tr id="orderedItems'+i+'" ><td class="f_code"><input type="text" id="food_code" name="'+i+'"></td><td class="f_name">Burger</td><td> <input type="text" class="cost" id="cost'+i+'" name="cost"> </td><td><button type="button" id="'+i+'" class="btn btn-danger btn_remove"><b>Remove</b></button></td></tr>');
     });
 
     $('#total').on('click',function(){
@@ -104,8 +108,39 @@ $(document).ready(function(){
 
     $(document).on('click','.btn_remove',function(){
     var btn_rmv=$(this).attr("id");
+    var h = $('#cost'+btn_rmv+'').val();
+    
+    //alert(w);
     $('#orderedItems'+btn_rmv+'').remove();
+    
+    var m = parseFloat(sum)-parseFloat(h);
+    
+    $('#result').text(m);
+    });
 
+    $(document).on('keyup','#food_code',function(e){
+        var f =$(this).val();
+        var w =$(this).attr("name");
+        //alert(w);
+        //var f = $('#food_code').val();
+        //var j= $(e.currentTarget).text();
+        console.log(f);
+                     $.ajax({
+
+                    url: `/seller/invoice/searchAjax/${f}`, 
+
+                    success: (f_cost) => {
+                        console.log(f_cost);
+                        var html = '';
+                        
+                        if(f_cost != null)
+                        {
+                            var g = f_cost[0].itemCost;
+                            $('#cost'+w+'').val(g)
+                        
+                        }
+                    }
+                    });
     });
 });
 </script>

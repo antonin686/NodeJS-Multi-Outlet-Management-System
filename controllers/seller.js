@@ -10,6 +10,20 @@ router.get('/home', (req, res) => res.render('seller/seller_home', {title: "Sell
 
 // Admin Outlet
 //router.get('/itemList', (req, res) => res.render('seller/itemList', { title: "Admin | Outlet", user: req.session.uname}));
+///seller/invoice/searchAjax/${f}
+router.get('/invoice/searchAjax/:id', function(req,res){
+    var id = req.params.id;
+	itelmListModel.foodSearch(id,function(status){
+		//console.log(status);
+		if(status){
+			res.send(status);
+		}else{
+			res.send("error");
+		}
+	});
+});
+
+
 
 router.get('/invoice', (req, res) => res.render('seller/invoice', { title: "Seller | Invoice", user: req.session.uname}));
 
