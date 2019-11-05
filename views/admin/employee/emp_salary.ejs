@@ -113,7 +113,7 @@
             </div>
             <form action="POST">
                 <div class="modal-body">
-                    Are you sure your want to delete this profile?
+                    Are you sure your want to delete this Scale?
                 </div>
                 <input type="hidden" name="buttonType" value="delete">
                 <div class="modal-footer">
@@ -130,7 +130,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Profile Deletation</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update Salary </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -191,8 +191,7 @@
                                         $.ajax({
                                             url: `/admin/employee/salary/update/${empList[i].emp_ID}/${sal}`,
                                             success: () => {
-                                                console.log(
-                                                    'success');
+                                                console.log( 'success');
                                             }
                                         });
                                         break;

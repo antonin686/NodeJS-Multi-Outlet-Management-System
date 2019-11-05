@@ -4,6 +4,7 @@ const empModel = require('../models/emp-model');
 const itelmListModel = require('../models/itemList-model');
 const loginModel = require('../models/login-model');
 const invoiceModel = require('../models/invoice-model');
+const orderModel = require('../models/admin/order-model');
 //const fetchDropDown = require('../models/inventory-raw-model');
 
 router.get('*', function(req, res, next){
@@ -36,6 +37,27 @@ router.get('/invoice/searchAjax/:id', function(req,res){
 
 
 
+router.get('/profile', function(req, res){
+    if(req.session.uname == null)
+	{
+		res.redirect('/users/login');
+	}
+
+	var id = req.session.uid;
+	//var id = 1;
+	console.log(req.session.uid)
+	empModel.getById(id, function(result){
+		if(!result){
+            res.send('invalid');
+		}else{
+			console.log(result);
+            res.render("seller/profile", {title: "Profile", user : req.session.uname, userInfo: result});
+		}
+	});
+
+	
+});
+
 router.get('/invoice', (req, res) => res.render('seller/invoice', { title: "Seller | Invoice", user: req.session.uname}));
 
 router.post('/invoice', function(req, res){
@@ -61,8 +83,8 @@ router.post('/invoice', function(req, res){
 			});
 		 
 	});
-	
 
+	
 
 router.get('/itemList', function(req,res){
     

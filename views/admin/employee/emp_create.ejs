@@ -17,13 +17,21 @@
         Create Employee
     </div>
     <div class="card-body">
-        <%= typeof msgErr != 'undefined' ? msg : ''%>
-        <div class="col-md-8 mx-auto">
 
-            <form class="card-body" method="POST" enctype="multipart/form-data">
+        <div class="col-md-8 mx-auto">
+            <% if(errMsg != false){ %>
+            <div class="alert alert-danger" role="alert">
+                <%= errMsg%>
+            </div>
+            <%  }%>
+            <div id="div-alert" role="alert">
+                <%= errMsg%>
+            </div>
+
+            <form class="card-body" name="empForm" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" name="username"> <span>
+                    <input type="text" class="form-control" id="username" name="username" required> <span>
                         <div id="div-alert" role="alert">
 
                         </div>
@@ -31,19 +39,19 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password">
+                    <input type="password" class="form-control" name="password" required>
                 </div>
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name">
+                    <input type="text" class="form-control" name="name" required>
                 </div>
                 <div class="form-group">
                     <label for="name">Contact</label>
-                    <input type="number" class="form-control" name="contact">
+                    <input type="number" class="form-control" name="contact" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="outlet">Outlet</label>
-                    <select class="custom-select" name="outlet">
+                    <select class="custom-select" name="outlet" required>
                         <% for(var i=0; i < outList.length; i++) {%>
                         <option value="<%= outList[i].outlet_ID %>"> <%= outList[i].name %> </option>
                         <% } %>
@@ -51,7 +59,7 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="rank">Type</label>
-                    <select class="custom-select" name="rank">
+                    <select class="custom-select" name="rank" required>
                         <option value="3" selected>Seller</option>
                         <option value="2">Manager</option>
                         <option value="1">Admin</option>
@@ -59,11 +67,11 @@
                 </div>
                 <div class="form-group">
                     <label for="salary">Salary</label>
-                    <input type="number" class="form-control" name="salary">
+                    <input type="number" class="form-control" name="salary" required>
                 </div>
                 <div class="form-group">
                     <label for="dp">Profile Picture</label>
-                    <input type="file" class="form-control-file" name="myImage">
+                    <input type="file" class="form-control-file" name="myImage" required>
                 </div>
 
                 <button type="submit" class="btn btn-success">Create</button>
@@ -77,6 +85,7 @@
 
 <script>
     $(document).ready(() => {
+        $('')
         $('#username').change((event) => {
             var key = $(event.currentTarget).val();
             $('#div-alert').removeClass();
@@ -95,4 +104,59 @@
             });
         });
     });
+
+    function validateForm() {
+        var username = document.forms["empForm"]["username"].value;
+        var name = document.forms["empForm"]["name"].value;
+        var contact = document.forms["empForm"]["contact"].value;
+        var password = document.forms["empForm"]["password"].value;
+        var salary = document.forms["empForm"]["salary"].value;
+        var err = [];
+
+
+        $('#div-alert').removeClass();
+        $('#div-alert').html(' ');
+
+        if (username == "") {
+            err.push('Enter username');
+        }
+
+        if (password = "") {
+            err.push('Enter password');
+        }
+
+        if (contact = "") {
+            err.push('Enter contact');
+        }
+
+        if (salary = "") {
+            err.push('Enter salary');
+        }
+
+        if (name = "") {
+            err.push('Enter name');
+        }
+
+
+        
+        if (err == null) {
+            if (err != null) {
+                console.log(html)
+                return true;
+            } else {
+                $('#div-alert').addClass('alert alert-danger');
+                var html = '';
+                for (var i = 0; i < err.length; i++) {
+                    html += `${err[i]} <br>`;
+                }
+                console.log(html)
+                $('#div-alert').html(html);
+            }
+        }else{
+            document.forms["empForm"].preven
+        }
+
+        return false;
+
+    }
 </script>

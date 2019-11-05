@@ -44,6 +44,7 @@ module.exports = {
 	},
 
 	getOrderList: (data, callback) => {
+		
 		var sql = `SELECT orders.order_ID, item_list.itemName, item_list.itemType, orders.quantity, orders.total_price, DATE_FORMAT(orders.date, "%M %d") as date FROM item_list,orders where item_list.id = orders.item_ID AND orders.date BETWEEN CURRENT_DATE() - ${data.time} AND CURRENT_DATE() and orders.outlet_ID = ${data.outlet} and item_list.itemName like '%${data.key}%'`;
 		//console.log(sql);
 		db.getResults(sql, (results) => {
@@ -71,7 +72,7 @@ module.exports = {
 
 	getTotalTransactionForTnY: (callback) => {
 		var sql = `SELECT date,sum(total_price) as total from ${table_name} GROUP BY date HAVING DATEDIFF(date, CURDATE()) = 0 or DATEDIFF(date, CURDATE()) = -1`;
-		console.log(sql)
+		//console.log(sql)
 		db.getResults(sql, (results) => {
 
 			if (results.length > 0) {

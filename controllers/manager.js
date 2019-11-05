@@ -408,13 +408,15 @@ router.post('/attendance', function(req, res) {
 						res.send('attendance insert unsuccessful');
 					}
 					else{
-						res.redirect('/manager/home');
+						//res.redirect('/manager/home');
 					}
 				});
 				//res.redirect('/manager/home');
 			}
 		});
+		res.redirect('/manager/home');
 	}
+	
 });
 
 

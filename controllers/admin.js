@@ -781,7 +781,8 @@ router.get('/employee/create', (req, res) => {
 				outList: result,
 				success: false,
 				errors: req.session.erros,
-				layout: 'layout_admin'
+				layout: 'layout_admin',
+				errMsg: false
 			});
 		}
 	});
@@ -792,20 +793,42 @@ router.post('/employee/create', (req, res) => {
 
 	upload(req, res, (err) => {
 		if (err) {
-			res.render('admin/employee/emp_create', {
-				layout: 'layout_admin',
-				title: "Admin | Employee",
-				user: req.session.uname,
-				errMsg: err
+			outletModel.getAll((result) => {
+				//console.log(result)
+				if (!result) {
+					res.send('no outlet result found');
+				} else {
+					res.render('admin/employee/emp_create', {
+						title: 'Admin | Employee | Create',
+						user: req.session.uname,
+						outList: result,
+						success: false,
+						errors: req.session.erros,
+						layout: 'layout_admin',
+						errMsg: err
+					});
+				}
 			});
+		
 		} else {
 			if (req.file == null) {
-				res.render('admin/employee/emp_create', {
-					layout: 'layout_admin',
-					title: "Admin | Employee",
-					user: req.session.uname,
-					errMsg: 'no image'
+				outletModel.getAll((result) => {
+					//console.log(result)
+					if (!result) {
+						res.send('no outlet result found');
+					} else {
+						res.render('admin/employee/emp_create', {
+							title: 'Admin | Employee | Create',
+							user: req.session.uname,
+							outList: result,
+							success: false,
+							errors: req.session.erros,
+							layout: 'layout_admin',
+							errMsg: 'no image selected'
+						});
+					}
 				});
+			
 			} else {
 
 				// validate
@@ -819,7 +842,9 @@ router.post('/employee/create', (req, res) => {
 					salary: req.body.salary,
 					imgPath: req.file.filename
 				}
-
+				
+				
+				
 				empModel.insert(user, (result) => {
 					if (!result) {
 						res.send('emp insert unsuccessful');
@@ -832,7 +857,7 @@ router.post('/employee/create', (req, res) => {
 							}
 						});
 					}
-				});
+				}); 
 			}
 		}
 	});
